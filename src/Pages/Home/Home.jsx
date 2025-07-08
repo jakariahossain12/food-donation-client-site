@@ -7,7 +7,7 @@ const Home = () => {
     console.log(user);
     return (
         <div>
-           
+           <h1>jakeia</h1>
         </div>
     );
 };
