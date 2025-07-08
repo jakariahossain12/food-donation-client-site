@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
-
 import { toast } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
@@ -14,7 +14,6 @@ const Register = () => {
   const onSubmit = async (data) => {
     const { name, image, email, password } = data;
 
-    console.log(data);
     // Password validation
     const capitalRegex = /[A-Z]/;
     const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
@@ -33,11 +32,13 @@ const Register = () => {
       toast.error("Password must include at least one special character.");
       return;
     }
+
+    console.log(data);
   };
 
   return (
     <div className="h-screen flex items-center justify-center">
-      <div className="max-w-md mx-auto mt-10 p-6   rounded shadow">
+      <div className="w-md mx-auto mt-10 p-6   rounded shadow">
         <h2 className="text-2xl font-semibold mb-4 text-center">Register</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Name */}

@@ -11,7 +11,7 @@ import {
 } from "firebase/auth";
 
 
-import { auth } from "../Firebase/firevase.config";
+import { auth } from "../Firebase/firebase.config";
 import { AuthContext } from "../Context/Context";
 
 
