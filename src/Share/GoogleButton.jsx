@@ -1,9 +1,24 @@
 import React from 'react';
+import useAuth from '../hooks/useAuth';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
 
 const GoogleButton = () => {
+  const { userSignUpWithGoogle } = useAuth();
+  const navigate = useNavigate()
+
+  const handleSubmit = () => {
+    userSignUpWithGoogle()
+      .then(() => {
+        toast.success('account create successfully')
+        navigate('/')
+      }).catch(error => {
+      toast.error(error.message)
+    })
+  }
     return (
       <div>
-        <button className="btn w-full bg-white text-black border-[#e5e5e5]">
+        <button onClick={handleSubmit} className="btn w-full bg-white text-black border-[#e5e5e5]">
           <svg
             aria-label="Google logo"
             width="16"

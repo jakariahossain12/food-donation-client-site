@@ -56,7 +56,7 @@ const Dashboard = () => {
         <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
         <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
           {/* Sidebar items */}
-          <h1>
+          <h1 className="mb-10">
             <Link to={"/"}>FoodShare</Link>
           </h1>
 

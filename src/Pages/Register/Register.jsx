@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-
-import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
 import GoogleButton from "../../Share/GoogleButton";
 import { Link } from "react-router";
+import useAuth from "../../hooks/useAuth";
+import { uploadToImgbb } from "../../Utils/Utils";
+import { useState } from "react";
 
 const Register = () => {
   const {
@@ -13,8 +14,11 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
+  const { userSignUp, userUpdateProfile } = useAuth();
+  const [imageUrl, setImageUrl] = useState(null);
+
   const onSubmit = async (data) => {
-    const { name, image, email, password } = data;
+    const { name, email, password } = data;
 
     // Password validation
     const capitalRegex = /[A-Z]/;
@@ -35,7 +39,27 @@ const Register = () => {
       return;
     }
 
-    console.log(data);
+    userSignUp(email, password)
+      .then((res) => {
+        const upDateInfo = {
+          displayName: name,
+          photoURL: imageUrl,
+        };
+        console.log(res);
+        userUpdateProfile(upDateInfo)
+          .then(() => {})
+          .catch(() => {});
+        toast.success("ok");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handelImage = async (e) => {
+    const imageFile = e.target.files[0];
+    const image = await uploadToImgbb(imageFile);
+    setImageUrl(image);
   };
 
   return (
@@ -61,12 +85,10 @@ const Register = () => {
             <label className="block font-medium">Image URL</label>
             <input
               type="file"
-              {...register("image", { required: "Image URL is required" })}
+              required
+              onChange={handelImage}
               className="w-full p-2 border rounded"
             />
-            {errors.image && (
-              <p className="text-red-500 text-sm">{errors.image.message}</p>
-            )}
           </div>
 
           {/* Email */}
@@ -111,6 +133,7 @@ const Register = () => {
           </Link>
         </p>
       </div>
+      <ToastContainer />
     </div>
   );
 };

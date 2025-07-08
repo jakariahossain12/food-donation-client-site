@@ -1,23 +1,29 @@
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-import useAuth from "../../hooks/useAuth";
 import { Link, useNavigate } from "react-router";
 import GoogleButton from "../../Share/GoogleButton";
+import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
-  const { user } = useAuth(); // You can use this to redirect if already logged in
+  const { userLogin } = useAuth(); // You can use this to redirect if already logged in
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = async ({ email, password }) => {
     console.log(email, password);
-    toast.success("ok");
+    userLogin(email, password)
+      .then(() => {
+        toast.success("login successfully");
+        navigate("/");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
   };
 
   return (
