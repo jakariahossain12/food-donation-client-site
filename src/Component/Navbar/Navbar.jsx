@@ -46,7 +46,7 @@ const Navbar = () => {
         <ul className="hidden md:flex gap-6 font-medium items-center">
           {link}
           {
-            user ? <button className="btn bg-primary text-white">Sign Out</button>:<button className="btn bg-primary text-white">Login</button>
+            user ? <button className="btn bg-primary text-white">Sign Out</button>:<Link to={'/login'} className="btn bg-primary text-white">Login</Link>
           }
         </ul>
 
@@ -63,7 +63,7 @@ const Navbar = () => {
       {isOpen && (
         <div className="md:hidden px-4 pb-4  ">
           <ul className="space-y-2  w-1/2 right-0 ">{link} {
-            user ? <button className="btn bg-primary text-white">Sign Out</button>:<button className="btn bg-primary text-white">Login</button>
+            user ? <button className="btn bg-primary text-white">Sign Out</button>:<Link to={'/login'} className="btn bg-primary text-white">Login</Link>
           }</ul>
         </div>
       )}

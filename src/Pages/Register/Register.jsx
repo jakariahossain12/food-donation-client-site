@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
+import GoogleButton from "../../Share/GoogleButton";
+import { Link } from "react-router";
 
 const Register = () => {
   const {
@@ -38,7 +40,7 @@ const Register = () => {
 
   return (
     <div className="h-screen flex items-center justify-center">
-      <div className="w-md mx-auto mt-10 p-6   rounded shadow">
+      <div className="w-md mx-auto mt-10 p-6   rounded shadow space-y-3">
         <h2 className="text-2xl font-semibold mb-4 text-center">Register</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Name */}
@@ -101,6 +103,13 @@ const Register = () => {
             Register
           </button>
         </form>
+        <GoogleButton></GoogleButton>
+        <p>
+          You have already an account Please{" "}
+          <Link className="text-blue-500 font-medium" to={"/login"}>
+            Login
+          </Link>
+        </p>
       </div>
     </div>
   );

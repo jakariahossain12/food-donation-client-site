@@ -2,7 +2,8 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 import useAuth from "../../hooks/useAuth";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
+import GoogleButton from "../../Share/GoogleButton";
 
 const Login = () => {
   const { user } = useAuth(); // You can use this to redirect if already logged in
@@ -21,7 +22,7 @@ const Login = () => {
 
   return (
     <div className="h-screen flex items-center justify-center">
-      <div className="w-md mx-auto mt-10 p-6   rounded shadow">
+      <div className="w-md mx-auto mt-10 p-6 space-y-3  rounded shadow">
         <h2 className="text-2xl font-semibold mb-4 text-center">Login</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Email */}
@@ -58,6 +59,13 @@ const Login = () => {
             Register
           </button>
         </form>
+        <GoogleButton></GoogleButton>
+        <p>
+          You have don't an account Please{" "}
+          <Link className="text-blue-500 font-medium" to={"/register"}>
+            Sign Up
+          </Link>
+        </p>
       </div>
     </div>
   );
