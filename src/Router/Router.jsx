@@ -6,12 +6,14 @@ import Register from "../Pages/Register/Register";
 import Login from "../Pages/Login/Login";
 import Dashboard from "../Layouts/Dashboard";
 import NotFound from "../Pages/NotFound/NotFound";
+import AllDonation from "../Pages/All-Donation/AllDonation";
  export const router = createBrowserRouter([
   {
     path: "/",
          Component: MainLayout,
          children: [
-             { index: true, Component: Home },
+           { index: true, Component: Home },
+           {path:'donations',Component:AllDonation}
              
     ]
    },
