@@ -5,6 +5,8 @@ import { Link } from "react-router";
 import useAuth from "../../hooks/useAuth";
 import { uploadToImgbb } from "../../Utils/Utils";
 import { useState } from "react";
+import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
 
 const Register = () => {
   const {
@@ -16,6 +18,15 @@ const Register = () => {
 
   const { userSignUp, userUpdateProfile } = useAuth();
   const [imageUrl, setImageUrl] = useState(null);
+
+// use tanstack query for post data 
+  const mutation = useMutation({
+    mutationFn:async (userData) => {
+      const res = await axios.post(`${import.meta.env.VITE_SERVER_BASE_API}/user`, userData);
+      console.log(res.data);
+      return res.data;
+    },
+  });
 
   const onSubmit = async (data) => {
     const { name, email, password } = data;
@@ -40,7 +51,7 @@ const Register = () => {
     }
 
     userSignUp(email, password)
-      .then((res) => {
+      .then(async(res) => {
         const upDateInfo = {
           displayName: name,
           photoURL: imageUrl,
@@ -49,7 +60,16 @@ const Register = () => {
         userUpdateProfile(upDateInfo)
           .then(() => {})
           .catch(() => {});
-        toast.success("ok");
+        toast.success("account create successfully");
+        const userData = {
+          name,
+          email,
+          imageUrl,
+          create_at: new Date().toISOString(),
+          last_login: new Date().toISOString(),
+        };
+        mutation.mutate(userData);
+        reset()
       })
       .catch((error) => {
         console.log(error);
