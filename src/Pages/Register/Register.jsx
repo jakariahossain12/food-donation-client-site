@@ -65,6 +65,7 @@ const Register = () => {
           name,
           email,
           imageUrl,
+          role:'user',
           create_at: new Date().toISOString(),
           last_login: new Date().toISOString(),
         };

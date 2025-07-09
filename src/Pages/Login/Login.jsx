@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router";
 import GoogleButton from "../../Share/GoogleButton";
 import useAuth from "../../hooks/useAuth";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 
 const Login = () => {
   const { userLogin } = useAuth(); // You can use this to redirect if already logged in
@@ -14,12 +16,25 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
+  // use tanstack query for post data
+  const mutation = useMutation({
+    mutationFn: async (userData) => {
+      const res = await axios.post(
+        `${import.meta.env.VITE_SERVER_BASE_API}/user`,
+        userData
+      );
+      console.log(res.data);
+      return res.data;
+    },
+  });
+
   const onSubmit = async ({ email, password }) => {
     console.log(email, password);
     userLogin(email, password)
       .then(() => {
         toast.success("login successfully");
         navigate("/");
+        mutation.mutate({email})
       })
       .catch((error) => {
         toast.error(error.message);
