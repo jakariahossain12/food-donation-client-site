@@ -16,7 +16,8 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const { userSignUp, userUpdateProfile } = useAuth();
+  const { userSignUp, userUpdateProfile, user } = useAuth();
+ 
   const [imageUrl, setImageUrl] = useState(null);
 
 // use tanstack query for post data 

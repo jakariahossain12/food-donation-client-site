@@ -7,27 +7,43 @@ import Login from "../Pages/Login/Login";
 import Dashboard from "../Layouts/Dashboard";
 import NotFound from "../Pages/NotFound/NotFound";
 import AllDonation from "../Pages/All-Donation/AllDonation";
+import MyProfile from "../Pages/MyProfile/MyProfile";
+import RequestCharityRole from "../Pages/Dashboard/User/RequestCharityRole";
+import PymentElements from "../Pages/Dashboard/User/PymentElements";
  export const router = createBrowserRouter([
-  {
-    path: "/",
-         Component: MainLayout,
-         children: [
-           { index: true, Component: Home },
-           {path:'donations',Component:AllDonation}
-             
-    ]
+   {
+     path: "/",
+     Component: MainLayout,
+     children: [
+       { index: true, Component: Home },
+       { path: "donations", Component: AllDonation },
+     ],
    },
    {
-     path:'register',Component:Register
+     path: "register",
+     Component: Register,
    },
    {
-     path:'login',Component:Login
+     path: "login",
+     Component: Login,
    },
    {
-     path:'dashboard',Component:Dashboard
+     path: "dashboard",
+     Component: Dashboard,
+     children: [
+       { index: true,path:'my-profile', element: <MyProfile></MyProfile> },
+       {
+         path: "request-charity",
+         element: <RequestCharityRole></RequestCharityRole>,
+       },
+       {
+         path: "payment",
+         element: <PymentElements></PymentElements>,
+       },
+     ],
    },
    {
-     path: '*',
-     Component:NotFound
-   }
-]);
+     path: "*",
+     Component: NotFound,
+   },
+ ]);
