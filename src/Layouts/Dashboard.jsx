@@ -1,14 +1,14 @@
 import React from "react";
 import { Link, NavLink, Outlet } from "react-router";
 import {
-  MdLocalShipping,
-  MdPayment,
-  MdTrackChanges,
-  MdSettings,
-  MdHelpOutline,
-  MdPeopleOutline,
-  MdPendingActions,
+  MdPerson,
+  MdVolunteerActivism,
+  MdFavorite,
+  MdRateReview,
+  MdHistory,
 } from "react-icons/md";
+
+import './dashboard.css'
 
 const Dashboard = () => {
   return (
@@ -54,14 +54,59 @@ const Dashboard = () => {
       {/* Sidebar */}
       <div className="drawer-side">
         <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
-        <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+        <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content font-bold">
           {/* Sidebar items */}
           <h1 className="mb-10">
-            <Link to={"/"}>FoodShare</Link>
+            <Link
+              to="/"
+              className="flex items-center gap-2 text-2xl font-extrabold"
+              style={{ color: "#00705c" }}
+            >
+              FoodShare
+            </Link>
           </h1>
 
-         <li>profile</li>
-        
+          {/* user nav link */}
+          <li>
+            <NavLink
+              to={"/dashboard/my-profile"}
+              className="flex items-center gap-2"
+            >
+              <MdPerson /> My Profile
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={"/dashboard/request-charity"}
+              className="flex items-center gap-2"
+            >
+              <MdVolunteerActivism /> Request Charity Role
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={"/dashboard/favorites"}
+              className="flex items-center gap-2"
+            >
+              <MdFavorite /> Favorites
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={"/dashboard/my-reviews"}
+              className="flex items-center gap-2"
+            >
+              <MdRateReview /> My Reviews
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={"/dashboard/transaction-history"}
+              className="flex items-center gap-2"
+            >
+              <MdHistory /> Transaction History
+            </NavLink>
+          </li>
         </ul>
       </div>
     </div>
