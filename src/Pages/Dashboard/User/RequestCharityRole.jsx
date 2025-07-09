@@ -1,65 +1,75 @@
 // your custom hook
-
-import useAuth from "../../../hooks/useAuth";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { CardElement, Elements } from "@stripe/react-stripe-js";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import { Link } from "react-router";
 import PymentElements from "./PymentElements";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import useAuth from "../../../hooks/useAuth";
+import Loading from "../../../Component/Loading/Loading";
+import { toast } from "react-toastify";
 
 const RequestCharityRole = () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const [hasRequest, setHasRequest] = useState(false);
-  const amount = 25;
+  const [isModalOpen, setIsModelOpen] = useState(false);
+  const [roleRequestData, setRoleRequestData] = useState({});
 
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm();
 
   // Check for existing role request
-  useEffect(() => {
-    axios
-      .get(`/api/charity-request-status?email=${user?.email}`)
-      .then((res) => {
-        if (res.data.status === "Pending" || res.data.status === "Approved") {
-          setHasRequest(true);
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, [user?.email]);
+
+  const {
+    isLoading,
+    error,
+    data: payment,
+  } = useQuery({
+    queryKey: ["payment", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/charity-request-status?email=${user?.email}`
+      );
+      if (res?.data?.status === "Pending" || res?.data?.status === "Approved") {
+        setHasRequest(true);
+      }
+      return res.data;
+    },
+  });
+
+  if (isLoading || loading) {
+    return <Loading></Loading>;
+  }
+
+  if (error) {
+    toast.error(error.message)
+  }
+
+
 
   const onSubmit = async (data) => {
-    try {
-      // Create PaymentIntent from server
+    setIsModelOpen(true);
 
-      // Save role request
-      const roleRequest = {
-        email: user.email,
-        name: user.displayName,
-        organization: data.organization,
-        mission: data.mission,
-
-        status: "Pending",
-        date: new Date(),
-      };
-    } catch (error) {
-      console.error(error);
-      toast.error("Something went wrong. Try again.");
-    }
+    // Save role request
+    const roleRequest = {
+      email: user?.email,
+      name: user?.displayName,
+      organization: data.organization,
+      mission: data.mission,
+      status: "Pending",
+      date: new Date(),
+    };
+    setRoleRequestData(roleRequest);
   };
 
   if (hasRequest) {
     return (
       <div className="max-w-xl mx-auto text-center mt-20 p-4">
         <h2 className="text-xl font-semibold text-[#00705c]">
-          You already have a pending or approved charity role request.
+          You already have a {payment?.status} charity role request.
         </h2>
       </div>
     );
@@ -129,24 +139,28 @@ const RequestCharityRole = () => {
           className="w-full mt-4 bg-[#00705c] hover:bg-[#005e4e] text-white py-2 rounded-md font-semibold"
           onClick={() => document.getElementById("my_modal_1").showModal()}
         >
-          <Link>Pay & Request Role</Link>
+          Pay & Request Role
         </button>
       </form>
 
       {/* Open the modal using document.getElementById('ID').showModal() method */}
 
-      <dialog id="my_modal_1" className="modal">
-        <div className="modal-box">
-          <h3 className="font-bold text-lg">Pay for Charity </h3>
-          <PymentElements></PymentElements>
-          <div className="modal-action">
-            <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
-              <button className="btn">Close</button>
-            </form>
+      {isModalOpen && (
+        <dialog id="my_modal_1" className="modal">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Pay for Charity </h3>
+            <PymentElements roleRequestData={roleRequestData}></PymentElements>
+            <div className="modal-action">
+              <form method="dialog">
+                {/* if there is a button in form, it will close the modal */}
+                <button onClick={() => setIsModelOpen(false)} className="btn">
+                  Close
+                </button>
+              </form>
+            </div>
           </div>
-        </div>
-      </dialog>
+        </dialog>
+      )}
     </div>
   );
 };

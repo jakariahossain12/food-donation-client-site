@@ -6,10 +6,10 @@ import CheckoutForm from "./CheckoutForm";
 const stripePromise = loadStripe(
   "pk_test_51Re6W0KHEkXvw65FCKsnPFet2aLc5998AoE9INx55D3rI2z8RNpqTV2cSLqNdRdRi77LHnGngevV78OZSHerYoRE009exgQfPL"
 );
-const PymentElements = () => {
+const PymentElements = ({ roleRequestData }) => {
   return (
     <Elements stripe={stripePromise}>
-      <CheckoutForm />
+      <CheckoutForm roleRequestData={roleRequestData} />
     </Elements>
   );
 };

@@ -1,16 +1,32 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import React, { useState } from "react";
-import './CheckoutForm.css'
+import "./CheckoutForm.css";
 
-const CheckoutForm = () => {
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useMutation } from "@tanstack/react-query";
+const CheckoutForm = ({ roleRequestData }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [paymentProcess, setPaymentProcess] = useState(false);
 
+  const axiosSecure = useAxiosSecure();
+
+
+  // post save payment data with Mutations
+
+  const mutation = useMutation({
+    mutationFn: async (userData) => {
+      const res = await axiosSecure.post(`/save-payment`,userData
+      );
+      console.log(res.data);
+      return res.data;
+    },
+  });
+
   const handleSubmit = async (event) => {
     // Block native form submission.
     event.preventDefault();
-setPaymentProcess(true)
+    setPaymentProcess(true);
     if (!stripe || !elements) {
       // Stripe.js has not loaded yet. Make sure to disable
       // form submission until Stripe.js has loaded.
@@ -34,8 +50,49 @@ setPaymentProcess(true)
 
     if (error) {
       console.log("[error]", error);
+      return;
     } else {
       console.log("[PaymentMethod]", paymentMethod);
+    }
+
+    try {
+      const amount = 25 * 100;
+      const res = await axiosSecure.post("/create-payment-intent", { amount });
+
+      const clientSecret = res.data.clientSecret;
+
+      // 3. Confirm payment using clientSecret and paymentMethod.id
+      const { error, paymentIntent } = await stripe.confirmCardPayment(
+        clientSecret,
+        {
+          payment_method: paymentMethod.id,
+        }
+      );
+
+      if (error) {
+        console.error("Payment failed:", error.message);
+        alert(error.message);
+      } else if (paymentIntent.status === "succeeded") {
+        console.log("Payment succeeded:", paymentIntent);
+       
+        // You can now store paymentIntent or update DB
+
+        const paymentData = {
+          ...roleRequestData,
+          amount: paymentIntent.amount,
+          currency: paymentIntent.currency,
+          transactionId: paymentIntent.id,
+          paymentMethod: paymentMethod.id,
+          created: paymentIntent.created,
+        };
+
+        console.log(paymentData);
+        mutation.mutate(paymentData)
+
+        alert("Payment Successful!");
+      }
+    } catch (error) {
+      console.log(error.message);
     }
   };
   return (
