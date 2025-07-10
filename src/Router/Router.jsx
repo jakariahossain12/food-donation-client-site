@@ -11,6 +11,7 @@ import MyProfile from "../Pages/MyProfile/MyProfile";
 import RequestCharityRole from "../Pages/Dashboard/User/RequestCharityRole";
 import PymentElements from "../Pages/Dashboard/User/PymentElements";
 import CharityTransactionHistory from "../Pages/Dashboard/User/CharityTransactionHistory";
+import AllCharityRequests from "../Pages/Dashboard/Admin/AllCharityRequests";
  export const router = createBrowserRouter([
    {
      path: "/",
@@ -44,6 +45,10 @@ import CharityTransactionHistory from "../Pages/Dashboard/User/CharityTransactio
        {
          path: "transaction-history",
          element: <CharityTransactionHistory></CharityTransactionHistory>,
+       },
+       {
+         path: "manage-role-requests",
+         element: <AllCharityRequests></AllCharityRequests>,
        },
      ],
    },

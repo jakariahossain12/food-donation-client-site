@@ -29,6 +29,7 @@ const CharityTransactionHistory = () => {
   const {
     isLoading,
     error,
+    refetch,
     data: transactionData,
   } = useQuery({
     queryKey: ["payment", user?.email],
@@ -41,6 +42,7 @@ const CharityTransactionHistory = () => {
     },
   });
 
+  refetch();
   if (isLoading || loading) {
     return <Loading></Loading>;
   }

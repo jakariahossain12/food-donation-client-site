@@ -5,6 +5,7 @@ import "./CheckoutForm.css";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 const CheckoutForm = ({ roleRequestData }) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -91,7 +92,7 @@ const CheckoutForm = ({ roleRequestData }) => {
         console.log(paymentData);
         mutation.mutate(paymentData)
 
-        alert("Payment Successful!");
+        toast.success("Payment Successful!");
         navigate("/dashboard/transaction-history");
       }
     } catch (error) {

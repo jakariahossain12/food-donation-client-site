@@ -18,6 +18,7 @@ import {
 } from "react-icons/md";
 
 import './dashboard.css'
+import { ToastContainer } from "react-toastify";
 
 const Dashboard = () => {
   return (
@@ -194,6 +195,7 @@ const Dashboard = () => {
           </li>
         </ul>
       </div>
+      <ToastContainer/>
     </div>
   );
 };

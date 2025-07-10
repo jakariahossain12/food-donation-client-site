@@ -37,12 +37,14 @@ const RequestCharityRole = () => {
   } = useQuery({
     queryKey: ["payment", user?.email],
     queryFn: async () => {
+      console.log(user?.email);
       const res = await axiosSecure.get(
         `/charity-request-status?email=${user?.email}`
       );
       if (res?.data?.status === "Pending" || res?.data?.status === "Approved") {
         setHasRequest(true);
       }
+      console.log(res.data);
       return res.data;
     },
   });
@@ -50,16 +52,13 @@ const RequestCharityRole = () => {
   if (isLoading || loading) {
     return <Loading></Loading>;
   }
+  console.log(user?.email);
 
   if (error) {
-    toast.error(error.message)
+    toast.error(error.message);
   }
 
-
-
   const onSubmit = async (data) => {
-    
-
     // Save role request
     const roleRequest = {
       email: user?.email,
@@ -145,7 +144,6 @@ const RequestCharityRole = () => {
         <button
           type="submit"
           className="w-full mt-4 bg-[#00705c] hover:bg-[#005e4e] text-white py-2 rounded-md font-semibold"
-          
         >
           Pay & Request Role
         </button>
