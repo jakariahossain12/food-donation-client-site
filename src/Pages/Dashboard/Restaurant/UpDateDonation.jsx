@@ -1,30 +1,61 @@
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth"; // your auth hook
 import { uploadToImgbb } from "../../../Utils/Utils";
-import { useMutation } from "@tanstack/react-query";
+import {  useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
+import { useNavigate, useParams } from "react-router";
+import Loading from "../../../Component/Loading/Loading";
 
 const UpDateDonation = () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const { id } = useParams();
+  const navigate = useNavigate();
+  console.log(id);
+
+  const queryClient = useQueryClient();
+  const {
+    isLoading,
+    data: donation = [],refetch
+  } = useQuery({
+    queryKey: ["Donation", id],
+    enabled: !!id,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/donation?id=${id}`);
+      console.log(res.data);
+      return res.data;
+    },
+  });
+  refetch()
+
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm();
   const [imagePreview, setImagePreview] = useState(null);
 
   const mutation = useMutation({
     mutationFn: async (donationData) => {
-      const res = await axiosSecure.post("/add-donation", donationData);
+      const res = await axiosSecure.put(
+        `/upDate-donation/${donation._id}`,
+        donationData
+      );
+      queryClient.invalidateQueries(["myDonation"]);
       console.log(res.data);
-      toast.success(" donation post successfully");
+      toast.success(" donation Update successfully");
       return res.data;
     },
   });
+  useEffect(() => {
+    setImagePreview(donation?.image);
+  }, [donation]);
+
+  if (isLoading || loading) {
+    return <Loading></Loading>;
+  }
 
   const handleImage = async (image) => {
     const imageUrl = await uploadToImgbb(image);
@@ -35,10 +66,11 @@ const UpDateDonation = () => {
   const onSubmit = async (data) => {
     data.image = imagePreview;
     data.status = "Pending";
+    data.upDate = new Date().toISOString();
     console.log(data);
     mutation.mutate(data);
-    setImagePreview(null);
-    reset();
+    
+    navigate("/dashboard/my-donations");
   };
 
   return (
@@ -55,6 +87,7 @@ const UpDateDonation = () => {
           </label>
           <input
             {...register("title", { required: true })}
+            defaultValue={donation?.title}
             type="text"
             placeholder="e.g. Surplus Pastries"
             className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00705c]"
@@ -71,6 +104,7 @@ const UpDateDonation = () => {
           </label>
           <input
             {...register("type", { required: true })}
+            defaultValue={donation?.type}
             type="text"
             placeholder="e.g. Bakery, Produce"
             className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00705c]"
@@ -87,6 +121,7 @@ const UpDateDonation = () => {
           </label>
           <input
             {...register("quantity", { required: true })}
+            defaultValue={donation?.quantity}
             type="text"
             placeholder="e.g. 10kg or 20 portions"
             className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00705c]"
@@ -104,6 +139,7 @@ const UpDateDonation = () => {
               {...register("pickupStart", { required: true })}
               type="time"
               name="pickupStart"
+              defaultValue={donation?.pickupStart}
               required
             />
             <span>to</span>
@@ -111,6 +147,7 @@ const UpDateDonation = () => {
               {...register("pickupEnd", { required: true })}
               type="time"
               name="pickupEnd"
+              defaultValue={donation?.pickupEnd}
               required
             />
           </div>
@@ -132,6 +169,7 @@ const UpDateDonation = () => {
             <input
               value={user?.displayName || ""}
               {...register("name", { required: true })}
+              defaultValue={donation?.name}
               readOnly
               className="w-full mt-1 px-4 py-2 border bg-gray-100 rounded-lg"
             />
@@ -157,6 +195,7 @@ const UpDateDonation = () => {
           </label>
           <input
             {...register("location", { required: true })}
+            defaultValue={donation?.location}
             type="text"
             placeholder="e.g. 123 Main St or 24.9207, 91.8312"
             className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00705c]"
@@ -172,7 +211,6 @@ const UpDateDonation = () => {
             Upload Image
           </label>
           <input
-            required
             type="file"
             accept="image/*"
             className="w-full text-sm file:py-2 file:px-4 file:border file:rounded-lg file:bg-[#00705c] file:text-white file:cursor-pointer"

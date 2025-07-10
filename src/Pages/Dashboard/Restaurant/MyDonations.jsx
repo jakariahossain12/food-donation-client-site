@@ -17,10 +17,11 @@ const MyDonations = () => {
     queryKey: ["myDonation", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/all-donation?email=${user?.email}`);
+      const res = await axiosSecure.get(`/my-donation?email=${user?.email}`);
       return res.data;
     },
   });
+  
 
   const mutation = useMutation({
     mutationFn: async (id) => {

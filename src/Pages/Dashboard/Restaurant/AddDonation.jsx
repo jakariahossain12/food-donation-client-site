@@ -35,6 +35,7 @@ const AddDonation = () => {
   const onSubmit = async (data) => {
     data.image = imagePreview;
     data.status = "Pending";
+    data.create = new Date().toISOString();
       console.log(data);
       mutation.mutate(data)
       setImagePreview(null)
