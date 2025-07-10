@@ -13,6 +13,7 @@ import PymentElements from "../Pages/Dashboard/User/PymentElements";
 import CharityTransactionHistory from "../Pages/Dashboard/User/CharityTransactionHistory";
 import AllCharityRequests from "../Pages/Dashboard/Admin/AllCharityRequests";
 import AddDonation from "../Pages/Dashboard/Restaurant/AddDonation";
+import MyDonations from "../Pages/Dashboard/Restaurant/MyDonations";
  export const router = createBrowserRouter([
    {
      path: "/",
@@ -54,6 +55,10 @@ import AddDonation from "../Pages/Dashboard/Restaurant/AddDonation";
        {
          path: "add-donation",
          element: <AddDonation></AddDonation>,
+       },
+       {
+         path: "my-donations",
+         element: <MyDonations></MyDonations>,
        },
      ],
    },
