@@ -14,7 +14,9 @@ import {
   MdAssignment,
   MdLocalShipping,
   MdCardGiftcard,
- 
+  MdAddBox,
+  MdInventory,
+  MdMoveToInbox,
 } from "react-icons/md";
 
 import './dashboard.css'
