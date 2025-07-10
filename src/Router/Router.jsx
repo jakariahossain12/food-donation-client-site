@@ -10,6 +10,7 @@ import AllDonation from "../Pages/All-Donation/AllDonation";
 import MyProfile from "../Pages/MyProfile/MyProfile";
 import RequestCharityRole from "../Pages/Dashboard/User/RequestCharityRole";
 import PymentElements from "../Pages/Dashboard/User/PymentElements";
+import CharityTransactionHistory from "../Pages/Dashboard/User/CharityTransactionHistory";
  export const router = createBrowserRouter([
    {
      path: "/",
@@ -31,7 +32,7 @@ import PymentElements from "../Pages/Dashboard/User/PymentElements";
      path: "dashboard",
      Component: Dashboard,
      children: [
-       { index: true,path:'my-profile', element: <MyProfile></MyProfile> },
+       { index: true, path: "my-profile", element: <MyProfile></MyProfile> },
        {
          path: "request-charity",
          element: <RequestCharityRole></RequestCharityRole>,
@@ -39,6 +40,10 @@ import PymentElements from "../Pages/Dashboard/User/PymentElements";
        {
          path: "payment",
          element: <PymentElements></PymentElements>,
+       },
+       {
+         path: "transaction-history",
+         element: <CharityTransactionHistory></CharityTransactionHistory>,
        },
      ],
    },

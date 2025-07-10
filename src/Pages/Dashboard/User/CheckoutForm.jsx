@@ -4,12 +4,14 @@ import "./CheckoutForm.css";
 
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router";
 const CheckoutForm = ({ roleRequestData }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [paymentProcess, setPaymentProcess] = useState(false);
 
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
 
   // post save payment data with Mutations
@@ -79,7 +81,7 @@ const CheckoutForm = ({ roleRequestData }) => {
 
         const paymentData = {
           ...roleRequestData,
-          amount: paymentIntent.amount,
+          amount: 25,
           currency: paymentIntent.currency,
           transactionId: paymentIntent.id,
           paymentMethod: paymentMethod.id,
@@ -90,6 +92,7 @@ const CheckoutForm = ({ roleRequestData }) => {
         mutation.mutate(paymentData)
 
         alert("Payment Successful!");
+        navigate("/dashboard/transaction-history");
       }
     } catch (error) {
       console.log(error.message);

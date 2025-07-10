@@ -1,5 +1,5 @@
 // your custom hook
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import PymentElements from "./PymentElements";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -14,6 +14,13 @@ const RequestCharityRole = () => {
   const [hasRequest, setHasRequest] = useState(false);
   const [isModalOpen, setIsModelOpen] = useState(false);
   const [roleRequestData, setRoleRequestData] = useState({});
+  const modalRef = useRef();
+
+  useEffect(() => {
+    if (isModalOpen && modalRef.current) {
+      modalRef.current.showModal();
+    }
+  }, [isModalOpen]);
 
   const {
     register,
@@ -51,7 +58,7 @@ const RequestCharityRole = () => {
 
 
   const onSubmit = async (data) => {
-    setIsModelOpen(true);
+    
 
     // Save role request
     const roleRequest = {
@@ -63,6 +70,7 @@ const RequestCharityRole = () => {
       date: new Date(),
     };
     setRoleRequestData(roleRequest);
+    setIsModelOpen(true);
   };
 
   if (hasRequest) {
@@ -137,7 +145,7 @@ const RequestCharityRole = () => {
         <button
           type="submit"
           className="w-full mt-4 bg-[#00705c] hover:bg-[#005e4e] text-white py-2 rounded-md font-semibold"
-          onClick={() => document.getElementById("my_modal_1").showModal()}
+          
         >
           Pay & Request Role
         </button>
@@ -146,7 +154,7 @@ const RequestCharityRole = () => {
       {/* Open the modal using document.getElementById('ID').showModal() method */}
 
       {isModalOpen && (
-        <dialog id="my_modal_1" className="modal">
+        <dialog ref={modalRef} id="my_modal_1" className="modal">
           <div className="modal-box">
             <h3 className="font-bold text-lg">Pay for Charity </h3>
             <PymentElements roleRequestData={roleRequestData}></PymentElements>
