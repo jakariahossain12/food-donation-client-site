@@ -193,9 +193,35 @@ const Dashboard = () => {
               <MdHistory /> Transaction History
             </NavLink>
           </li>
+          {/* Restaurant  */}
+          <li>Restaurant </li>
+          <li>
+            <NavLink
+              to={"/dashboard/add-donation"}
+              className="flex items-center gap-2"
+            >
+              <MdAddBox /> Add Donation
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={"/dashboard/my-donations"}
+              className="flex items-center gap-2"
+            >
+              <MdInventory /> My Donations
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={"/dashboard/requested-donations"}
+              className="flex items-center gap-2"
+            >
+              <MdMoveToInbox /> Requested Donations
+            </NavLink>
+          </li>
         </ul>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 };
