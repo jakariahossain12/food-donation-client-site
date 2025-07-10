@@ -6,6 +6,15 @@ import {
   MdFavorite,
   MdRateReview,
   MdHistory,
+  MdDashboard,
+  MdPeople,
+  MdAssignmentInd,
+  MdListAlt,
+  MdStar,
+  MdAssignment,
+  MdLocalShipping,
+  MdCardGiftcard,
+ 
 } from "react-icons/md";
 
 import './dashboard.css'
@@ -97,6 +106,82 @@ const Dashboard = () => {
               className="flex items-center gap-2"
             >
               <MdRateReview /> My Reviews
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={"/dashboard/transaction-history"}
+              className="flex items-center gap-2"
+            >
+              <MdHistory /> Transaction History
+            </NavLink>
+          </li>
+          {/* admin */}
+          <li>admin</li>
+          <li>
+            <NavLink
+              to={"/dashboard/manage-donations"}
+              className="flex items-center gap-2"
+            >
+              <MdDashboard /> Manage Donations
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={"/dashboard/manage-users"}
+              className="flex items-center gap-2"
+            >
+              <MdPeople /> Manage Users
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={"/dashboard/manage-role-requests"}
+              className="flex items-center gap-2"
+            >
+              <MdAssignmentInd /> Manage Role Requests
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={"/dashboard/manage-requests"}
+              className="flex items-center gap-2"
+            >
+              <MdListAlt /> Manage Requests
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={"/dashboard/feature-donations"}
+              className="flex items-center gap-2"
+            >
+              <MdStar /> Feature Donations
+            </NavLink>
+          </li>
+          {/* charity */}
+          <li>charity</li>
+          <li>
+            <NavLink
+              to={"/dashboard/my-requests"}
+              className="flex items-center gap-2"
+            >
+              <MdAssignment /> My Requests
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={"/dashboard/my-pickups"}
+              className="flex items-center gap-2"
+            >
+              <MdLocalShipping /> My Pickups
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={"/dashboard/received-donations"}
+              className="flex items-center gap-2"
+            >
+              <MdCardGiftcard /> Received Donations
             </NavLink>
           </li>
           <li>
