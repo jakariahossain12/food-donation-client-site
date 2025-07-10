@@ -14,6 +14,7 @@ import CharityTransactionHistory from "../Pages/Dashboard/User/CharityTransactio
 import AllCharityRequests from "../Pages/Dashboard/Admin/AllCharityRequests";
 import AddDonation from "../Pages/Dashboard/Restaurant/AddDonation";
 import MyDonations from "../Pages/Dashboard/Restaurant/MyDonations";
+import UpDateDonation from "../Pages/Dashboard/Restaurant/UpDateDonation";
  export const router = createBrowserRouter([
    {
      path: "/",
@@ -59,6 +60,10 @@ import MyDonations from "../Pages/Dashboard/Restaurant/MyDonations";
        {
          path: "my-donations",
          element: <MyDonations></MyDonations>,
+       },
+       {
+         path: "upDate-donations/:id",
+         element: <UpDateDonation></UpDateDonation>,
        },
      ],
    },

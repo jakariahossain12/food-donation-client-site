@@ -5,6 +5,7 @@ import {
   FaTimesCircle,
   FaHourglassHalf,
 } from "react-icons/fa";
+import { Link } from "react-router";
 
 const statusColors = {
   Verified: "text-green-600",
@@ -68,10 +69,13 @@ const MyDonationCard = ({ donation, handleDelete }) => {
 
         <div className="flex justify-end gap-2 mt-4">
           {status !== "Rejected" && (
-            <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded-md flex items-center gap-2">
+            <Link
+              to={`/dashboard/upDate-donations/${_id}`}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded-md flex items-center gap-2"
+            >
               <FaEdit />
               Update
-            </button>
+            </Link>
           )}
           <button
             onClick={() => handleDelete(_id)}
