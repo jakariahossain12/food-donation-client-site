@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import {
   createUserWithEmailAndPassword,
+  deleteUser,
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -46,6 +47,11 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
+  const deleteUserFirebase = () => {
+    setLoading(true)
+    return deleteUser(auth.currentUser)
+  }
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
@@ -72,6 +78,7 @@ const AuthProvider = ({ children }) => {
     userLogin,
     userUpdateProfile,
     userSignOut,
+    deleteUserFirebase,
     userSignUpWithGoogle,
   };
 

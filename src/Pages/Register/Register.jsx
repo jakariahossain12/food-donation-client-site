@@ -16,7 +16,7 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const { userSignUp, userUpdateProfile, user } = useAuth();
+  const { userSignUp, userUpdateProfile } = useAuth();
  
   const [imageUrl, setImageUrl] = useState(null);
 
@@ -65,6 +65,7 @@ const Register = () => {
         const userData = {
           name,
           email,
+          uid:res?.user?.uid,
           imageUrl,
           role:'user',
           create_at: new Date().toISOString(),

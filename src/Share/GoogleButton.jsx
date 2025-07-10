@@ -30,6 +30,7 @@ const GoogleButton = () => {
           name: res.user.displayName,
           email: res.user.email,
           imageUrl: res.user.photoURL,
+          uid: res?.user?.uid,
           role: "user",
           create_at: new Date().toISOString(),
           last_login: new Date().toISOString(),
