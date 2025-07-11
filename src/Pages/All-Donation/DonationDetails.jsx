@@ -1,24 +1,28 @@
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useState } from "react";
-import { toast } from "react-toastify";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import { useParams } from "react-router";
-import Rating from "react-rating-stars-component"; // Optional star rating lib
+import { toast } from "react-toastify";
+import { FaHeart } from "react-icons/fa";
 
 const DonationDetails = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [reviewModal, setReviewModal] = useState(false);
   const [description, setDescription] = useState("");
   const [pickupTime, setPickupTime] = useState("");
-  const [reviewDescription, setReviewDescription] = useState("");
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(5);
+  const [reviewText, setReviewText] = useState("");
 
-  const { data: donation, isLoading } = useQuery({
+  const {
+    data: donation = {},
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["donationDetails", id],
     queryFn: async () => {
       const res = await axiosSecure.get(`/donation?id=${id}`);
@@ -26,14 +30,32 @@ const DonationDetails = () => {
     },
   });
 
-  const { data: reviews = [], refetch: refetchReviews } = useQuery({
-    queryKey: ["reviews", id],
-    queryFn: async () => {
-      const res = await axiosSecure.get(`/reviews?donationId=${id}`);
+  // Save to favorites mutation
+  const { mutate, isPending } = useMutation({
+    mutationFn: async () => {
+      const favorite = {
+        donationId: id,
+        userEmail: user?.email,
+        savedAt: new Date(),
+      };
+      const res = await axiosSecure.post("/favorites", favorite);
       return res.data;
     },
-    enabled: !!id,
+    onSuccess: () => {
+      toast.success("Saved to favorites!");
+    },
+    onError: () => {
+      toast.error("You’ve already saved this donation.");
+    },
   });
+
+  const handleSave = () => {
+    if (!user) {
+      toast.warning("Please log in to save donations.");
+      return;
+    }
+    mutate();
+  };
 
   const handleRequestSubmit = async () => {
     const requestData = {
@@ -59,29 +81,28 @@ const DonationDetails = () => {
 
   const handleAddReview = async () => {
     const reviewData = {
-      donationId: id,
-      reviewer: user.displayName,
+      donationId: donation._id,
+      reviewerName: user.displayName,
       reviewerEmail: user.email,
-      description: reviewDescription,
       rating,
-      createdAt: new Date(),
+      reviewText,
+      date: new Date(),
     };
+
     try {
-      await axiosSecure.post("/reviews", reviewData);
-      toast.success("Review added!");
-      setIsReviewModalOpen(false);
-      setReviewDescription("");
-      setRating(0);
-      refetchReviews();
+      await axiosSecure.post("/donation-review", reviewData);
+      toast.success("Review submitted!");
+      setReviewModal(false);
+      refetch();
     } catch (err) {
-      toast.error("Failed to add review");
+      toast.error("Failed to submit review");
     }
   };
 
   if (isLoading) return <div className="text-center py-10">Loading...</div>;
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md mt-6 z-50">
+    <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md mt-6 relative z-10">
       <img
         src={donation.image}
         alt={donation.title}
@@ -90,18 +111,16 @@ const DonationDetails = () => {
       <h2 className="text-3xl font-bold text-[#00705c] mb-2">
         {donation.title}
       </h2>
-
-      {/* Donation info */}
-      <p className="text-gray-700 mb-2">
+      <p className="text-gray-700">
         <strong>Food Type:</strong> {donation.type}
       </p>
-      <p className="text-gray-700 mb-2">
+      <p className="text-gray-700">
         <strong>Restaurant:</strong> {donation.name} - {donation.location}
       </p>
-      <p className="text-gray-700 mb-2">
+      <p className="text-gray-700">
         <strong>Status:</strong> {donation.status}
       </p>
-      <p className="text-gray-700 mb-2">
+      <p className="text-gray-700">
         <strong>Quantity:</strong> {donation.quantity}
       </p>
       <p className="text-gray-700 mb-4">
@@ -109,54 +128,98 @@ const DonationDetails = () => {
         {donation.pickupEnd}
       </p>
 
-      <div className="flex gap-4">
+      <div className="flex gap-4 mb-6">
         <button
-          onClick={() => toast.success("Saved to favorites!")}
-          className="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-4 py-2 rounded"
+          onClick={handleSave}
+          disabled={isPending}
+          className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2 rounded-md flex items-center gap-2 transition duration-300"
         >
-          Save to Favorites
+          <FaHeart />
+          {isPending ? "Saving..." : "Save to Favorites"}
         </button>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="bg-primary hover:bg-[#005c4a] text-white px-4 py-2 rounded"
+          className="btn btn-success"
         >
           Request Donation
         </button>
         <button
-          onClick={() => setIsReviewModalOpen(true)}
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+          onClick={() => setReviewModal(true)}
+          className="btn btn-warning"
         >
           Add Review
         </button>
       </div>
 
-      {/* Review Section */}
-      <div className="mt-8">
-        <h3 className="text-xl font-bold text-[#00705c] mb-2">📝 Reviews</h3>
-        {reviews.length === 0 ? (
-          <p className="text-gray-500 italic">
-            No reviews yet. Be the first to review!
-          </p>
-        ) : (
+      {/* ⭐ Review Section */}
+      <div className="mt-6">
+        <h3 className="text-xl font-semibold mb-2 text-[#00705c]">
+          📝 Reviews
+        </h3>
+        {donation.reviews?.length > 0 ? (
           <div className="space-y-4">
-            {reviews.map((rev) => (
-              <div key={rev._id} className="border rounded-lg p-4 shadow-sm">
-                <p className="font-semibold text-[#00705c]">{rev.reviewer}</p>
-                <p className="text-sm text-gray-600">{rev.description}</p>
-                <p className="text-yellow-500 text-sm">⭐ {rev.rating} / 5</p>
+            {donation.reviews.map((review, index) => (
+              <div key={index} className="border p-3 rounded-md shadow">
+                <p className="font-bold">{review.reviewerName}</p>
+                <p className="text-sm text-gray-600">
+                  Rating: {review.rating}/5
+                </p>
+                <p>{review.reviewText}</p>
               </div>
             ))}
           </div>
+        ) : (
+          <p className="text-gray-500">No reviews yet for this donation.</p>
         )}
       </div>
 
-      {/* Request Modal */}
+      {/* 🟡 DaisyUI Review Modal */}
+      {reviewModal && (
+        <dialog id="review_modal" className="modal modal-open">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg text-[#00705c]">
+              Add Your Review
+            </h3>
+            <textarea
+              className="textarea textarea-bordered w-full mt-3"
+              placeholder="Write your review"
+              value={reviewText}
+              onChange={(e) => setReviewText(e.target.value)}
+            ></textarea>
+            <input
+              type="number"
+              min={1}
+              max={5}
+              value={rating}
+              onChange={(e) => setRating(e.target.value)}
+              className="input input-bordered w-full mt-3"
+              placeholder="Rating (1 to 5)"
+            />
+            <div className="modal-action">
+              <form method="dialog">
+                <button
+                  type="button"
+                  className="btn btn-success mr-2"
+                  onClick={handleAddReview}
+                >
+                  Submit
+                </button>
+                <button className="btn" onClick={() => setReviewModal(false)}>
+                  Close
+                </button>
+              </form>
+            </div>
+          </div>
+        </dialog>
+      )}
+
+      {/* 🌿 DaisyUI Donation Request Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
-          <div className="bg-white rounded-lg p-6 space-y-4 shadow-lg relative w-full max-w-lg">
-            <h2 className="text-xl font-bold text-[#00705c]">
+        <dialog id="request_modal" className="modal modal-open">
+          <div className="modal-box space-y-3">
+            <h3 className="text-xl font-bold text-[#00705c]">
               Request Donation
-            </h2>
+            </h3>
             <p>
               <strong>Donation:</strong> {donation.title}
             </p>
@@ -169,85 +232,34 @@ const DonationDetails = () => {
             <p>
               <strong>Your Email:</strong> {user.email}
             </p>
-
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Why do you need this donation?"
-              className="w-full border px-3 py-2 rounded-md"
+              className="textarea textarea-bordered w-full"
               rows="3"
             />
             <input
               type="time"
               value={pickupTime}
               onChange={(e) => setPickupTime(e.target.value)}
-              className="w-full border px-3 py-2 rounded-md"
+              className="input input-bordered w-full"
             />
-
-            <div className="flex justify-between mt-4">
-              <button
-                onClick={handleRequestSubmit}
-                className="bg-[#00705c] text-white px-4 py-2 rounded hover:bg-[#005c4a]"
-              >
-                Submit Request
-              </button>
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="text-gray-500 hover:underline"
-              >
-                Cancel
-              </button>
+            <div className="modal-action">
+              <form method="dialog">
+                <button
+                  onClick={handleRequestSubmit}
+                  className="btn btn-primary"
+                >
+                  Submit
+                </button>
+                <button className="btn" onClick={() => setIsModalOpen(false)}>
+                  Cancel
+                </button>
+              </form>
             </div>
           </div>
-        </div>
-      )}
-
-      {/* Review Modal */}
-      {isReviewModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
-          <div className="bg-white rounded-lg p-6 space-y-4 shadow-lg relative w-full max-w-lg">
-            <h2 className="text-xl font-bold text-[#00705c]">Add Review</h2>
-
-            <p>
-              <strong>Your Name:</strong> {user.displayName}
-            </p>
-
-            <textarea
-              value={reviewDescription}
-              onChange={(e) => setReviewDescription(e.target.value)}
-              placeholder="Your review..."
-              className="w-full border px-3 py-2 rounded-md"
-              rows="3"
-            />
-
-            <label className="block text-sm font-medium text-gray-700">
-              Rating (1–5):
-            </label>
-            <input
-              type="number"
-              min={1}
-              max={5}
-              value={rating}
-              onChange={(e) => setRating(e.target.value)}
-              className="w-full border px-3 py-2 rounded-md"
-            />
-
-            <div className="flex justify-between mt-4">
-              <button
-                onClick={handleAddReview}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-              >
-                Submit Review
-              </button>
-              <button
-                onClick={() => setIsReviewModalOpen(false)}
-                className="text-gray-500 hover:underline"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
+        </dialog>
       )}
     </div>
   );
