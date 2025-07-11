@@ -21,7 +21,6 @@ const DonationDetails = () => {
   const {
     data: donation = {},
     isLoading,
-    refetch,
   } = useQuery({
     queryKey: ["donationDetails", id],
     queryFn: async () => {
@@ -29,6 +28,21 @@ const DonationDetails = () => {
       return res.data;
     },
   });
+
+
+   const {
+     data: reviews = {},
+     refetch,
+   } = useQuery({
+     queryKey: ["review", id],
+     queryFn: async () => {
+       const res = await axiosSecure.get(`/review?id=${id}`);
+       return res.data;
+     },
+   });
+
+
+
 
   // Save to favorites mutation
   const { mutate, isPending } = useMutation({
@@ -169,9 +183,9 @@ const DonationDetails = () => {
         <h3 className="text-xl font-semibold mb-2 text-[#00705c]">
           📝 Reviews
         </h3>
-        {donation.reviews?.length > 0 ? (
+        {reviews?.length > 0 ? (
           <div className="space-y-4">
-            {donation.reviews.map((review, index) => (
+            {reviews.map((review, index) => (
               <div key={index} className=" p-3 rounded-md shadow">
                 <p className="font-bold">{review.reviewerName}</p>
                 <p className="text-sm text-gray-600">
