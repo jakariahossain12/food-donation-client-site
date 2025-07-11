@@ -15,7 +15,7 @@ const ManageUsersTable = () => {
 
   const {
     isLoading,
-    data: users,
+    data: users = [],
     refetch,
   } = useQuery({
     queryKey: ["users"],

@@ -5,10 +5,12 @@ import { uploadToImgbb } from "../../../Utils/Utils";
 import { useMutation } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 const AddDonation = () => {
     const { user } = useAuth();
-    const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -38,7 +40,8 @@ const AddDonation = () => {
     data.create = new Date().toISOString();
       console.log(data);
       mutation.mutate(data)
-      setImagePreview(null)
+    setImagePreview(null)
+    navigate("/dashboard/my-donations");
       reset()
   };
 

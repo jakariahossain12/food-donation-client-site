@@ -16,6 +16,7 @@ import AddDonation from "../Pages/Dashboard/Restaurant/AddDonation";
 import MyDonations from "../Pages/Dashboard/Restaurant/MyDonations";
 import UpDateDonation from "../Pages/Dashboard/Restaurant/UpDateDonation";
 import ManageUsersTable from "../Pages/Dashboard/Admin/ManageUsersTable";
+import ManageDonations from "../Pages/Dashboard/Admin/ManageDonations";
  export const router = createBrowserRouter([
    {
      path: "/",
@@ -57,6 +58,10 @@ import ManageUsersTable from "../Pages/Dashboard/Admin/ManageUsersTable";
        {
          path: "manage-users",
          element: <ManageUsersTable></ManageUsersTable>,
+       },
+       {
+         path: "manage-donations",
+         element: <ManageDonations></ManageDonations>,
        },
        {
          path: "add-donation",
