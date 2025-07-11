@@ -1,16 +1,8 @@
 import React from "react";
 
 const DonationCard = ({ donation }) => {
-  const {
-    imageUrl,
-    title,
-    restaurantName,
-    location,
-    charityName,
-    status,
-    quantity,
-    _id,
-  } = donation || {};
+  const { image, title, type, location, name, status, quantity, _id } =
+    donation || "";
 
   const statusColor = {
     Available: "text-green-600",
@@ -20,21 +12,23 @@ const DonationCard = ({ donation }) => {
 
   return (
     <div className="bg-white rounded-2xl shadow-md overflow-hidden border hover:shadow-lg transition duration-300">
-      <img src={imageUrl} alt={title} className="w-full h-48 object-cover" />
+      <img src={image} alt={title} className="w-full h-48 object-cover" />
 
       <div className="p-4 space-y-2">
         <h2 className="text-xl font-semibold text-[#00705c]">{title}</h2>
-
         <p className="text-sm text-gray-600">
-          <strong>Restaurant:</strong> {restaurantName}, {location}
+          <strong>food type:</strong> {type}
         </p>
 
         <p className="text-sm text-gray-600">
-          <strong>Charity:</strong> {charityName || "Not assigned"}
+          <strong>Restaurant:</strong> {name}
         </p>
 
         <p className="text-sm text-gray-600">
           <strong>Quantity:</strong> {quantity}
+        </p>
+        <p className="text-sm text-gray-600">
+          <strong>location:</strong> {location}
         </p>
 
         <p
