@@ -57,6 +57,19 @@ const DonationDetails = () => {
     mutate();
   };
 
+  const requestDonation = useMutation({
+    mutationFn: async (requestData) => {
+      const res = await axiosSecure.post("/donation-request", requestData);
+      return res.data;
+    },
+    onSuccess: () => {
+      toast.success("Donation request sent!");
+    },
+    onError: () => {
+      toast.error("You’ve already sent Donation request .");
+    },
+  });
+
   const handleRequestSubmit = async () => {
     const requestData = {
       donationId: donation._id,
@@ -70,14 +83,21 @@ const DonationDetails = () => {
       requestedAt: new Date(),
     };
 
-    try {
-      await axiosSecure.post("/donation-request", requestData);
-      toast.success("Donation request sent!");
-      setIsModalOpen(false);
-    } catch (err) {
-      toast.error("Failed to request donation.");
-    }
+    requestDonation.mutate(requestData);
+    setIsModalOpen(false);
   };
+
+  // add review
+  const donationReview = useMutation({
+    mutationFn: async (reviewData) => {
+      const res = await axiosSecure.post("/donation-review", reviewData);
+      return res.data;
+    },
+    onSuccess: () => {
+      refetch()
+      setReviewModal(false);
+    },
+  });
 
   const handleAddReview = async () => {
     const reviewData = {
@@ -89,14 +109,7 @@ const DonationDetails = () => {
       date: new Date(),
     };
 
-    try {
-      await axiosSecure.post("/donation-review", reviewData);
-      toast.success("Review submitted!");
-      setReviewModal(false);
-      refetch();
-    } catch (err) {
-      toast.error("Failed to submit review");
-    }
+    donationReview.mutate(reviewData);
   };
 
   if (isLoading) return <div className="text-center py-10">Loading...</div>;
@@ -159,10 +172,11 @@ const DonationDetails = () => {
         {donation.reviews?.length > 0 ? (
           <div className="space-y-4">
             {donation.reviews.map((review, index) => (
-              <div key={index} className="border p-3 rounded-md shadow">
+              <div key={index} className=" p-3 rounded-md shadow">
                 <p className="font-bold">{review.reviewerName}</p>
                 <p className="text-sm text-gray-600">
                   Rating: {review.rating}/5
+                 
                 </p>
                 <p>{review.reviewText}</p>
               </div>
