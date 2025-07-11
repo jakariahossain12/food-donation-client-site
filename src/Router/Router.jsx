@@ -17,6 +17,7 @@ import MyDonations from "../Pages/Dashboard/Restaurant/MyDonations";
 import UpDateDonation from "../Pages/Dashboard/Restaurant/UpDateDonation";
 import ManageUsersTable from "../Pages/Dashboard/Admin/ManageUsersTable";
 import ManageDonations from "../Pages/Dashboard/Admin/ManageDonations";
+import DonationDetails from "../Pages/All-Donation/DonationDetails";
  export const router = createBrowserRouter([
    {
      path: "/",
@@ -24,6 +25,7 @@ import ManageDonations from "../Pages/Dashboard/Admin/ManageDonations";
      children: [
        { index: true, Component: Home },
        { path: "donations", Component: AllDonation },
+       { path: "donations/:id", element:<DonationDetails></DonationDetails> },
      ],
    },
    {

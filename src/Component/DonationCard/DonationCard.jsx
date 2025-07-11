@@ -1,11 +1,22 @@
 import React from "react";
+import { Link } from "react-router";
 
 const DonationCard = ({ donation }) => {
-  const { image, title, type, location, name, status, quantity, _id } =
-    donation || "";
+  const {
+    image,
+    title,
+    type,
+    location,
+    name,
+    status,
+    pickupStart,
+    pickupEnd,
+    quantity,
+    _id,
+  } = donation || "";
 
   const statusColor = {
-    Available: "text-green-600",
+    Verified: "text-green-600",
     Requested: "text-yellow-500",
     "Picked Up": "text-gray-500",
   };
@@ -36,16 +47,15 @@ const DonationCard = ({ donation }) => {
             statusColor[status] || "text-gray-700"
           }`}
         >
-          <strong>Status:</strong> {status}
+          <strong className="text-gray-600">Status:</strong> {status}
         </p>
 
         <div className="pt-3 flex justify-end">
-          <button
-            className="bg-secondary hover:bg-yellow-400 text-primary font-semibold py-1.5 px-4 rounded-md "
-            onClick={() => console.log("View details for:", _id)}
-          >
-            Details
-          </button>
+          <Link to={`/donations/${_id}`}>
+            <button className="bg-secondary hover:bg-yellow-400 text-primary font-semibold py-1.5 px-4 rounded-md">
+              Details
+            </button>
+          </Link>
         </div>
       </div>
     </div>
