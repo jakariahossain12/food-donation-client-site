@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import GoogleButton from "../../Share/GoogleButton";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
 import { uploadToImgbb } from "../../Utils/Utils";
 import { useState } from "react";
@@ -19,6 +19,7 @@ const Register = () => {
   const { userSignUp, userUpdateProfile } = useAuth();
  
   const [imageUrl, setImageUrl] = useState(null);
+  const navigate = useNavigate();
 
 // use tanstack query for post data 
   const mutation = useMutation({
@@ -73,6 +74,7 @@ const Register = () => {
         };
         mutation.mutate(userData);
         reset()
+        navigate('/')
       })
       .catch((error) => {
         console.log(error);

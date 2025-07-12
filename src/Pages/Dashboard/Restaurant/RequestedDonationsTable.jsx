@@ -77,7 +77,7 @@ const RequestedDonationsTable = () => {
                   {request.status}
                 </span>
               </td>
-              <td className="flex gap-2">
+              <td className="flex gap-2 items-center justify-center">
                 <button
                   className="btn btn-xs btn-success"
                   disabled={request.status !== "Pending"}

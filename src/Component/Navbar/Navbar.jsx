@@ -8,7 +8,8 @@ import useAuth from "../../hooks/useAuth";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { user } = useAuth();
+  const { user, userSignOut } = useAuth();
+
 
   const link = (
     <>
@@ -28,6 +29,13 @@ const Navbar = () => {
     </>
   ); 
 
+  const handleSignOut = () => {
+    userSignOut()
+      .then(() => {
+      }).catch((error) => {
+      console.log(error);
+    })
+  }
  
 
   return (
@@ -45,9 +53,18 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <ul className="hidden md:flex gap-6 font-medium items-center">
           {link}
-          {
-            user ? <button className="btn bg-primary text-white">Sign Out</button>:<Link to={'/login'} className="btn bg-primary text-white">Login</Link>
-          }
+          {user ? (
+            <button
+              onClick={handleSignOut}
+              className="btn bg-primary text-white"
+            >
+              Sign Out
+            </button>
+          ) : (
+            <Link to={"/login"} className="btn bg-primary text-white">
+              Login
+            </Link>
+          )}
         </ul>
 
         {/* Mobile Menu Button */}
@@ -62,9 +79,21 @@ const Navbar = () => {
       {/* Mobile Dropdown */}
       {isOpen && (
         <div className="md:hidden px-4 pb-4  ">
-          <ul className="space-y-2  w-1/2 right-0 ">{link} {
-            user ? <button className="btn bg-primary text-white">Sign Out</button>:<Link to={'/login'} className="btn bg-primary text-white">Login</Link>
-          }</ul>
+          <ul className="space-y-2  w-1/2 right-0 ">
+            {link}{" "}
+            {user ? (
+              <button
+                onClick={handleSignOut}
+                className="btn bg-primary text-white"
+              >
+                Sign Out
+              </button>
+            ) : (
+              <Link to={"/login"} className="btn bg-primary text-white">
+                Login
+              </Link>
+            )}
+          </ul>
         </div>
       )}
     </nav>
