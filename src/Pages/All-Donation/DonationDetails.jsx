@@ -89,6 +89,8 @@ const DonationDetails = () => {
       donationId: donation._id,
       donationTitle: donation.title,
       restaurantName: donation.name,
+      restaurantEmail: donation.email,
+      type:donation.type,
       charityName: user.displayName,
       charityEmail: user.email,
       description,

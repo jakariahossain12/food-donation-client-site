@@ -18,6 +18,8 @@ import UpDateDonation from "../Pages/Dashboard/Restaurant/UpDateDonation";
 import ManageUsersTable from "../Pages/Dashboard/Admin/ManageUsersTable";
 import ManageDonations from "../Pages/Dashboard/Admin/ManageDonations";
 import DonationDetails from "../Pages/All-Donation/DonationDetails";
+import MyFavorites from "../Pages/Dashboard/User/MyFavorites";
+import RequestedDonationsTable from "../Pages/Dashboard/Restaurant/RequestedDonationsTable";
  export const router = createBrowserRouter([
    {
      path: "/",
@@ -25,7 +27,7 @@ import DonationDetails from "../Pages/All-Donation/DonationDetails";
      children: [
        { index: true, Component: Home },
        { path: "donations", Component: AllDonation },
-       { path: "donations/:id", element:<DonationDetails></DonationDetails> },
+       { path: "donations/:id", element: <DonationDetails></DonationDetails> },
      ],
    },
    {
@@ -54,6 +56,10 @@ import DonationDetails from "../Pages/All-Donation/DonationDetails";
          element: <CharityTransactionHistory></CharityTransactionHistory>,
        },
        {
+         path: "favorites",
+         element: <MyFavorites></MyFavorites>,
+       },
+       {
          path: "manage-role-requests",
          element: <AllCharityRequests></AllCharityRequests>,
        },
@@ -68,6 +74,10 @@ import DonationDetails from "../Pages/All-Donation/DonationDetails";
        {
          path: "add-donation",
          element: <AddDonation></AddDonation>,
+       },
+       {
+         path: "requested-donations",
+         element: <RequestedDonationsTable></RequestedDonationsTable>,
        },
        {
          path: "my-donations",
