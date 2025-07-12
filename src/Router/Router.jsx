@@ -20,6 +20,7 @@ import ManageDonations from "../Pages/Dashboard/Admin/ManageDonations";
 import DonationDetails from "../Pages/All-Donation/DonationDetails";
 import MyFavorites from "../Pages/Dashboard/User/MyFavorites";
 import RequestedDonationsTable from "../Pages/Dashboard/Restaurant/RequestedDonationsTable";
+import MyRequests from "../Pages/Dashboard/Charity/MyRequests";
  export const router = createBrowserRouter([
    {
      path: "/",
@@ -86,6 +87,13 @@ import RequestedDonationsTable from "../Pages/Dashboard/Restaurant/RequestedDona
        {
          path: "upDate-donations/:id",
          element: <UpDateDonation></UpDateDonation>,
+       },
+
+       //  cherity
+
+       {
+         path: "my-requests",
+         element: <MyRequests></MyRequests>,
        },
      ],
    },

@@ -90,6 +90,7 @@ const DonationDetails = () => {
       donationTitle: donation.title,
       restaurantName: donation.name,
       restaurantEmail: donation.email,
+      quantity:donation.quantity,
       type:donation.type,
       charityName: user.displayName,
       charityEmail: user.email,
