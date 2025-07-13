@@ -3,18 +3,25 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Loading from "../../../Component/Loading/Loading";
 
 const RequestedDonationsTable = () => {
-    const axiosSecure = useAxiosSecure();
-    const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const { user, loading } = useAuth();
+ 
 
-  const { data: requests = [], refetch } = useQuery({
+  console.log(user?.email);
+  
+
+  const { data: requests = [], refetch, isLoading } = useQuery({
     queryKey: ["donationRequests"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/donation-requests?email=${user?.email}`);
       return res.data;
     },
   });
+
+  console.log(requests);
 
   const updateStatus = useMutation({
     mutationFn: async ({ id, status }) => {
@@ -30,6 +37,11 @@ const RequestedDonationsTable = () => {
     onError: () => toast.error("Failed to update status"),
   });
 
+  if (loading || isLoading) {
+    return <Loading></Loading>
+  }
+  
+  refetch()
   const handleStatusChange = (id, status) => {
     updateStatus.mutate({ id, status });
   };
@@ -66,11 +78,11 @@ const RequestedDonationsTable = () => {
               <td>{request.pickupTime}</td>
               <td>
                 <span
-                  className={`badge ${
+                  className={`badge  ${
                     request.status === "Accepted"
                       ? "badge-success"
                       : request.status === "Rejected"
-                      ? "badge-error"
+                      ? "badge-error" : request.status==='PickedUp'?'badge-info'
                       : "badge-warning"
                   }`}
                 >

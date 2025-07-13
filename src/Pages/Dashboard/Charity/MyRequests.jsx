@@ -80,6 +80,8 @@ const MyRequests = () => {
                   ? "#22c55e"
                   : req.status === "Rejected"
                   ? "#ef4444"
+                  : req.status === "PickedUp"
+                  ? "#00bafe"
                   : "#facc15",
             }}
           >
@@ -104,6 +106,8 @@ const MyRequests = () => {
                     ? "badge-warning"
                     : req.status === "Accepted"
                     ? "badge-success"
+                    : req.status === "PickedUp"
+                    ? "badge-info"
                     : "badge-error"
                 }`}
               >
@@ -118,9 +122,7 @@ const MyRequests = () => {
             >
               <FaTimesCircle />
               Cancel Request
-                </button>
-                
-                
+            </button>
           </div>
         ))}
       </div>

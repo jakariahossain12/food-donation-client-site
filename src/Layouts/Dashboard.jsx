@@ -181,7 +181,7 @@ const Dashboard = () => {
           </li>
           <li>
             <NavLink
-              to={"/dashboard/received-donations"}
+              to={"/dashboard/my-received-donations"}
               className="flex items-center gap-2"
             >
               <MdCardGiftcard /> Received Donations
