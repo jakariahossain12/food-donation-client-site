@@ -42,13 +42,18 @@ const Navbar = () => {
     <nav className="bg-white shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo + Name */}
-        <Link
-          to="/"
-          className="flex items-center gap-2 text-2xl font-extrabold"
-          style={{ color: "#00705c" }}
-        >
-          FoodShare
-        </Link>
+        <div className="flex gap-1">
+          <div className="bg-yellow-400 w-8 h-8 rounded-full flex items-center justify-center">
+            <div className="bg-green-600 w-5 h-5 rounded-full" />
+          </div>
+          <Link
+            to="/"
+            className="flex items-center gap-2 text-2xl font-extrabold"
+            style={{ color: "#00705c" }}
+          >
+            FoodShare
+          </Link>
+        </div>
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex gap-6 font-medium items-center">
