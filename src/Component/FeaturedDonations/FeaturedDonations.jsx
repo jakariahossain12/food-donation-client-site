@@ -60,10 +60,11 @@ const FeaturedDonations = () => {
                 {donation.restaurant}
               </h3>
               <p className="text-sm text-gray-500">{donation.location}</p>
-
-              <button className="mt-2 w-full bg-yellow-400 hover:bg-yellow-500 transition text-white font-medium py-2 rounded-lg">
-                <Link to={`donations/${donation._id}`}>View Details</Link>
-              </button>
+              <Link to={`donations/${donation._id}`}>
+                <button className="mt-2 w-full bg-yellow-400 hover:bg-yellow-500 transition text-white font-medium py-2 rounded-lg">
+                  View Details
+                </button>
+              </Link>
             </div>
           </div>
         ))}

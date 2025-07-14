@@ -26,6 +26,7 @@ import ManageRequests from "../Pages/Dashboard/Admin/ManageRequests";
 import FeatureDonations from "../Pages/Dashboard/Admin/FeatureDonations";
 import PrivateRoute from "../Private/PrivateRoute";
 import RestaurantRoute from "../Private/RestaurantRoute";
+import MyReviews from "../Pages/Dashboard/User/MyReviews";
 
 export const router = createBrowserRouter([
   {
@@ -82,6 +83,15 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <RequestCharityRole />
+          </PrivateRoute>
+        ),
+      },
+
+      {
+        path: "my-reviews",
+        element: (
+          <PrivateRoute>
+            <MyReviews />
           </PrivateRoute>
         ),
       },

@@ -119,6 +119,9 @@ const DonationDetails = () => {
   const handleAddReview = async () => {
     const reviewData = {
       donationId: donation._id,
+      donationTitle:donation.title,
+      restaurantName: donation.name,
+      restaurantEmail:donation.email,
       reviewerName: user.displayName,
       reviewerEmail: user.email,
       rating,

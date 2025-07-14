@@ -214,14 +214,7 @@ const Dashboard = () => {
               <MdCardGiftcard /> Received Donations
             </NavLink>
           </li>
-          <li>
-            <NavLink
-              to={"/dashboard/transaction-history"}
-              className="flex items-center gap-2"
-            >
-              <MdHistory /> Transaction History
-            </NavLink>
-          </li>
+          
           {/* Restaurant  */}
           <li>Restaurant </li>
 
