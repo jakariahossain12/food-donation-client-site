@@ -4,6 +4,7 @@ import Loading from '../../Component/Loading/Loading';
 import HeroSection from '../../Component/HeroSection/HeroSection';
 import BottomSection from '../../Component/BottomSection/BottomSection';
 import ContactSection from '../../Component/ContactSection/ContactSection';
+import StatsAndFAQ from '../../Component/StatsAndFAQ/StatsAndFAQ';
 
 const Home = () => {
     const { user } = useAuth();
@@ -12,6 +13,7 @@ const Home = () => {
         <div>
             <HeroSection />
             <BottomSection />
+            <StatsAndFAQ/>
             <ContactSection/>
         </div>
     );
