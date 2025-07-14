@@ -63,6 +63,7 @@ const RequestCharityRole = () => {
     const roleRequest = {
       email: user?.email,
       name: user?.displayName,
+      image: user?.photoURL,
       organization: data.organization,
       mission: data.mission,
       status: "Pending",
