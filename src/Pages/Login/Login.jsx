@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import GoogleButton from "../../Share/GoogleButton";
 import useAuth from "../../hooks/useAuth";
 import { useMutation } from "@tanstack/react-query";
@@ -10,6 +10,7 @@ import axios from "axios";
 const Login = () => {
   const { userLogin } = useAuth(); // You can use this to redirect if already logged in
   const navigate = useNavigate();
+  const location = useLocation();
   const {
     register,
     handleSubmit,
@@ -33,7 +34,7 @@ const Login = () => {
     userLogin(email, password)
       .then(() => {
         toast.success("login successfully");
-        navigate("/");
+        navigate(location?.state || "/ ");
         mutation.mutate({email})
       })
       .catch((error) => {
@@ -83,7 +84,7 @@ const Login = () => {
         <GoogleButton></GoogleButton>
         <p>
           You have don't an account Please{" "}
-          <Link className="text-blue-500 font-medium" to={"/register"}>
+          <Link state={location?.state} className="text-blue-500 font-medium" to={"/register"}>
             Sign Up
           </Link>
         </p>

@@ -1,13 +1,14 @@
 import React from 'react';
 import useAuth from '../hooks/useAuth';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
 const GoogleButton = () => {
   const { userSignUpWithGoogle } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   // use tanstack query for post data
   const mutation = useMutation({
@@ -25,7 +26,7 @@ const GoogleButton = () => {
     userSignUpWithGoogle()
       .then((res) => {
         toast.success("account create successfully");
-        navigate("/");
+        navigate(location?.state||"/");
         const userData = {
           name: res.user.displayName,
           email: res.user.email,

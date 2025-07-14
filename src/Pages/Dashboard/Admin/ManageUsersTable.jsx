@@ -10,7 +10,7 @@ import useAuth from "../../../hooks/useAuth";
 const ManageUsersTable = () => {
   const [selectedRole, setSelectedRole] = useState({});
   const axiosSecure = useAxiosSecure();
-  const { loading } = useAuth();
+  const { loading,user } = useAuth();
   
 
   const {
@@ -18,9 +18,9 @@ const ManageUsersTable = () => {
     data: users = [],
     refetch,
   } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["allUsers",user.email],
     queryFn: async () => {
-      const res = await axiosSecure.get("/user");
+      const res = await axiosSecure.get("/all-user");
       console.log(res.data);
       return res.data;
     },

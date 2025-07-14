@@ -25,6 +25,7 @@ const ManageDonations = () => {
       return res.data;
     },
   });
+  console.log(donations);
 
   const updateStatusMutation = useMutation({
     mutationFn: async ({ id, status }) => {
@@ -80,7 +81,7 @@ const ManageDonations = () => {
           </tr>
         </thead>
         <tbody className="text-gray-700">
-          {donations.map((donation) => (
+          {donations?.map((donation) => (
             <tr
               key={donation._id}
               className="border-t hover:bg-gray-50 transition"

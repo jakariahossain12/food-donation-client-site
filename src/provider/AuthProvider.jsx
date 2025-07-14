@@ -56,7 +56,11 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         await currentUser.reload();
-          setUser(currentUser);
+        setUser(currentUser);
+        
+        const token = currentUser.accessToken;
+        
+        localStorage.setItem('token',token)
           
           console.log(currentUser);
 

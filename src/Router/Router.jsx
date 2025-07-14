@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import MainLayout from "../Layouts/MainLayout";
 import Home from "../Pages/Home/Home";
-
 import Register from "../Pages/Register/Register";
 import Login from "../Pages/Login/Login";
 import Dashboard from "../Layouts/Dashboard";
@@ -25,100 +24,205 @@ import MyPickups from "../Pages/Dashboard/Charity/MyPickups";
 import ReceivedDonations from "../Pages/Dashboard/Charity/ReceivedDonations";
 import ManageRequests from "../Pages/Dashboard/Admin/ManageRequests";
 import FeatureDonations from "../Pages/Dashboard/Admin/FeatureDonations";
- export const router = createBrowserRouter([
-   {
-     path: "/",
-     Component: MainLayout,
-     children: [
-       { index: true, Component: Home },
-       { path: "donations", Component: AllDonation },
-       { path: "donations/:id", element: <DonationDetails></DonationDetails> },
-     ],
-   },
-   {
-     path: "register",
-     Component: Register,
-   },
-   {
-     path: "login",
-     Component: Login,
-   },
-   {
-     path: "dashboard",
-     Component: Dashboard,
-     children: [
-       { index: true, path: "my-profile", element: <MyProfile></MyProfile> },
-       {
-         path: "request-charity",
-         element: <RequestCharityRole></RequestCharityRole>,
-       },
-       {
-         path: "payment",
-         element: <PymentElements></PymentElements>,
-       },
-       {
-         path: "transaction-history",
-         element: <CharityTransactionHistory></CharityTransactionHistory>,
-       },
-       {
-         path: "favorites",
-         element: <MyFavorites></MyFavorites>,
-       },
-       {
-         path: "manage-role-requests",
-         element: <AllCharityRequests></AllCharityRequests>,
-       },
-       {
-         path: "manage-users",
-         element: <ManageUsersTable></ManageUsersTable>,
-       },
-       {
-         path: "manage-donations",
-         element: <ManageDonations></ManageDonations>,
-       },
-       {
-         path: "manage-requests",
-         element: <ManageRequests></ManageRequests>,
-       },
-       {
-         path: "feature-donations",
-         element: <FeatureDonations></FeatureDonations>,
-       },
-       {
-         path: "add-donation",
-         element: <AddDonation></AddDonation>,
-       },
-       {
-         path: "requested-donations",
-         element: <RequestedDonationsTable></RequestedDonationsTable>,
-       },
-       {
-         path: "my-donations",
-         element: <MyDonations></MyDonations>,
-       },
-       {
-         path: "upDate-donations/:id",
-         element: <UpDateDonation></UpDateDonation>,
-       },
+import PrivateRoute from "../Private/PrivateRoute";
+import RestaurantRoute from "../Private/RestaurantRoute";
 
-       //  cherity
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    Component: MainLayout,
+    children: [
+      { index: true, Component: Home },
+      {
+        path: "donations",
+        element: (
+          <PrivateRoute>
+            <AllDonation />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "donations/:id",
+        element: (
+          <PrivateRoute>
+            <DonationDetails />
+          </PrivateRoute>
+        ),
+      },
+    ],
+  },
+  {
+    path: "register",
+    Component: Register,
+  },
+  {
+    path: "login",
+    Component: Login,
+  },
+  {
+    path: "dashboard",
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
+    children: [
+      // User
+      {
+        index: true,
+        path: "my-profile",
+        element: (
+          <PrivateRoute>
+            <MyProfile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "request-charity",
+        element: (
+          <PrivateRoute>
+            <RequestCharityRole />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "payment",
+        element: (
+          <PrivateRoute>
+            <PymentElements />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "transaction-history",
+        element: (
+          <PrivateRoute>
+            <CharityTransactionHistory />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "favorites",
+        element: (
+          <PrivateRoute>
+            <MyFavorites />
+          </PrivateRoute>
+        ),
+      },
 
-       {
-         path: "my-requests",
-         element: <MyRequests></MyRequests>,
-       },
-       {
-         path: "my-pickups",
-         element: <MyPickups></MyPickups>,
-       },
-       {
-         path: "my-received-donations",
-         element: <ReceivedDonations></ReceivedDonations>,
-       },
-     ],
-   },
-   {
-     path: "*",
-     Component: NotFound,
-   },
- ]);
+      // Admin
+      {
+        path: "manage-role-requests",
+        element: (
+          <PrivateRoute>
+            <AllCharityRequests />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "manage-users",
+        element: (
+          <PrivateRoute>
+            <ManageUsersTable />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "manage-donations",
+        element: (
+          <PrivateRoute>
+            <ManageDonations />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "manage-requests",
+        element: (
+          <PrivateRoute>
+            <ManageRequests />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "feature-donations",
+        element: (
+          <PrivateRoute>
+            <FeatureDonations />
+          </PrivateRoute>
+        ),
+      },
+
+      // Restaurant
+      {
+        path: "add-donation",
+        element: (
+          <PrivateRoute>
+            <RestaurantRoute>
+              <AddDonation />
+            </RestaurantRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "requested-donations",
+        element: (
+          <PrivateRoute>
+            <RestaurantRoute>
+              <RequestedDonationsTable />
+            </RestaurantRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "my-donations",
+        element: (
+          <PrivateRoute>
+            <RestaurantRoute>
+              <MyDonations />
+            </RestaurantRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "upDate-donations/:id",
+        element: (
+          <PrivateRoute>
+            <RestaurantRoute>
+              <UpDateDonation />
+            </RestaurantRoute>
+          </PrivateRoute>
+        ),
+      },
+
+      // Charity
+      {
+        path: "my-requests",
+        element: (
+          <PrivateRoute>
+            <MyRequests />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "my-pickups",
+        element: (
+          <PrivateRoute>
+            <MyPickups />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "my-received-donations",
+        element: (
+          <PrivateRoute>
+            <ReceivedDonations />
+          </PrivateRoute>
+        ),
+      },
+    ],
+  },
+  {
+    path: "*",
+    Component: NotFound,
+  },
+]);

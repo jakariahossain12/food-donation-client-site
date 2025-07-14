@@ -21,8 +21,32 @@ import {
 
 import './dashboard.css'
 import { ToastContainer } from "react-toastify";
+import useAuth from "../hooks/useAuth";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../Component/Loading/Loading";
 
 const Dashboard = () => {
+
+
+  const { user, loading } = useAuth();
+  const axiosSecure = useAxiosSecure();
+
+  const { data = {}, isLoading } = useQuery({
+    queryKey: ["user", user.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/user?email=${user?.email}`);
+      return res.data;
+    },
+  });
+  if (loading || isLoading) {
+    return <Loading></Loading>;
+  }
+
+
+
+
+
   return (
     <div className="drawer lg:drawer-open">
       <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
@@ -197,30 +221,31 @@ const Dashboard = () => {
           </li>
           {/* Restaurant  */}
           <li>Restaurant </li>
-          <li>
+
+          {data.role === "restaurant" && <li>
             <NavLink
               to={"/dashboard/add-donation"}
               className="flex items-center gap-2"
             >
               <MdAddBox /> Add Donation
             </NavLink>
-          </li>
-          <li>
+          </li>}
+          {data.role === "restaurant" && <li>
             <NavLink
               to={"/dashboard/my-donations"}
               className="flex items-center gap-2"
             >
               <MdInventory /> My Donations
             </NavLink>
-          </li>
-          <li>
+          </li>}
+          {data.role === "restaurant" && <li>
             <NavLink
               to={"/dashboard/requested-donations"}
               className="flex items-center gap-2"
             >
               <MdMoveToInbox /> Requested Donations
             </NavLink>
-          </li>
+          </li>}
         </ul>
       </div>
       <ToastContainer />

@@ -1,13 +1,32 @@
 import { useForm } from "react-hook-form";
-import useAuth from "../../hooks/useAuth";
+
 import { useState } from "react";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../../Component/Loading/Loading";
+import useAuth from "../../hooks/useAuth";
 
 
-const MyProfile = ({ userr, onUpdate }) => {
-  const { name, image, role } = userr || {};
+const MyProfile = () => {
+  
   const [editing, setEditing] = useState(false);
-  const { user } = useAuth();
+  
 
+   const { user, loading } = useAuth();
+   const axiosSecure = useAxiosSecure();
+
+  const { data ={} , isLoading } = useQuery({
+     queryKey: ["user", user.email],
+     queryFn: async () => {
+       const res = await axiosSecure.get(`/user?email=${user?.email}`);
+       console.log("res",res);
+       return res.data;
+     },
+   });
+  console.log(data);
+  console.log(user?.email);
+  
+const { name, image, role } = data ;
   const {
     register,
     handleSubmit,
@@ -20,6 +39,12 @@ const MyProfile = ({ userr, onUpdate }) => {
     },
   });
 
+   if (loading || isLoading) {
+     return <Loading></Loading>;
+   }
+
+
+
   const handleEdit = () => {
     setEditing(true);
   };
@@ -30,9 +55,7 @@ const MyProfile = ({ userr, onUpdate }) => {
   };
 
   const onSubmit = (data) => {
-    if (onUpdate) {
-      onUpdate(data); // you can send this to Firebase or server
-    }
+   console.log(data);
     setEditing(false);
   };
 
