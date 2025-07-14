@@ -92,7 +92,10 @@ const Dashboard = () => {
         <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
         <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content font-bold">
           {/* Sidebar items */}
-          <h1 className="mb-10">
+          <div className="flex gap-1 mb-10">
+            <div className="bg-yellow-400 w-8 h-8 rounded-full flex items-center justify-center">
+              <div className="bg-green-600 w-5 h-5 rounded-full" />
+            </div>
             <Link
               to="/"
               className="flex items-center gap-2 text-2xl font-extrabold"
@@ -100,7 +103,7 @@ const Dashboard = () => {
             >
               FoodShare
             </Link>
-          </h1>
+          </div>
 
           {/* user nav link */}
           <li>
@@ -222,30 +225,36 @@ const Dashboard = () => {
           {/* Restaurant  */}
           <li>Restaurant </li>
 
-          {data.role === "restaurant" && <li>
-            <NavLink
-              to={"/dashboard/add-donation"}
-              className="flex items-center gap-2"
-            >
-              <MdAddBox /> Add Donation
-            </NavLink>
-          </li>}
-          {data.role === "restaurant" && <li>
-            <NavLink
-              to={"/dashboard/my-donations"}
-              className="flex items-center gap-2"
-            >
-              <MdInventory /> My Donations
-            </NavLink>
-          </li>}
-          {data.role === "restaurant" && <li>
-            <NavLink
-              to={"/dashboard/requested-donations"}
-              className="flex items-center gap-2"
-            >
-              <MdMoveToInbox /> Requested Donations
-            </NavLink>
-          </li>}
+          {data.role === "restaurant" && (
+            <li>
+              <NavLink
+                to={"/dashboard/add-donation"}
+                className="flex items-center gap-2"
+              >
+                <MdAddBox /> Add Donation
+              </NavLink>
+            </li>
+          )}
+          {data.role === "restaurant" && (
+            <li>
+              <NavLink
+                to={"/dashboard/my-donations"}
+                className="flex items-center gap-2"
+              >
+                <MdInventory /> My Donations
+              </NavLink>
+            </li>
+          )}
+          {data.role === "restaurant" && (
+            <li>
+              <NavLink
+                to={"/dashboard/requested-donations"}
+                className="flex items-center gap-2"
+              >
+                <MdMoveToInbox /> Requested Donations
+              </NavLink>
+            </li>
+          )}
         </ul>
       </div>
       <ToastContainer />

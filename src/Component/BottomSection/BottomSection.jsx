@@ -4,7 +4,7 @@ const BottomSection = () => {
     return (
       <div>
         {/* Bottom Feature Row */}
-        <div className="my-20 grid grid-cols-1 md:grid-cols-3 gap-6 px-6 md:px-10 text-center">
+        <div className="my-20 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 px-6 md:px-10 text-center">
           <div>
             <img
               src="https://cdn-icons-png.flaticon.com/128/4203/4203842.png"

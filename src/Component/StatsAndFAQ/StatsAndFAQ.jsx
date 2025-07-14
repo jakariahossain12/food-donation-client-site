@@ -33,43 +33,49 @@ const StatsAndFAQ = () => {
   const [openIndex, setOpenIndex] = useState(1); // open the second FAQ by default
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 p-8 bg-gray-50 min-h-screen max-w-7xl mx-auto items-center">
-      {/* Stats Section */}
-      <div className="grid grid-cols-2 gap-6">
-        {stats.map((stat, index) => (
-          <div
-            key={index}
-            className="bg-white p-6 rounded-lg shadow flex flex-col items-center text-center"
-          >
-            <div className="text-4xl mb-2">{stat.icon}</div>
-            <div className="text-3xl font-bold">{stat.count}</div>
-            <div className="text-gray-500">{stat.label}</div>
-          </div>
-        ))}
-      </div>
-
-      {/* FAQ Section */}
-      <div>
-        <h4 className="text-sm text-gray-500 uppercase mb-2">
-          Recently Asked Questions
-        </h4>
-        <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
-
-        <div className="space-y-4">
-          {faqs.map((faq, index) => (
-            <div key={index} className="border-b pb-4">
-              <button
-                className="w-full text-left font-semibold flex justify-between items-center"
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-              >
-                {faq.question}
-                <span>{openIndex === index ? "−" : "+"}</span>
-              </button>
-              {openIndex === index && (
-                <p className="mt-2 text-gray-600 text-sm">{faq.answer}</p>
-              )}
+    <div className="bg-gray-50">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 p-8 bg-gray-50 min-h-screen max-w-7xl mx-auto items-center">
+        {/* Stats Section */}
+        <div className="grid grid-cols-2 gap-6">
+          {stats.map((stat, index) => (
+            <div
+              key={index}
+              className="bg-white p-6 rounded-lg shadow flex flex-col items-center text-center"
+            >
+              <div className="text-4xl mb-2">{stat.icon}</div>
+              <div className="text-3xl font-bold">{stat.count}</div>
+              <div className="text-gray-500">{stat.label}</div>
             </div>
           ))}
+        </div>
+
+        {/* FAQ Section */}
+        <div>
+          <h4 className="text-sm text-gray-500 uppercase mb-2">
+            Recently Asked Questions
+          </h4>
+          <h2 className="text-2xl font-bold mb-4">
+            Frequently Asked Questions
+          </h2>
+
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="border-b pb-4">
+                <button
+                  className="w-full text-left font-semibold flex justify-between items-center"
+                  onClick={() =>
+                    setOpenIndex(openIndex === index ? null : index)
+                  }
+                >
+                  {faq.question}
+                  <span>{openIndex === index ? "−" : "+"}</span>
+                </button>
+                {openIndex === index && (
+                  <p className="mt-2 text-gray-600 text-sm">{faq.answer}</p>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
