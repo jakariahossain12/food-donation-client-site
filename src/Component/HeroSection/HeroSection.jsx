@@ -31,7 +31,7 @@ const HeroSection = () => {
           />
 
           {/* Total Donation Badge */}
-          <div className="absolute top-4 right-4 bg-white shadow-lg p-2 px-4 rounded-md flex items-center gap-2">
+          <div className="absolute hidden md:block top-4 right-4 bg-white shadow-lg p-2 px-4 rounded-md flex items-center gap-2">
             <span className="text-sm font-semibold text-green-700">
               Total Donation
             </span>

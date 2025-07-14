@@ -3,6 +3,7 @@ import useAuth from '../../hooks/useAuth';
 import Loading from '../../Component/Loading/Loading';
 import HeroSection from '../../Component/HeroSection/HeroSection';
 import BottomSection from '../../Component/BottomSection/BottomSection';
+import ContactSection from '../../Component/ContactSection/ContactSection';
 
 const Home = () => {
     const { user } = useAuth();
@@ -10,7 +11,8 @@ const Home = () => {
     return (
         <div>
             <HeroSection />
-            <BottomSection/>
+            <BottomSection />
+            <ContactSection/>
         </div>
     );
 };
