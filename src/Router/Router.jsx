@@ -27,6 +27,8 @@ import FeatureDonations from "../Pages/Dashboard/Admin/FeatureDonations";
 import PrivateRoute from "../Private/PrivateRoute";
 import RestaurantRoute from "../Private/RestaurantRoute";
 import MyReviews from "../Pages/Dashboard/User/MyReviews";
+import CharityRoute from "../Private/CharityRoute";
+import AdminRoute from "../Private/AdminRoute";
 
 export const router = createBrowserRouter([
   {
@@ -125,7 +127,9 @@ export const router = createBrowserRouter([
         path: "manage-role-requests",
         element: (
           <PrivateRoute>
-            <AllCharityRequests />
+            <AdminRoute>
+              <AllCharityRequests />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
@@ -133,7 +137,9 @@ export const router = createBrowserRouter([
         path: "manage-users",
         element: (
           <PrivateRoute>
-            <ManageUsersTable />
+            <AdminRoute>
+              <ManageUsersTable />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
@@ -141,7 +147,9 @@ export const router = createBrowserRouter([
         path: "manage-donations",
         element: (
           <PrivateRoute>
-            <ManageDonations />
+            <AdminRoute>
+              <ManageDonations />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
@@ -149,7 +157,9 @@ export const router = createBrowserRouter([
         path: "manage-requests",
         element: (
           <PrivateRoute>
-            <ManageRequests />
+            <AdminRoute>
+              <ManageRequests />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
@@ -157,7 +167,9 @@ export const router = createBrowserRouter([
         path: "feature-donations",
         element: (
           <PrivateRoute>
-            <FeatureDonations />
+            <AdminRoute>
+              <FeatureDonations />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
@@ -209,7 +221,9 @@ export const router = createBrowserRouter([
         path: "my-requests",
         element: (
           <PrivateRoute>
-            <MyRequests />
+            <CharityRoute>
+              <MyRequests />
+            </CharityRoute>
           </PrivateRoute>
         ),
       },
@@ -217,7 +231,9 @@ export const router = createBrowserRouter([
         path: "my-pickups",
         element: (
           <PrivateRoute>
-            <MyPickups />
+            <CharityRoute>
+              <MyPickups />
+            </CharityRoute>
           </PrivateRoute>
         ),
       },
@@ -225,7 +241,9 @@ export const router = createBrowserRouter([
         path: "my-received-donations",
         element: (
           <PrivateRoute>
-            <ReceivedDonations />
+            <CharityRoute>
+              <ReceivedDonations />
+            </CharityRoute>
           </PrivateRoute>
         ),
       },

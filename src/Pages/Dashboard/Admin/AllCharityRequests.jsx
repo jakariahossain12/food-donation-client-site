@@ -35,10 +35,9 @@ const AllCharityRequests = () => {
     return <Loading></Loading>;
   }
 
-  const handleUpdateStatus = async (id, newStatus) => {
-    const email = user?.email;
+  const handleUpdateStatus = async (email, newStatus) => {
     const role = "charity";
-    mutation.mutate({ id, newStatus, role, email });
+    mutation.mutate({ email, newStatus, role });
     newStatus === "Approved"
       ? toast.success(newStatus)
       : toast.error(newStatus);
@@ -91,14 +90,14 @@ const AllCharityRequests = () => {
                 {req.status === "Pending" && (
                   <td className="px-4 py-3 space-x-2 flex">
                     <button
-                      onClick={() => handleUpdateStatus(req._id, "Approved")}
+                      onClick={() => handleUpdateStatus(req.email, "Approved")}
                       className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md text-xs"
                       disabled={req.status !== "Pending"}
                     >
                       Approve
                     </button>
                     <button
-                      onClick={() => handleUpdateStatus(req._id, "Rejected")}
+                      onClick={() => handleUpdateStatus(req.email, "Rejected")}
                       className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-xs"
                       disabled={req.status !== "Pending"}
                     >

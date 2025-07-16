@@ -21,7 +21,7 @@ const MyDonations = () => {
       return res.data;
     },
   });
-  
+  refetch()
   
 
   const mutation = useMutation({

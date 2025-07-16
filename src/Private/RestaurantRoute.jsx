@@ -9,7 +9,7 @@ const RestaurantRoute = ({ children }) => {
   const axiosSecure = useAxiosSecure();
 
   const { data = {}, isLoading } = useQuery({
-    queryKey: ["user",user.email],
+    queryKey: ["userRestaurant",user.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/user?email=${user?.email}`);
       return res.data;

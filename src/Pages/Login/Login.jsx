@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 import { Link, useLocation, useNavigate } from "react-router";
 import GoogleButton from "../../Share/GoogleButton";
@@ -33,8 +33,8 @@ const Login = () => {
     console.log(email, password);
     userLogin(email, password)
       .then(() => {
-        toast.success("login successfully");
-        navigate(location?.state || "/ ");
+        toast.success('login successfully')
+        navigate(location?.state || "/");
         mutation.mutate({email})
       })
       .catch((error) => {
@@ -78,7 +78,7 @@ const Login = () => {
             type="submit"
             className="w-full bg-primary hover:bg-[#005e4e] text-white py-2 rounded"
           >
-            Register
+            Login
           </button>
         </form>
         <GoogleButton></GoogleButton>
@@ -89,6 +89,7 @@ const Login = () => {
           </Link>
         </p>
       </div>
+      <ToastContainer/>
     </div>
   );
 };

@@ -14,6 +14,7 @@ import {
 
 import { auth } from "../Firebase/firebase.config";
 import { AuthContext } from "../Context/Context";
+import axios from "axios";
 
 
 const AuthProvider = ({ children }) => {
@@ -58,12 +59,16 @@ const AuthProvider = ({ children }) => {
         await currentUser.reload();
         setUser(currentUser);
         
-        const token = currentUser.accessToken;
-        
-        localStorage.setItem('token',token)
-          
-          console.log(currentUser);
-
+        axios
+          .post(`${import.meta.env.VITE_SERVER_BASE_API}/jwt-token`, {
+            email: currentUser?.email,
+          })
+          .then((res) => {
+            const token = res.data.token;
+            console.log(token);
+            localStorage.setItem("token", token);
+          })
+          .catch(() => {});
        
       } else {
         setUser(null);

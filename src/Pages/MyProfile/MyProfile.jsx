@@ -76,7 +76,6 @@ const { name, image, role } = data ;
           <>
             <h2 className="text-2xl font-bold text-[#00705c]">
               {name}
-              {user?.displayName}
             </h2>
 
             {showRole && (

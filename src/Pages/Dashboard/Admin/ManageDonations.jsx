@@ -19,7 +19,7 @@ const ManageDonations = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["allDonations"],
+    queryKey: ["allDonationsAdmin"],
     queryFn: async () => {
       const res = await axiosSecure.get("/all-donations");
       return res.data;

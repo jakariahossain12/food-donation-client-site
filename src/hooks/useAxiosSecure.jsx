@@ -6,13 +6,13 @@ export const axiosSecure = axios.create({
   baseURL: import.meta.env.VITE_SERVER_BASE_API,
 });
 
-const useAxiosSecure = () => {
-  const { userSignOut } = useAuth();
+const useAxiosSecure =  () => {
+  const { userSignOut } =  useAuth();
   const token = localStorage.getItem("token");
-  
+  console.log("token",token);
   axiosSecure.interceptors.request.use((config) => {
     
-    config.headers.Authorization= `Bearer ${token}`
+    config.headers.authorization= `Bearer ${token}`
 
     return config
   })
@@ -21,6 +21,7 @@ const useAxiosSecure = () => {
     if (error.status === 401 || error.status === 403) {
       userSignOut()
         .then(() => {
+          localStorage.removeItem('token')
         console.log(`Your logOut because of an error with ${error.status} code`);
         }).catch(() => {
         

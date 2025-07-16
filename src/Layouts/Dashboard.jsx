@@ -31,6 +31,7 @@ const Dashboard = () => {
 
   const { user, loading } = useAuth();
   const axiosSecure = useAxiosSecure();
+  
 
   const { data = {}, isLoading } = useQuery({
     queryKey: ["user", user.email],
@@ -104,7 +105,6 @@ const Dashboard = () => {
               FoodShare
             </Link>
           </div>
-
           {/* user nav link */}
           <li>
             <NavLink
@@ -114,110 +114,130 @@ const Dashboard = () => {
               <MdPerson /> My Profile
             </NavLink>
           </li>
-          <li>
-            <NavLink
-              to={"/dashboard/request-charity"}
-              className="flex items-center gap-2"
-            >
-              <MdVolunteerActivism /> Request Charity Role
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={"/dashboard/favorites"}
-              className="flex items-center gap-2"
-            >
-              <MdFavorite /> Favorites
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={"/dashboard/my-reviews"}
-              className="flex items-center gap-2"
-            >
-              <MdRateReview /> My Reviews
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={"/dashboard/transaction-history"}
-              className="flex items-center gap-2"
-            >
-              <MdHistory /> Transaction History
-            </NavLink>
-          </li>
+          {["user", "charity"].includes(data.role) && (
+            <li>
+              <NavLink
+                to={"/dashboard/request-charity"}
+                className="flex items-center gap-2"
+              >
+                <MdVolunteerActivism /> Request Charity Role
+              </NavLink>
+            </li>
+          )}
+          {["user", "charity"].includes(data.role) && (
+            <li>
+              <NavLink
+                to={"/dashboard/favorites"}
+                className="flex items-center gap-2"
+              >
+                <MdFavorite /> Favorites
+              </NavLink>
+            </li>
+          )}
+          {data.role === "restaurant" && (
+            <li>
+              <NavLink
+                to={"/dashboard/my-reviews"}
+                className="flex items-center gap-2"
+              >
+                <MdRateReview /> My Reviews
+              </NavLink>
+            </li>
+          )}
+          {["user", "charity"].includes(data.role) && (
+            <li>
+              <NavLink
+                to={"/dashboard/transaction-history"}
+                className="flex items-center gap-2"
+              >
+                <MdHistory /> Transaction History
+              </NavLink>
+            </li>
+          )}
           {/* admin */}
-          <li>admin</li>
-          <li>
-            <NavLink
-              to={"/dashboard/manage-donations"}
-              className="flex items-center gap-2"
-            >
-              <MdDashboard /> Manage Donations
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={"/dashboard/manage-users"}
-              className="flex items-center gap-2"
-            >
-              <MdPeople /> Manage Users
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={"/dashboard/manage-role-requests"}
-              className="flex items-center gap-2"
-            >
-              <MdAssignmentInd /> Manage Role Requests
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={"/dashboard/manage-requests"}
-              className="flex items-center gap-2"
-            >
-              <MdListAlt /> Manage Requests
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={"/dashboard/feature-donations"}
-              className="flex items-center gap-2"
-            >
-              <MdStar /> Feature Donations
-            </NavLink>
-          </li>
+          {data.role === "admin" && (
+            <li>
+              <NavLink
+                to={"/dashboard/manage-donations"}
+                className="flex items-center gap-2"
+              >
+                <MdDashboard /> Manage Donations
+              </NavLink>
+            </li>
+          )}
+          {data.role === "admin" && (
+            <li>
+              <NavLink
+                to={"/dashboard/manage-users"}
+                className="flex items-center gap-2"
+              >
+                <MdPeople /> Manage Users
+              </NavLink>
+            </li>
+          )}
+          {data.role === "admin" && (
+            <li>
+              <NavLink
+                to={"/dashboard/manage-role-requests"}
+                className="flex items-center gap-2"
+              >
+                <MdAssignmentInd /> Manage Role Requests
+              </NavLink>
+            </li>
+          )}
+          {data.role === "admin" && (
+            <li>
+              <NavLink
+                to={"/dashboard/manage-requests"}
+                className="flex items-center gap-2"
+              >
+                <MdListAlt /> Manage Requests
+              </NavLink>
+            </li>
+          )}
+          {data.role === "admin" && (
+            <li>
+              <NavLink
+                to={"/dashboard/feature-donations"}
+                className="flex items-center gap-2"
+              >
+                <MdStar /> Feature Donations
+              </NavLink>
+            </li>
+          )}
           {/* charity */}
-          <li>charity</li>
-          <li>
-            <NavLink
-              to={"/dashboard/my-requests"}
-              className="flex items-center gap-2"
-            >
-              <MdAssignment /> My Requests
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={"/dashboard/my-pickups"}
-              className="flex items-center gap-2"
-            >
-              <MdLocalShipping /> My Pickups
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={"/dashboard/my-received-donations"}
-              className="flex items-center gap-2"
-            >
-              <MdCardGiftcard /> Received Donations
-            </NavLink>
-          </li>
-          
-          {/* Restaurant  */}
-          <li>Restaurant </li>
+          {data.role === "charity" && (
+            <li>
+              <NavLink
+                to={"/dashboard/my-requests"}
+                className="flex items-center gap-2"
+              >
+                <MdAssignment /> My Requests
+              </NavLink>
+            </li>
+          )}
+          {data.role === "charity" && (
+            <li>
+              <NavLink
+                to={"/dashboard/my-pickups"}
+                className="flex items-center gap-2"
+              >
+                <MdLocalShipping /> My Pickups
+              </NavLink>
+            </li>
+          )}
 
+          {data.role === "charity" && (
+            <li>
+              <NavLink
+                to={"/dashboard/my-received-donations"}
+                className="flex items-center gap-2"
+              >
+                <MdCardGiftcard /> Received Donations
+              </NavLink>
+            </li>
+          )}
+          {/* Restaurant  */}
           {data.role === "restaurant" && (
             <li>
               <NavLink
@@ -238,6 +258,18 @@ const Dashboard = () => {
               </NavLink>
             </li>
           )}
+
+          {data.role === "restaurant" && (
+            <li>
+              <NavLink
+                to={"/dashboard/my-reviews"}
+                className="flex items-center gap-2"
+              >
+                <MdRateReview /> My Reviews
+              </NavLink>
+            </li>
+          )}
+
           {data.role === "restaurant" && (
             <li>
               <NavLink

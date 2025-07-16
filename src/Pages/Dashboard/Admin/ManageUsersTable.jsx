@@ -10,7 +10,8 @@ import useAuth from "../../../hooks/useAuth";
 const ManageUsersTable = () => {
   const [selectedRole, setSelectedRole] = useState({});
   const axiosSecure = useAxiosSecure();
-  const { loading,user } = useAuth();
+  const { loading, user } = useAuth();
+  
   
 
   const {

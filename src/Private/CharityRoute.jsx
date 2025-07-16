@@ -9,7 +9,7 @@ const CharityRoute = ({children}) => {
     const axiosSecure = useAxiosSecure();
 
     const { data={},isLoading } = useQuery({
-        queryKey: ['user'],
+        queryKey: ['userCharity'],
         queryFn: async () => {
             const res = await axiosSecure.get(`/user?email=${user?.email}`);
             return res.data
