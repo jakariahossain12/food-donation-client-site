@@ -1,5 +1,4 @@
 import React from 'react';
-import useAuth from '../../hooks/useAuth';
 import Loading from '../../Component/Loading/Loading';
 import HeroSection from '../../Component/HeroSection/HeroSection';
 import BottomSection from '../../Component/BottomSection/BottomSection';
@@ -9,8 +8,6 @@ import FeaturedDonations from '../../Component/FeaturedDonations/FeaturedDonatio
 import LatestCharityRequests from '../../Component/LatestCharityRequests/LatestCharityRequests';
 
 const Home = () => {
-    const { user } = useAuth();
-    console.log(user);
     return (
         <div>
             <HeroSection />

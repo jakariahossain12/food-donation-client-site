@@ -25,7 +25,6 @@ const ManageDonations = () => {
       return res.data;
     },
   });
-  console.log(donations);
 
   const updateStatusMutation = useMutation({
     mutationFn: async ({ id, status }) => {

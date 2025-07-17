@@ -59,9 +59,6 @@ const ReceivedDonations = () => {
     );
   }
 
-  console.log(received[0]);
-  console.log("Is valid:", !isNaN(new Date(received[0].pickedUpAt)));
-
   return (
     <>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">

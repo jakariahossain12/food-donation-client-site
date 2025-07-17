@@ -10,7 +10,6 @@ const RequestedDonationsTable = () => {
   const { user, loading } = useAuth();
  
 
-  console.log(user?.email);
   
 
   const { data: requests = [], refetch, isLoading } = useQuery({
@@ -21,7 +20,6 @@ const RequestedDonationsTable = () => {
     },
   });
 
-  console.log(requests);
 
   const updateStatus = useMutation({
     mutationFn: async ({ id, status }) => {

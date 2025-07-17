@@ -24,13 +24,11 @@ const Login = () => {
         `${import.meta.env.VITE_SERVER_BASE_API}/user`,
         userData
       );
-      console.log(res.data);
       return res.data;
     },
   });
 
   const onSubmit = async ({ email, password }) => {
-    console.log(email, password);
     userLogin(email, password)
       .then(() => {
         toast.success('login successfully')

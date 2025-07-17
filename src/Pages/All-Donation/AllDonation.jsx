@@ -1,67 +1,74 @@
-import { FaMapMarkerAlt } from "react-icons/fa";
-import { Link } from "react-router";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Loading from "../../Component/Loading/Loading";
 import DonationCard from "../../Component/DonationCard/DonationCard";
 
-import { useQuery } from "@tanstack/react-query";
-import Loading from "../../Component/Loading/Loading";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
-
-
-
 const AllDonation = () => {
-
   const axiosSecure = useAxiosSecure();
+  const [searchTerm, setSearchTerm] = useState("");
 
   const {
     data: donations = [],
     isLoading,
+    refetch,
   } = useQuery({
-    queryKey: ["allVerifyDonations"],
+    queryKey: ["allVerifyDonations", searchTerm],
     queryFn: async () => {
-      const res = await axiosSecure.get("/all-verify-donations");
+      const res = await axiosSecure.get(
+        `/all-verify-donations?search=${searchTerm}`
+      );
       return res.data;
     },
   });
 
-
-
-
-
- if (isLoading) return <Loading />;
-
-
-
-
-
-  if (!donations || donations.length === 0) {
-    return (
-      <div className="flex justify-center items-center min-h-[60vh]">
-        <div className="text-center text-gray-500 space-y-2">
-          <h2 className="text-2xl font-bold">
-            No Verified Donations Available
-          </h2>
-          <p>Check back later or encourage restaurants to add donations.</p>
-        </div>
-      </div>
-    );
-  }
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+    refetch(); // fetch new data based on search
+  };
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-auto px-4">
+      {/* Always show the header */}
       <div className="text-center my-8">
         <h2 className="text-4xl font-bold text-[#00705c]">
           🥗 Explore Verified Food Donations
         </h2>
         <p className="text-gray-500 mt-2 px-2">
-          Browse available food donations shared by our restaurant partners.
+          Browse food donations shared by restaurant partners.
         </p>
       </div>
 
-      <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-2 py-4">
-        {donations.map((donation) => (
-          <DonationCard key={donation._id} donation={donation}></DonationCard>
-        ))}
+      {/* Always show search input */}
+      <div className="flex justify-center my-6">
+        <input
+          type="text"
+          placeholder="🔍 Search by location (e.g., Kuwait City)"
+          className="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#00705c] transition"
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
       </div>
+
+      {/* Loading State */}
+      {isLoading ? (
+        <Loading />
+      ) : donations.length === 0 ? (
+        // No donations found
+        <div className="text-center text-gray-500 py-10">
+          <h2 className="text-2xl font-semibold">
+            No matching donations found
+          </h2>
+          <p>Try searching with a different location.</p>
+        </div>
+      ) : (
+        // Show donations grid
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-4">
+          {donations.map((donation) => (
+            <DonationCard key={donation._id} donation={donation} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

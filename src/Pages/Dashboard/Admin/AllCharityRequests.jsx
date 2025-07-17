@@ -23,9 +23,7 @@ const AllCharityRequests = () => {
 
   const mutation = useMutation({
     mutationFn: async (userData) => {
-      console.log(userData);
       const res = await axiosSecure.patch(`/updata-user-role`, userData);
-      console.log(res.data);
       refetch();
       return res.data;
     },

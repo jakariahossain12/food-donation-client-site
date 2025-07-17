@@ -21,7 +21,6 @@ const CheckoutForm = ({ roleRequestData }) => {
     mutationFn: async (userData) => {
       const res = await axiosSecure.post(`/save-payment`,userData
       );
-      console.log(res.data);
       return res.data;
     },
   });
@@ -54,9 +53,7 @@ const CheckoutForm = ({ roleRequestData }) => {
     if (error) {
       console.log("[error]", error);
       return;
-    } else {
-      console.log("[PaymentMethod]", paymentMethod);
-    }
+    } 
 
     try {
       const amount = 25 * 100;
@@ -76,7 +73,6 @@ const CheckoutForm = ({ roleRequestData }) => {
         console.error("Payment failed:", error.message);
         alert(error.message);
       } else if (paymentIntent.status === "succeeded") {
-        console.log("Payment succeeded:", paymentIntent);
        
         // You can now store paymentIntent or update DB
 
@@ -89,14 +85,13 @@ const CheckoutForm = ({ roleRequestData }) => {
           created: paymentIntent.created,
         };
 
-        console.log(paymentData);
         mutation.mutate(paymentData)
 
         toast.success("Payment Successful!");
         navigate("/dashboard/transaction-history");
       }
     } catch (error) {
-      console.log(error.message);
+      toast.error(error.message)
     }
   };
   return (

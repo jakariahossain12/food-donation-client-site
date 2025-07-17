@@ -6,27 +6,21 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../../Component/Loading/Loading";
 import useAuth from "../../hooks/useAuth";
 
-
 const MyProfile = () => {
-  
   const [editing, setEditing] = useState(false);
-  
 
-   const { user, loading } = useAuth();
-   const axiosSecure = useAxiosSecure();
+  const { user, loading } = useAuth();
+  const axiosSecure = useAxiosSecure();
 
-  const { data ={} , isLoading } = useQuery({
-     queryKey: ["user", user.email],
-     queryFn: async () => {
-       const res = await axiosSecure.get(`/user?email=${user?.email}`);
-       console.log("res",res);
-       return res.data;
-     },
-   });
-  console.log(data);
-  console.log(user?.email);
-  
-const { name, image, role } = data ;
+  const { data = {}, isLoading } = useQuery({
+    queryKey: ["user", user.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/user?email=${user?.email}`);
+      return res.data;
+    },
+  });
+
+  const { name, image, role } = data;
   const {
     register,
     handleSubmit,
@@ -39,11 +33,9 @@ const { name, image, role } = data ;
     },
   });
 
-   if (loading || isLoading) {
-     return <Loading></Loading>;
-   }
-
-
+  if (loading || isLoading) {
+    return <Loading></Loading>;
+  }
 
   const handleEdit = () => {
     setEditing(true);
@@ -55,7 +47,6 @@ const { name, image, role } = data ;
   };
 
   const onSubmit = (data) => {
-   console.log(data);
     setEditing(false);
   };
 
@@ -74,9 +65,7 @@ const { name, image, role } = data ;
 
         {!editing ? (
           <>
-            <h2 className="text-2xl font-bold text-[#00705c]">
-              {name}
-            </h2>
+            <h2 className="text-2xl font-bold text-[#00705c]">{name}</h2>
 
             {showRole && (
               <span className="mt-2 inline-block bg-[#fdd65b] text-[#00705c] text-sm font-semibold px-4 py-1 rounded-full shadow-sm">
@@ -149,8 +138,6 @@ const { name, image, role } = data ;
         )}
       </div>
     </div>
-
-    
   );
 };
 

@@ -17,7 +17,6 @@ const GoogleButton = () => {
         `${import.meta.env.VITE_SERVER_BASE_API}/user`,
         userData
       );
-      console.log(res.data);
       return res.data;
     },
   });
@@ -37,7 +36,6 @@ const GoogleButton = () => {
           last_login: new Date().toISOString(),
         };
 
-        console.log(userData);
         mutation.mutate(userData);
       })
       .catch((error) => {

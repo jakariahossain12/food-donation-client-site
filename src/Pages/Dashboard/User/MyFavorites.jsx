@@ -23,7 +23,6 @@ const MyFavorites = () => {
       return res.data;
     },
   });
-    console.log(favorites);
 
   // Delete favorite mutation
   const { mutate: removeFavorite } = useMutation({

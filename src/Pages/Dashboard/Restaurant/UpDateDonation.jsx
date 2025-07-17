@@ -13,7 +13,6 @@ const UpDateDonation = () => {
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
   const navigate = useNavigate();
-  console.log(id);
 
   const queryClient = useQueryClient();
   const {
@@ -24,7 +23,6 @@ const UpDateDonation = () => {
     enabled: !!id,
     queryFn: async () => {
       const res = await axiosSecure.get(`/donation?id=${id}`);
-      console.log(res.data);
       return res.data;
     },
   });
@@ -44,7 +42,6 @@ const UpDateDonation = () => {
         donationData
       );
       queryClient.invalidateQueries(["myDonation"]);
-      console.log(res.data);
       toast.success(" donation Update successfully");
       return res.data;
     },
@@ -59,7 +56,6 @@ const UpDateDonation = () => {
 
   const handleImage = async (image) => {
     const imageUrl = await uploadToImgbb(image);
-    console.log(imageUrl);
     setImagePreview(imageUrl);
   };
 
@@ -67,7 +63,6 @@ const UpDateDonation = () => {
     data.image = imagePreview;
     data.status = "Pending";
     data.upDate = new Date().toISOString();
-    console.log(data);
     mutation.mutate(data);
     
     navigate("/dashboard/my-donations");

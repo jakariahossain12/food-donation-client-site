@@ -26,7 +26,6 @@ const MyDonations = () => {
 
   const mutation = useMutation({
     mutationFn: async (id) => {
-      console.log(id);
       const res = await axiosSecure.delete(`/delete-donation?id=${id}`);
       refetch();
       toast.success('delete successfully')

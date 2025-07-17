@@ -22,7 +22,6 @@ const ManageUsersTable = () => {
     queryKey: ["allUsers",user.email],
     queryFn: async () => {
       const res = await axiosSecure.get("/all-user");
-      console.log(res.data);
       return res.data;
     },
   });
@@ -30,7 +29,6 @@ const ManageUsersTable = () => {
   const mutation = useMutation({
     mutationFn: async (updata) => {
       const res = await axiosSecure.patch(`/user`, updata);
-      console.log(res.data);
       refetch();
       return res.data;
     },
@@ -39,7 +37,6 @@ const ManageUsersTable = () => {
   const mutationDelete = useMutation({
     mutationFn: async (id) => {
       const res = await axiosSecure.delete(`/user?id=${id}`);
-      console.log(res.data);
       refetch();
       toast.success("User deleted successfully");
       return res.data;
@@ -49,7 +46,6 @@ const ManageUsersTable = () => {
   const mutationDeleteFirebaseUser = useMutation({
     mutationFn: async (uid) => {
       const res = await axiosSecure.delete(`/delete-user/${uid}`);
-      console.log(res.data);
       return res.data;
     },
   });
@@ -60,7 +56,6 @@ const ManageUsersTable = () => {
 
   const handleUpdateRole = (id, value) => {
     if (value === "charity" || value === "restaurant" || value === "admin") {
-      console.log(value);
       mutation.mutate({ id, value });
       toast.success(`user role update successfully,${value}`);
     } else {

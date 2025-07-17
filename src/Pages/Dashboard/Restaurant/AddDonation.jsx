@@ -22,7 +22,6 @@ const AddDonation = () => {
     const mutation = useMutation({
         mutationFn: async (donationData) => {
             const res = await axiosSecure.post('/add-donation', donationData);
-            console.log(res.data);
             toast.success(' donation post successfully')
             return res.data
         }
@@ -30,7 +29,6 @@ const AddDonation = () => {
 
   const handleImage = async (image) => {
     const imageUrl = await uploadToImgbb(image);
-    console.log(imageUrl);
     setImagePreview(imageUrl);
   };
 
@@ -38,7 +36,6 @@ const AddDonation = () => {
     data.image = imagePreview;
     data.status = "Pending";
     data.create = new Date().toISOString();
-      console.log(data);
       mutation.mutate(data)
     setImagePreview(null)
     navigate("/dashboard/my-donations");

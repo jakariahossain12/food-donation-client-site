@@ -37,14 +37,12 @@ const RequestCharityRole = () => {
   } = useQuery({
     queryKey: ["payment", user?.email],
     queryFn: async () => {
-      console.log(user?.email);
       const res = await axiosSecure.get(
         `/charity-request-status?email=${user?.email}`
       );
       if (res?.data?.status === "Pending" || res?.data?.status === "Approved") {
         setHasRequest(true);
       }
-      console.log(res.data);
       return res.data;
     },
   });
@@ -52,7 +50,6 @@ const RequestCharityRole = () => {
   if (isLoading || loading) {
     return <Loading></Loading>;
   }
-  console.log(user?.email);
 
   if (error) {
     toast.error(error.message);

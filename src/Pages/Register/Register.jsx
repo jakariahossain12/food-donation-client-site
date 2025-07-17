@@ -26,7 +26,6 @@ const Register = () => {
   const mutation = useMutation({
     mutationFn:async (userData) => {
       const res = await axios.post(`${import.meta.env.VITE_SERVER_BASE_API}/user`, userData);
-      console.log(res.data);
       return res.data;
     },
   });
@@ -59,7 +58,6 @@ const Register = () => {
           displayName: name,
           photoURL: imageUrl,
         };
-        console.log(res);
         userUpdateProfile(upDateInfo)
           .then(() => {})
           .catch(() => {});
@@ -77,8 +75,7 @@ const Register = () => {
         reset()
         navigate(location?.state || '/')
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
       });
   };
 
