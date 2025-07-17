@@ -17,6 +17,7 @@ import {
   MdAddBox,
   MdInventory,
   MdMoveToInbox,
+  MdInsights,
 } from "react-icons/md";
 
 import './dashboard.css'
@@ -134,7 +135,7 @@ const Dashboard = () => {
               </NavLink>
             </li>
           )}
-          {data.role === "restaurant" && (
+          { ["restaurant",'user'].includes(data.role) && (
             <li>
               <NavLink
                 to={"/dashboard/my-reviews"}
@@ -259,16 +260,7 @@ const Dashboard = () => {
             </li>
           )}
 
-          {data.role === "restaurant" && (
-            <li>
-              <NavLink
-                to={"/dashboard/my-reviews"}
-                className="flex items-center gap-2"
-              >
-                <MdRateReview /> My Reviews
-              </NavLink>
-            </li>
-          )}
+          
 
           {data.role === "restaurant" && (
             <li>
@@ -277,6 +269,17 @@ const Dashboard = () => {
                 className="flex items-center gap-2"
               >
                 <MdMoveToInbox /> Requested Donations
+              </NavLink>
+            </li>
+          )}
+
+          {data.role === "restaurant" && (
+            <li>
+              <NavLink
+                to={"/dashboard/donation-statistics"}
+                className="flex items-center gap-2"
+              >
+                <MdInsights /> Donation Statistics
               </NavLink>
             </li>
           )}

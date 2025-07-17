@@ -29,6 +29,7 @@ import RestaurantRoute from "../Private/RestaurantRoute";
 import MyReviews from "../Pages/Dashboard/User/MyReviews";
 import CharityRoute from "../Private/CharityRoute";
 import AdminRoute from "../Private/AdminRoute";
+import DonationStatistics from "../Pages/Dashboard/Restaurant/DonationStatistics";
 
 export const router = createBrowserRouter([
   {
@@ -211,6 +212,16 @@ export const router = createBrowserRouter([
           <PrivateRoute>
             <RestaurantRoute>
               <UpDateDonation />
+            </RestaurantRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "donation-statistics",
+        element: (
+          <PrivateRoute>
+            <RestaurantRoute>
+              <DonationStatistics />
             </RestaurantRoute>
           </PrivateRoute>
         ),
