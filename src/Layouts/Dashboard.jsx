@@ -108,12 +108,12 @@ const Dashboard = () => {
           </div>
           {/* user nav link */}
           <li>
-            <NavLink
-              to={"/dashboard/my-profile"}
+            <Link
+              to={"/dashboard"}
               className="flex items-center gap-2"
             >
               <MdPerson /> My Profile
-            </NavLink>
+            </Link>
           </li>
           {["user", "charity"].includes(data.role) && (
             <li>
