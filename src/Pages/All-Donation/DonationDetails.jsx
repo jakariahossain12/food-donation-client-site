@@ -9,7 +9,7 @@ import { FaHeart } from "react-icons/fa";
 const DonationDetails = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
-  const { user } = useAuth();
+  const { user,loading } = useAuth();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reviewModal, setReviewModal] = useState(false);
@@ -25,6 +25,15 @@ const DonationDetails = () => {
     queryKey: ["donationDetails", id],
     queryFn: async () => {
       const res = await axiosSecure.get(`/donation?id=${id}`);
+      return res.data;
+    },
+  });
+
+
+  const { data = {} } = useQuery({
+    queryKey: ["user", user.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/user?email=${user?.email}`);
       return res.data;
     },
   });
@@ -83,8 +92,15 @@ const DonationDetails = () => {
       toast.error("You’ve already sent Donation request .");
     },
   });
-
+ 
   const handleRequestSubmit = async () => {
+
+    if (data?.role !== 'charity') {
+      return toast.warning('your not charity')
+    }
+   
+
+
     const requestData = {
       donationId: donation._id,
       donationTitle: donation.title,
@@ -132,7 +148,7 @@ const DonationDetails = () => {
     donationReview.mutate(reviewData);
   };
 
-  if (isLoading) return <div className="text-center py-10">Loading...</div>;
+  if (isLoading||loading) return <div className="text-center py-10">Loading...</div>;
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md mt-6 relative z-10">
