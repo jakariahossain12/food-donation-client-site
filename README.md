@@ -1,29 +1,35 @@
-# Food Donation Platform - Frontend
+# 🥗 Food Donation Platform - Frontend
 
-This is the frontend of a full-stack food donation platform built with React. It supports role-based access for Admins, Restaurants, Charities, and Users, integrated with Firebase authentication and verification workflows.
+**Live Website:** [https://deft-stroopwafel-641c61.netlify.app/](https://deft-stroopwafel-641c61.netlify.app/)
 
-## website link : 
-https://deft-stroopwafel-641c61.netlify.app/
+This is the **frontend** of a full-stack **Food Donation Platform** built with **React**. The platform supports **role-based access** for Admins, Restaurants, Charities, and Users, offering secure authentication, smooth UI, and dynamic food-sharing functionalities.
+
+---
 
 ## 🚀 Features
 
-- 🥗 Browdevse and request food donations
+- 🥗 Browse and request food donations
 - 🏢 Role-based dashboards (Admin, Restaurant, Charity)
 - 🔐 Authentication via Firebase
-- ✅ Role verification system
+- ✅ Role verification system with admin approval
 - ⭐ Feature donations on homepage
 - 📦 Manage pickups and reviews
-- 🎯 Real-time updates using React Query
+- 🎯 Real-time data management using React Query
+
+---
 
 ## 🛠️ Tech Stack
 
-- React
-- React Router DOM
-- Tailwind CSS + DaisyUI
-- Axios
-- Firebase Auth
-- SweetAlert2 & React Toastify
-- TanStack React Query
+- **React**
+- **React Router DOM**
+- **Tailwind CSS + DaisyUI**
+- **Axios**
+- **Firebase Auth**
+- **SweetAlert2 & React Toastify**
+- **TanStack React Query**
+
+---
+
 
 ## 📦 Installation
 
@@ -46,3 +52,10 @@ VITE_SERVER_BASE_API=http://localhost:5000
 | Restaurant | Add/manage donations                 |
 | Charity    | Request/receive food                 |
 | User       | View donations, request charity role |
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/your-username/food-donation-platform-frontend.git
+   cd food-donation-platform-frontend
+   npm install
