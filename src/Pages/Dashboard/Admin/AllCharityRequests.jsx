@@ -42,7 +42,7 @@ const AllCharityRequests = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto mt-10 px-4">
+    <div className="w-11/12 mx-auto mt-10 px-4">
       <h2 className="text-3xl font-bold text-center text-[#00705c] mb-6">
         All Charity Role Requests
       </h2>

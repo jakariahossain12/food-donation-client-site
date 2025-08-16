@@ -4,7 +4,7 @@ import { FaUsers } from "react-icons/fa";
 const HeroSection = () => {
   return (
     <section className="bg-gray-50 py-12">
-      <div className="max-w-7xl mx-auto px-6 md:px-10 flex flex-col-reverse md:flex-row items-center gap-10">
+      <div className="w-11/12 mx-auto px-6 md:px-10 flex flex-col-reverse md:flex-row items-center gap-10">
         {/* Text Content */}
         <div className="md:w-1/2">
           <p className="text-sm font-semibold text-gray-600 mb-2 uppercase">

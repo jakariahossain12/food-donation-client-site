@@ -1,6 +1,6 @@
 import { FaPhoneAlt } from "react-icons/fa";
 import { HiOutlineLocationMarker } from "react-icons/hi";
-import groupPhoto from '/donation-group.png'
+import groupPhoto from "/donation-group.png";
 
 const ContactSection = () => {
   return (
@@ -13,14 +13,10 @@ const ContactSection = () => {
           We Love to Hear from Our <br /> Happy Customers
         </h2>
       </div>
-      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-start">
+      <div className="w-11/12 mx-auto grid md:grid-cols-2 gap-10 items-start">
         {/* Left: Info */}
         <div>
-          <img
-            src={groupPhoto}
-            alt="Group"
-            className="rounded-xl mb-6"
-          />
+          <img src={groupPhoto} alt="Group" className="rounded-xl mb-6" />
 
           <p className="text-gray-600 mb-6">
             There are many variations of passages of available but the majority

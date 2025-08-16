@@ -34,7 +34,7 @@ const StatsAndFAQ = () => {
 
   return (
     <div className="bg-gray-50">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 p-8 bg-gray-50 min-h-screen max-w-7xl mx-auto items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 p-8 bg-gray-50 min-h-screen w-11/12 mx-auto items-center">
         {/* Stats Section */}
         <div className="grid grid-cols-2 gap-6">
           {stats.map((stat, index) => (

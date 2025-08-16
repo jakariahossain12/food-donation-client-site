@@ -3,8 +3,6 @@ import React from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { Link } from "react-router";
 
-
-
 const FeaturedDonations = () => {
   const axiosSecure = useAxiosSecure();
 
@@ -15,12 +13,10 @@ const FeaturedDonations = () => {
       return res.data;
     },
   });
-    
-    
 
   return (
     <section className="py-16 px-4 bg-gray-50">
-      <div className="max-w-7xl mx-auto text-center mb-12">
+      <div className="w-11/12 mx-auto text-center mb-12">
         <h2 className="text-4xl font-bold text-gray-800 mb-2">
           Featured Donations
         </h2>
@@ -29,7 +25,7 @@ const FeaturedDonations = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 px-6 gap-8 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 px-6 gap-8 w-11/12 mx-auto">
         {dummyDonations.map((donation) => (
           <div
             key={donation._id}
