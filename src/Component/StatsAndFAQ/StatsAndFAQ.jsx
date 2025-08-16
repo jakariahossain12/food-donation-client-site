@@ -33,14 +33,14 @@ const StatsAndFAQ = () => {
   const [openIndex, setOpenIndex] = useState(1); // open the second FAQ by default
 
   return (
-    <div className="bg-gray-50">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 p-8 bg-gray-50 min-h-screen w-11/12 mx-auto items-center">
+    <div className="bg-base-200">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 p-8  min-h-screen w-11/12 mx-auto items-center">
         {/* Stats Section */}
         <div className="grid grid-cols-2 gap-6">
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="bg-white p-6 rounded-lg shadow flex flex-col items-center text-center"
+              className="bg-base-100 p-6 rounded-lg shadow flex flex-col items-center text-center"
             >
               <div className="text-4xl mb-2">{stat.icon}</div>
               <div className="text-3xl font-bold">{stat.count}</div>

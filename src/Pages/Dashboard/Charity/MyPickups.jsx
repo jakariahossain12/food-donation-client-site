@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { PackageCheck, Truck, AlarmClock } from "lucide-react";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Loading from "../../../Component/Loading/Loading";
 
 const MyPickups = () => {
   const { user , loading } = useAuth();
@@ -40,7 +41,7 @@ const MyPickups = () => {
   if (isLoading || loading) {
     return (
       <div className="text-center py-16 text-lg font-medium">
-        Loading pickups...
+        <Loading/>
       </div>
     );
   }
@@ -64,7 +65,7 @@ const MyPickups = () => {
         {pickups.map((pickup) => (
           <div
             key={pickup._id}
-            className="bg-white rounded-2xl shadow-md border p-5 flex flex-col justify-between space-y-3 hover:shadow-lg transition"
+            className="bg-base-200 rounded-2xl shadow-md border p-5 flex flex-col justify-between space-y-3 hover:shadow-lg transition"
           >
             <div>
               <h3 className="text-xl font-bold text-[#004d40] mb-2 flex items-center gap-2">

@@ -67,7 +67,7 @@ const ManageDonations = () => {
       <h2 className="text-3xl font-bold mb-6 text-center text-[#00705c]">
         📦 Manage Donations
       </h2>
-      <table className="min-w-full bg-white rounded-xl shadow overflow-hidden border">
+      <table className="table table-zebra rounded-xl shadow overflow-hidden border">
         <thead className="bg-[#00705c] text-white text-sm uppercase text-left">
           <tr>
             <th className="py-3 px-4">Title</th>
@@ -79,11 +79,11 @@ const ManageDonations = () => {
             <th className="py-3 px-4">Actions</th>
           </tr>
         </thead>
-        <tbody className="text-gray-700">
+        <tbody className="">
           {donations?.map((donation) => (
             <tr
               key={donation._id}
-              className="border-t hover:bg-gray-50 transition"
+              className="border-t hover:bg-base-200 transition"
             >
               <td className="py-3 px-4">{donation.title}</td>
               <td className="py-3 px-4">{donation.type}</td>

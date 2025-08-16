@@ -50,7 +50,7 @@ const RequestedDonationsTable = () => {
         Requested Donations
       </h2>
 
-      <table className="table table-zebra shadow-md rounded-lg bg-white">
+      <table className="table table-zebra shadow-md rounded-lg bg-base-100">
         <thead className="bg-[#00705c] text-white">
           <tr>
             <th>#</th>

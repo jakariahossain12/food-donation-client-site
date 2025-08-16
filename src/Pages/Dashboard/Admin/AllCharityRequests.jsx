@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -6,7 +6,7 @@ import Loading from "../../../Component/Loading/Loading";
 import { toast } from "react-toastify";
 
 const AllCharityRequests = () => {
-  const { user, loading } = useAuth();
+  const { loading } = useAuth();
   const axiosSecure = useAxiosSecure();
   // get requests data
   const {
@@ -30,7 +30,11 @@ const AllCharityRequests = () => {
   });
 
   if (isLoading || loading) {
-    return <Loading></Loading>;
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <Loading />
+      </div>
+    );
   }
 
   const handleUpdateStatus = async (email, newStatus) => {
@@ -42,14 +46,14 @@ const AllCharityRequests = () => {
   };
 
   return (
-    <div className="w-11/12 mx-auto mt-10 px-4">
+    <div className=" px-4">
       <h2 className="text-3xl font-bold text-center text-[#00705c] mb-6">
         All Charity Role Requests
       </h2>
 
       <div className="overflow-x-auto shadow-lg rounded-lg">
-        <table className="min-w-full table-auto border border-gray-200 bg-white">
-          <thead className="bg-primary text-white">
+        <table className="table table-zebra  border ">
+          <thead className="bg-[#00705c] text-white">
             <tr>
               <th className="px-4 py-3 text-left text-sm">Name</th>
               <th className="px-4 py-3 text-left text-sm">Email</th>
@@ -69,7 +73,7 @@ const AllCharityRequests = () => {
                 <td className="px-4 py-3 italic max-w-sm truncate">
                   {req.mission}
                 </td>
-                <td className="px-4 py-3 font-mono text-xs text-gray-600">
+                <td className="px-4 py-3 font-mono text-xs ">
                   {req.transactionId}
                 </td>
                 <td className="px-4 py-3">

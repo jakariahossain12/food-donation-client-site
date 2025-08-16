@@ -5,6 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
 import { FaHeart } from "react-icons/fa";
+import Loading from "../../Component/Loading/Loading";
 
 const DonationDetails = () => {
   const { id } = useParams();
@@ -148,169 +149,174 @@ const DonationDetails = () => {
     donationReview.mutate(reviewData);
   };
 
-  if (isLoading||loading) return <div className="text-center py-10">Loading...</div>;
+  if (isLoading||loading) return (
+    <div className="h-screen flex justify-center items-center">
+      <Loading />
+    </div>
+  );;
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md mt-6 relative z-10">
-      <img
-        src={donation.image}
-        alt={donation.title}
-        className="w-full h-64 object-cover rounded-lg mb-4"
-      />
-      <h2 className="text-3xl font-bold text-[#00705c] mb-2">
-        {donation.title}
-      </h2>
-      <p className="text-gray-700">
-        <strong>Food Type:</strong> {donation.type}
-      </p>
-      <p className="text-gray-700">
-        <strong>Restaurant:</strong> {donation.name} - {donation.location}
-      </p>
-      <p className="text-gray-700">
-        <strong>Status:</strong> {donation.status}
-      </p>
-      <p className="text-gray-700">
-        <strong>Quantity:</strong> {donation.quantity}
-      </p>
-      <p className="text-gray-700 mb-4">
-        <strong>Pickup Time:</strong> {donation.pickupStart} -{" "}
-        {donation.pickupEnd}
-      </p>
+    <div className="min-h-screen bg-base-200 py-10">
+      <div className="max-w-3xl bg-base-100 mx-auto   p-6  rounded-lg shadow-md  relative z-10">
+        <img
+          src={donation.image}
+          alt={donation.title}
+          className="w-full h-64 object-cover rounded-lg mb-4"
+        />
+        <h2 className="text-3xl font-bold text-[#00705c] mb-2">
+          {donation.title}
+        </h2>
+        <p className="text-base-content">
+          <strong>Food Type:</strong> {donation.type}
+        </p>
+        <p className="text-base-content">
+          <strong>Restaurant:</strong> {donation.name} - {donation.location}
+        </p>
+        <p className="text-base-content">
+          <strong>Status:</strong> {donation.status}
+        </p>
+        <p className="text-base-content">
+          <strong>Quantity:</strong> {donation.quantity}
+        </p>
+        <p className="text-base-content mb-4">
+          <strong>Pickup Time:</strong> {donation.pickupStart} -{" "}
+          {donation.pickupEnd}
+        </p>
 
-      <div className="flex gap-4 mb-6">
-        <button
-          onClick={handleSave}
-          disabled={isPending}
-          className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2 rounded-md flex items-center gap-2 transition duration-300"
-        >
-          <FaHeart />
-          {isPending ? "Saving..." : "Save to Favorites"}
-        </button>
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="btn btn-success"
-        >
-          Request Donation
-        </button>
-        <button
-          onClick={() => setReviewModal(true)}
-          className="btn btn-warning"
-        >
-          Add Review
-        </button>
-      </div>
+        <div className="flex gap-4 mb-6">
+          <button
+            onClick={handleSave}
+            disabled={isPending}
+            className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2 rounded-md flex items-center gap-2 transition duration-300"
+          >
+            <FaHeart />
+            {isPending ? "Saving..." : "Save to Favorites"}
+          </button>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="btn btn-success"
+          >
+            Request Donation
+          </button>
+          <button
+            onClick={() => setReviewModal(true)}
+            className="btn btn-warning"
+          >
+            Add Review
+          </button>
+        </div>
 
-      {/* ⭐ Review Section */}
-      <div className="mt-6">
-        <h3 className="text-xl font-semibold mb-2 text-[#00705c]">
-          📝 Reviews
-        </h3>
-        {reviews?.length > 0 ? (
-          <div className="space-y-4">
-            {reviews.map((review, index) => (
-              <div key={index} className=" p-3 rounded-md shadow">
-                <p className="font-bold">{review.reviewerName}</p>
-                <p className="text-sm text-gray-600">
-                  Rating: {review.rating}/5
-                 
-                </p>
-                <p>{review.reviewText}</p>
+        {/* ⭐ Review Section */}
+        <div className="mt-6">
+          <h3 className="text-xl font-semibold mb-2 text-[#00705c]">
+            📝 Reviews
+          </h3>
+          {reviews?.length > 0 ? (
+            <div className="space-y-4">
+              {reviews.map((review, index) => (
+                <div key={index} className=" p-3 rounded-md shadow">
+                  <p className="font-bold">{review.reviewerName}</p>
+                  <p className="text-sm text-gray-600">
+                    Rating: {review.rating}/5
+                  </p>
+                  <p>{review.reviewText}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-500">No reviews yet for this donation.</p>
+          )}
+        </div>
+
+        {/* 🟡 DaisyUI Review Modal */}
+        {reviewModal && (
+          <dialog id="review_modal" className="modal modal-open">
+            <div className="modal-box">
+              <h3 className="font-bold text-lg text-[#00705c]">
+                Add Your Review
+              </h3>
+              <textarea
+                className="textarea textarea-bordered w-full mt-3"
+                placeholder="Write your review"
+                value={reviewText}
+                onChange={(e) => setReviewText(e.target.value)}
+              ></textarea>
+              <input
+                type="number"
+                min={1}
+                max={5}
+                value={rating}
+                onChange={(e) => setRating(e.target.value)}
+                className="input input-bordered w-full mt-3"
+                placeholder="Rating (1 to 5)"
+              />
+              <div className="modal-action">
+                <form method="dialog">
+                  <button
+                    type="button"
+                    className="btn btn-success mr-2"
+                    onClick={handleAddReview}
+                  >
+                    Submit
+                  </button>
+                  <button className="btn" onClick={() => setReviewModal(false)}>
+                    Close
+                  </button>
+                </form>
               </div>
-            ))}
-          </div>
-        ) : (
-          <p className="text-gray-500">No reviews yet for this donation.</p>
+            </div>
+          </dialog>
+        )}
+
+        {/* 🌿 DaisyUI Donation Request Modal */}
+        {isModalOpen && (
+          <dialog id="request_modal" className="modal modal-open">
+            <div className="modal-box space-y-3">
+              <h3 className="text-xl font-bold text-[#00705c]">
+                Request Donation
+              </h3>
+              <p>
+                <strong>Donation:</strong> {donation.title}
+              </p>
+              <p>
+                <strong>Restaurant:</strong> {donation.name}
+              </p>
+              <p>
+                <strong>Your Name:</strong> {user.displayName}
+              </p>
+              <p>
+                <strong>Your Email:</strong> {user.email}
+              </p>
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Why do you need this donation?"
+                className="textarea textarea-bordered w-full"
+                rows="3"
+              />
+              <input
+                type="time"
+                value={pickupTime}
+                onChange={(e) => setPickupTime(e.target.value)}
+                className="input input-bordered w-full"
+              />
+              <div className="modal-action">
+                <form method="dialog" className="flex gap-2">
+                  <button
+                    onClick={handleRequestSubmit}
+                    className="btn bg-[#00705c]"
+                  >
+                    Submit
+                  </button>
+                  <button className="btn" onClick={() => setIsModalOpen(false)}>
+                    Cancel
+                  </button>
+                </form>
+              </div>
+            </div>
+          </dialog>
         )}
       </div>
-
-      {/* 🟡 DaisyUI Review Modal */}
-      {reviewModal && (
-        <dialog id="review_modal" className="modal modal-open">
-          <div className="modal-box">
-            <h3 className="font-bold text-lg text-[#00705c]">
-              Add Your Review
-            </h3>
-            <textarea
-              className="textarea textarea-bordered w-full mt-3"
-              placeholder="Write your review"
-              value={reviewText}
-              onChange={(e) => setReviewText(e.target.value)}
-            ></textarea>
-            <input
-              type="number"
-              min={1}
-              max={5}
-              value={rating}
-              onChange={(e) => setRating(e.target.value)}
-              className="input input-bordered w-full mt-3"
-              placeholder="Rating (1 to 5)"
-            />
-            <div className="modal-action">
-              <form method="dialog">
-                <button
-                  type="button"
-                  className="btn btn-success mr-2"
-                  onClick={handleAddReview}
-                >
-                  Submit
-                </button>
-                <button className="btn" onClick={() => setReviewModal(false)}>
-                  Close
-                </button>
-              </form>
-            </div>
-          </div>
-        </dialog>
-      )}
-
-      {/* 🌿 DaisyUI Donation Request Modal */}
-      {isModalOpen && (
-        <dialog id="request_modal" className="modal modal-open">
-          <div className="modal-box space-y-3">
-            <h3 className="text-xl font-bold text-[#00705c]">
-              Request Donation
-            </h3>
-            <p>
-              <strong>Donation:</strong> {donation.title}
-            </p>
-            <p>
-              <strong>Restaurant:</strong> {donation.name}
-            </p>
-            <p>
-              <strong>Your Name:</strong> {user.displayName}
-            </p>
-            <p>
-              <strong>Your Email:</strong> {user.email}
-            </p>
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Why do you need this donation?"
-              className="textarea textarea-bordered w-full"
-              rows="3"
-            />
-            <input
-              type="time"
-              value={pickupTime}
-              onChange={(e) => setPickupTime(e.target.value)}
-              className="input input-bordered w-full"
-            />
-            <div className="modal-action">
-              <form method="dialog">
-                <button
-                  onClick={handleRequestSubmit}
-                  className="btn btn-primary"
-                >
-                  Submit
-                </button>
-                <button className="btn" onClick={() => setIsModalOpen(false)}>
-                  Cancel
-                </button>
-              </form>
-            </div>
-          </div>
-        </dialog>
-      )}
     </div>
   );
 };

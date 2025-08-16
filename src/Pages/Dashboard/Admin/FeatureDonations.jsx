@@ -1,6 +1,7 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
+import Loading from "../../../Component/Loading/Loading";
 
 const FeatureDonations = () => {
   const axiosSecure = useAxiosSecure();
@@ -34,7 +35,7 @@ const FeatureDonations = () => {
   });
 
   if (isLoading)
-    return <div className="text-center py-10">Loading donations...</div>;
+    return <div className="h-screen flex justify-center items-center"><Loading/></div>;
 
   if (donations.length === 0) {
     return (
@@ -51,7 +52,7 @@ const FeatureDonations = () => {
       <h2 className="text-2xl font-bold mb-4 text-[#00705c]">
         Feature Donations
       </h2>
-      <table className="table table-zebra rounded-xl shadow border">
+      <table className="table table-zebra rounded-xl shadow border border-base-100">
         <thead className="bg-[#00705c] text-white">
           <tr>
             <th>#</th>
@@ -79,7 +80,7 @@ const FeatureDonations = () => {
               <td>
                 <button
                   onClick={() => featureDonation.mutate(donation._id)}
-                  className="btn btn-sm bg-primary  text-white"
+                  className="btn btn-sm bg-[#00705c]  text-white"
                 >
                   Feature
                 </button>

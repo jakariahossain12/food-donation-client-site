@@ -97,13 +97,13 @@ const CheckoutForm = ({ roleRequestData }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-6 bg-white p-6 rounded-lg shadow-md max-w-md mx-auto"
+      className="space-y-6 bg-base-200 p-6 rounded-lg shadow-md max-w-md mx-auto"
     >
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-base-content mb-2">
           Card Details
         </label>
-        <div className="p-4 border border-gray-300 rounded-md shadow-sm bg-gray-50">
+        <div className="p-4 border border-gray-300 rounded-md shadow-sm bg-base-100">
           <CardElement
             options={{
               style: {

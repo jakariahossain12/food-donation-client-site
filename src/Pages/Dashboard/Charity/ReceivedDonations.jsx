@@ -65,7 +65,7 @@ const ReceivedDonations = () => {
         {received.map((donation) => (
           <div
             key={donation._id}
-            className="bg-white rounded-2xl shadow-md border p-5 space-y-3 relative"
+            className="bg-base-200 rounded-2xl shadow-md border p-5 space-y-3 relative"
           >
             <h2 className="text-xl font-bold text-[#00705c]">
               {donation.donationTitle}
@@ -101,7 +101,7 @@ const ReceivedDonations = () => {
         className="fixed z-50 inset-0 overflow-y-auto"
       >
         <div className="flex items-center justify-center min-h-screen bg-black/50 p-4">
-          <Dialog.Panel className="bg-white rounded-xl p-6 w-full max-w-md space-y-4">
+          <Dialog.Panel className="bg-base-100 rounded-xl p-6 w-full max-w-md space-y-4">
             <Dialog.Title className="text-lg font-bold">
               Leave a Review
             </Dialog.Title>

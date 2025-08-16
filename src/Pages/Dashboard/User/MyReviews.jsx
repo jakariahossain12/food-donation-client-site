@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { FaTrashAlt, FaStar } from "react-icons/fa";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
+import Loading from "../../../Component/Loading/Loading";
 
 const MyReviews = () => {
   const axiosSecure = useAxiosSecure();
@@ -35,7 +36,7 @@ const MyReviews = () => {
   });
 
   if (isLoading)
-    return <div className="text-center py-12">Loading reviews...</div>;
+    return <div className="text-center py-12"><Loading/></div>;
 
   if (reviews.length === 0) {
     return (
@@ -55,10 +56,10 @@ const MyReviews = () => {
         {reviews.map((review) => (
           <div
             key={review._id}
-            className="bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-lg transition duration-300 p-6 space-y-3 relative"
+            className="bg-base-200 border border-gray-200 rounded-2xl shadow-sm hover:shadow-lg transition duration-300 p-6 space-y-3 relative"
           >
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-bold text-gray-800">
+              <h3 className="text-xl font-bold text-base-content">
                 {review.donationTitle}
               </h3>
               <button
@@ -69,16 +70,14 @@ const MyReviews = () => {
               </button>
             </div>
 
-            <p className="text-gray-600 text-sm">
+            <p className="text-base-content text-sm">
               <strong>Restaurant:</strong> {review.restaurantName}
             </p>
-            <p className="text-gray-500 text-sm">
+            <p className="text-base-content text-sm">
               <strong>Reviewed On:</strong>{" "}
-              {review.date
-                ? format(new Date(review.date), "PPpp")
-                : "Unknown"}
+              {review.date ? format(new Date(review.date), "PPpp") : "Unknown"}
             </p>
-            <p className="text-gray-700 mt-2">{review.reviewText}</p>
+            <p className="text-base-content mt-2">{review.reviewText}</p>
 
             {review.rating && (
               <div className="flex items-center gap-1 text-yellow-500 text-sm">

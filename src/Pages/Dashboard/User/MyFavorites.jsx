@@ -6,6 +6,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Link } from "react-router";
+import Loading from "../../../Component/Loading/Loading";
 
 const MyFavorites = () => {
   const { user } = useAuth();
@@ -40,7 +41,7 @@ const MyFavorites = () => {
   });
 
   if (isLoading) {
-    return <div className="text-center py-10">Loading favorites...</div>;
+    return <div className="text-center py-10"><Loading/></div>;
   }
 
   return (
@@ -56,7 +57,7 @@ const MyFavorites = () => {
           {favorites.map((fav) => (
             <div
               key={fav._id}
-              className="card bg-white shadow-lg rounded-lg overflow-hidden border"
+              className="card bg-base-200 shadow-lg rounded-lg overflow-hidden border"
             >
               <figure>
                 <img
@@ -82,7 +83,7 @@ const MyFavorites = () => {
 
                 <div className="card-actions justify-between mt-4">
                   <Link
-                    to={`/donations/${fav.donationId}`}
+                    to={`/donations-details/${fav.donationId}`}
                     className="btn btn-success btn-sm"
                   >
                     Details

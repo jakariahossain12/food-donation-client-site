@@ -1,8 +1,29 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+
+@plugin "daisyui" {
+  themes: light, dark, cupcake;
+}
+
+
+
+
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
   --color-primary: #00705C;
   --color-secondary: #fdd65b;
+  --color-accent: #f6fefc;
+
+  --color-neutral: #1F2937;       /* Neutral dark */
+  --color-base-100: #FFFFFF;      /* Background */
+  --color-base-200: #F9FAFB;      /* Card background */
+  --color-base-300: #f6fefc;      /* Border */
+  --color-base-content: #101828;   /* default text */
+
+  --color-info: #3B82F6;
+  --color-success: #22C55E;
+  --color-warning: #fbbf24;
+  --color-error: #EF4444;
 }

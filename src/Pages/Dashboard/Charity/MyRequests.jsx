@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { FaTimesCircle } from "react-icons/fa";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
+import Loading from "../../../Component/Loading/Loading";
 
 const MyRequests = () => {
   const axiosSecure = useAxiosSecure();
@@ -41,7 +42,7 @@ const MyRequests = () => {
     cancelMutation.mutate(id);
   };
 
-    if (isLoading) return <div className="text-center py-10">Loading...</div>;
+    if (isLoading) return <div className="text-center py-10"><Loading/></div>;
     
 
 
@@ -65,7 +66,7 @@ const MyRequests = () => {
 
 
   return (
-    <div className="max-w-5xl mx-auto p-6">
+    <div className="w-full min-h-screen  mx-auto p-6">
       <h2 className="text-2xl font-bold mb-6 text-center text-[#00705c]">
         📋 My Donation Requests
       </h2>
@@ -73,7 +74,7 @@ const MyRequests = () => {
         {requests.map((req) => (
           <div
             key={req._id}
-            className="bg-white shadow-lg rounded-xl p-5 border-l-4"
+            className="bg-base-200 shadow-lg rounded-xl p-5 border-l-4"
             style={{
               borderColor:
                 req.status === "Accepted"
@@ -88,13 +89,13 @@ const MyRequests = () => {
             <h3 className="text-xl font-semibold text-[#00705c]">
               {req.donationTitle}
             </h3>
-            <p className="text-gray-600">
+            <p className="text-base-content">
               <strong>Restaurant:</strong> {req.restaurantName}
             </p>
-            <p className="text-gray-600">
+            <p className="text-base-content">
               <strong>Food Type:</strong> {req.type || "N/A"}
             </p>
-            <p className="text-gray-600">
+            <p className="text-base-content">
               <strong>Quantity:</strong> {req.quantity || "N/A"}
             </p>
 

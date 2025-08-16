@@ -53,7 +53,7 @@ const MyProfile = () => {
   const showRole = role && role !== "iooo";
 
   return (
-    <div className="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-2xl p-6">
+    <div className="w-11/12 mx-auto mt-10 bg-base-100 shadow-lg rounded-2xl p-6">
       <div className="flex flex-col items-center text-center">
         <div className="relative w-28 h-28 mb-4">
           <img

@@ -81,7 +81,7 @@ const RequestCharityRole = () => {
   }
 
   return (
-    <div className="max-w-xl mx-auto bg-white shadow-md p-6 rounded-xl mt-10">
+    <div className="max-w-xl mx-auto bg-base-100 shadow-md p-6 rounded-xl mt-10">
       <h2 className="text-2xl font-bold text-[#00705c] mb-6 text-center">
         Request Charity Role
       </h2>
@@ -91,7 +91,7 @@ const RequestCharityRole = () => {
           <input
             value={user?.displayName || ""}
             readOnly
-            className="w-full px-3 py-2 border rounded-md bg-gray-100"
+            className="w-full px-3 py-2 border rounded-md bg-base-200"
           />
         </div>
 
@@ -100,7 +100,7 @@ const RequestCharityRole = () => {
           <input
             value={user?.email || ""}
             readOnly
-            className="w-full px-3 py-2 border rounded-md bg-gray-100"
+            className="w-full px-3 py-2 border rounded-md bg-base-200"
           />
         </div>
 
@@ -150,7 +150,7 @@ const RequestCharityRole = () => {
       {/* Open the modal using document.getElementById('ID').showModal() method */}
 
       {isModalOpen && (
-        <dialog ref={modalRef} id="my_modal_1" className="modal">
+        <dialog ref={modalRef} id="my_modal_1" className="modal ">
           <div className="modal-box">
             <h3 className="font-bold text-lg">Pay for Charity </h3>
             <PymentElements roleRequestData={roleRequestData}></PymentElements>

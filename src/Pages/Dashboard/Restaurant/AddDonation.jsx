@@ -43,7 +43,7 @@ const AddDonation = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto bg-white shadow-xl rounded-xl mt-10 p-8">
+    <div className="max-w-2xl mx-auto bg-base-100 shadow-xl rounded-xl mt-10 p-8">
       <h2 className="text-3xl font-bold text-center text-[#00705c] mb-6">
         Add Surplus Food Donation
       </h2>
@@ -51,7 +51,7 @@ const AddDonation = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {/* Title */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-base-content">
             Donation Title
           </label>
           <input
@@ -67,7 +67,7 @@ const AddDonation = () => {
 
         {/* Food Type */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-base-content">
             Food Type
           </label>
           <input
@@ -83,7 +83,7 @@ const AddDonation = () => {
 
         {/* Quantity */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-base-content">
             Quantity (kg or portions)
           </label>
           <input
@@ -127,33 +127,33 @@ const AddDonation = () => {
         {/* Restaurant Info */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-base-content">
               Restaurant Name
             </label>
             <input
               value={user?.displayName || ""}
               {...register("name", { required: true })}
               readOnly
-              className="w-full mt-1 px-4 py-2 border bg-gray-100 rounded-lg"
+              className="w-full mt-1 px-4 py-2 border bg-base-100 rounded-lg"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-base-content">
               Restaurant Email
             </label>
             <input
               value={user?.email || ""}
               {...register("email", { required: true })}
               readOnly
-              className="w-full mt-1 px-4 py-2 border bg-gray-100 rounded-lg"
+              className="w-full mt-1 px-4 py-2 border bg-base-100 rounded-lg"
             />
           </div>
         </div>
 
         {/* Location */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-base-content">
             Location (Address or Coordinates)
           </label>
           <input
@@ -169,7 +169,7 @@ const AddDonation = () => {
 
         {/* Image Upload */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-base-content mb-1">
             Upload Image
           </label>
           <input

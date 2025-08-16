@@ -1,6 +1,7 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
+import Loading from "../../../Component/Loading/Loading";
 
 const ManageRequests = () => {
   const axiosSecure = useAxiosSecure();
@@ -34,7 +35,11 @@ const ManageRequests = () => {
   });
 
   if (isLoading)
-    return <div className="text-center py-10">Loading requests...</div>;
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <Loading />
+      </div>
+    );;
 
   if (requests.length === 0) {
     return (

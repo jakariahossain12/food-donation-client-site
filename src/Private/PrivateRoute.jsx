@@ -9,7 +9,11 @@ const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
   
   if (loading) {
-    return <Loading></Loading>
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <Loading />
+      </div>
+    );
   }
 
   if (!user) {

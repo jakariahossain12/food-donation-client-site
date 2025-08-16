@@ -74,7 +74,7 @@ const Login = () => {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full bg-primary hover:bg-[#005e4e] text-white py-2 rounded"
+            className="w-full bg-[#00705C] hover:bg-[#005e4e] text-white py-2 rounded"
           >
             Login
           </button>
@@ -82,12 +82,16 @@ const Login = () => {
         <GoogleButton></GoogleButton>
         <p>
           You have don't an account Please{" "}
-          <Link state={location?.state} className="text-blue-500 font-medium" to={"/register"}>
+          <Link
+            state={location?.state}
+            className="text-blue-500 font-medium"
+            to={"/register"}
+          >
             Sign Up
           </Link>
         </p>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 };

@@ -87,9 +87,9 @@ const ManageUsersTable = () => {
 
   return (
     <div className="overflow-x-auto">
-      <table className="min-w-full bg-white rounded-lg shadow-md border">
-        <thead>
-          <tr className="bg-[#00705c] text-white text-left">
+      <table className="table table-zebra rounded-lg shadow-md border">
+        <thead className="bg-[#00705c] text-white">
+          <tr className=" text-left">
             <th className="py-3 px-4">Name</th>
             <th className="py-3 px-4">Email</th>
             <th className="py-3 px-4">Role</th>
@@ -100,7 +100,7 @@ const ManageUsersTable = () => {
           {users?.map((user) => (
             <tr
               key={user._id}
-              className="border-t hover:bg-gray-50 transition duration-200"
+              className="border-t hover:bg-base-200 transition duration-200"
             >
               <td className="py-3 px-4">{user?.name}</td>
               <td className="py-3 px-4">{user?.email}</td>
@@ -111,7 +111,7 @@ const ManageUsersTable = () => {
                 <select
                   value={selectedRole[user._id] || ""}
                   onChange={(e) => handleSelectChange(user._id, e.target.value)}
-                  className="border rounded px-2 py-1 text-sm"
+                  className="border bg-base-200 rounded px-2 py-1 text-sm"
                 >
                   <option value="">Select Role</option>
                   <option value="admin">Admin</option>
@@ -130,7 +130,7 @@ const ManageUsersTable = () => {
                 </button>
 
                 <button
-                  onClick={() => handleDelete(user?._id,user?.uid)}
+                  onClick={() => handleDelete(user?._id, user?.uid)}
                   className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 text-sm rounded flex items-center gap-1"
                 >
                   <FaTrashAlt />

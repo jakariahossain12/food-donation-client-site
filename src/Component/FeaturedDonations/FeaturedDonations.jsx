@@ -2,11 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { Link } from "react-router";
+import Loading from "../Loading/Loading";
 
 const FeaturedDonations = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: dummyDonations = [] } = useQuery({
+  const { isLoading, data: dummyDonations = [] } = useQuery({
     queryKey: ["featuredDonations"],
     queryFn: async () => {
       const res = await axiosSecure.get("/featured-donations");
@@ -14,10 +15,14 @@ const FeaturedDonations = () => {
     },
   });
 
+  if (isLoading) {
+    return <Loading/>
+  }
+
   return (
-    <section className="py-16 px-4 bg-gray-50">
+    <section className="py-16 px-4 bg-base-200">
       <div className="w-11/12 mx-auto text-center mb-12">
-        <h2 className="text-4xl font-bold text-gray-800 mb-2">
+        <h2 className="text-4xl font-bold text-[#00705c] mb-2">
           Featured Donations
         </h2>
         <p className="text-gray-500">
@@ -29,7 +34,7 @@ const FeaturedDonations = () => {
         {dummyDonations.map((donation) => (
           <div
             key={donation._id}
-            className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition duration-300"
+            className="bg-base-100 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition duration-300"
           >
             <img
               src={donation.image}
@@ -52,11 +57,11 @@ const FeaturedDonations = () => {
                 </span>
               </div>
 
-              <h3 className="text-lg font-semibold text-gray-800">
+              <h3 className="text-lg font-semibold text-base-300">
                 {donation.restaurant}
               </h3>
               <p className="text-sm text-gray-500">{donation.location}</p>
-              <Link to={`donations/${donation._id}`}>
+              <Link to={`donations-details/${donation._id}`}>
                 <button className="mt-2 w-full bg-yellow-400 hover:bg-yellow-500 transition text-white font-medium py-2 rounded-lg">
                   View Details
                 </button>

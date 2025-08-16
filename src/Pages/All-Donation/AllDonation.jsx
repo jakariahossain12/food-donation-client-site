@@ -28,7 +28,7 @@ const AllDonation = () => {
   };
 
   return (
-    <div className=" bg-gray-50">
+    <div className=" bg-base-200 min-h-screen ">
       {/* Always show the header */}
       <div className="text-center py-8 w-11/12 mx-auto px-4">
         <h2 className="text-4xl font-bold text-[#00705c]">
@@ -63,7 +63,7 @@ const AllDonation = () => {
         </div>
       ) : (
         // Show donations grid
-        <div className="w-11/12 mx-auto px-4 min-h-screen   grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-4">
+        <div className="w-11/12 mx-auto px-4   grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 py-4">
           {donations.map((donation) => (
             <DonationCard key={donation._id} donation={donation} />
           ))}

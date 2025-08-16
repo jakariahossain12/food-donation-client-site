@@ -4,12 +4,12 @@ import groupPhoto from "/donation-group.png";
 
 const ContactSection = () => {
   return (
-    <section className="bg-[#f8f8f8] py-16 px-4">
+    <section className="bg-base-200 py-16 px-4">
       <div className="text-center">
         <p className="text-sm uppercase text-gray-500 tracking-widest">
           Contact Us
         </p>
-        <h2 className="text-4xl font-bold text-gray-800 mt-2 mb-6 leading-tight">
+        <h2 className="text-4xl font-bold text-base-content mt-2 mb-6 leading-tight">
           We Love to Hear from Our <br /> Happy Customers
         </h2>
       </div>
@@ -46,27 +46,27 @@ const ContactSection = () => {
         </div>
 
         {/* Right: Form */}
-        <div className="bg-white p-8 rounded-2xl shadow-md">
+        <div className="bg-base-100 p-8 rounded-2xl shadow-md">
           <form className="space-y-4">
             <input
               type="text"
               placeholder="Name"
-              className="w-full p-3 rounded-md bg-[#f8f8f8] border border-gray-300 outline-yellow-500"
+              className="w-full p-3 rounded-md bg-base-200 border border-gray-300 outline-yellow-500"
             />
             <input
               type="email"
               placeholder="Email"
-              className="w-full p-3 rounded-md bg-[#f8f8f8] border border-gray-300 outline-yellow-500"
+              className="w-full p-3 rounded-md bg-base-200 border border-gray-300 outline-yellow-500"
             />
             <input
               type="tel"
               placeholder="Phone"
-              className="w-full p-3 rounded-md bg-[#f8f8f8] border border-gray-300 outline-yellow-500"
+              className="w-full p-3 rounded-md bg-base-200 border border-gray-300 outline-yellow-500"
             />
             <textarea
               placeholder="Message"
               rows="4"
-              className="w-full p-3 rounded-md bg-[#f8f8f8] border border-gray-300 outline-yellow-500"
+              className="w-full p-3 rounded-md bg-base-200 border border-gray-300 outline-yellow-500"
             ></textarea>
 
             <button

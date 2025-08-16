@@ -3,21 +3,21 @@ import { FaUsers } from "react-icons/fa";
 
 const HeroSection = () => {
   return (
-    <section className="bg-gray-50 py-12">
+    <section className="bg-base-200 py-12">
       <div className="w-11/12 mx-auto px-6 md:px-10 flex flex-col-reverse md:flex-row items-center gap-10">
         {/* Text Content */}
         <div className="md:w-1/2">
           <p className="text-sm font-semibold text-gray-600 mb-2 uppercase">
             Always donate for childrens
           </p>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-base-content mb-4">
             Lend a Helping Hand to Those in Need
           </h1>
           <p className="text-gray-600 mb-6">
             We help companies develop powerful corporate social responsibility,
             grantmaking, and employee engagement strategies.
           </p>
-          <button className="bg-primary  text-white px-6 py-3 rounded-md font-semibold">
+          <button className="bg-[#00705c]  text-white px-6 py-3 rounded-md font-semibold">
             Donate Now
           </button>
         </div>

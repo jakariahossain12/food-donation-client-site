@@ -16,7 +16,9 @@ const AdminRoute = ({children}) => {
           },
         });
         if (loading || isLoading) {
-          return <Loading></Loading>;
+          return <div className="h-screen flex justify-center items-center">
+              <Loading />
+            </div>;
         }
         if (data.role !== "admin") {
           userSignOut()

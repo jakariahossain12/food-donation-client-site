@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { FaHandHoldingHeart } from "react-icons/fa";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Loading from "../Loading/Loading";
 
 
 const LatestCharityRequests = () => {
@@ -17,11 +18,11 @@ const LatestCharityRequests = () => {
   });
 
   if (isLoading) {
-    return <div className="text-center py-10">Loading latest requests...</div>;
+    return <div className="text-center py-10"><Loading/></div>;
   }
 
   return (
-    <section className="py-10 px-4 md:px-8 bg-[#f6fefc]">
+    <section className="py-10 px-4 md:px-8 bg-base-100">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl font-bold text-[#00705c] mb-6 flex items-center gap-2">
           <FaHandHoldingHeart className="text-pink-600" /> Latest Charity
