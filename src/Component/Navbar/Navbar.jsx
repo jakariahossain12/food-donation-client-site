@@ -23,11 +23,11 @@ const Navbar = () => {
       <li>
         <NavLink to={"/"}>Home</NavLink>
       </li>
-      {user && (
+      
         <li>
           <NavLink to={"/donations"}>All Donations</NavLink>
         </li>
-      )}
+      
       {user && (
         <li>
           <NavLink to={"/dashboard"}>Dashboard</NavLink>

@@ -10,7 +10,7 @@ import Loading from "../../Component/Loading/Loading";
 const DonationDetails = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
-  const { user,loading } = useAuth();
+  const { user, loading } = useAuth();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reviewModal, setReviewModal] = useState(false);
@@ -19,10 +19,7 @@ const DonationDetails = () => {
   const [rating, setRating] = useState(5);
   const [reviewText, setReviewText] = useState("");
 
-  const {
-    data: donation = {},
-    isLoading,
-  } = useQuery({
+  const { data: donation = {}, isLoading } = useQuery({
     queryKey: ["donationDetails", id],
     queryFn: async () => {
       const res = await axiosSecure.get(`/donation?id=${id}`);
@@ -30,29 +27,21 @@ const DonationDetails = () => {
     },
   });
 
-
   const { data = {} } = useQuery({
-    queryKey: ["user", user.email],
+    queryKey: ["user", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/user?email=${user?.email}`);
       return res.data;
     },
   });
 
-
-   const {
-     data: reviews = {},
-     refetch,
-   } = useQuery({
-     queryKey: ["review", id],
-     queryFn: async () => {
-       const res = await axiosSecure.get(`/review?id=${id}`);
-       return res.data;
-     },
-   });
-
-
-
+  const { data: reviews = {}, refetch } = useQuery({
+    queryKey: ["review", id],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/review?id=${id}`);
+      return res.data;
+    },
+  });
 
   // Save to favorites mutation
   const { mutate, isPending } = useMutation({
@@ -93,24 +82,34 @@ const DonationDetails = () => {
       toast.error("You’ve already sent Donation request .");
     },
   });
- 
-  const handleRequestSubmit = async () => {
 
-    if (data?.role !== 'charity') {
-      return toast.warning('your not charity')
+
+  const modelOpen = () => {
+    if (!user) {
+      toast.warning("Please log in to Request donations.");
+      return;
+    } else {
+      setIsModalOpen(true);
     }
-   
+    
+  }
 
+  const handleRequestSubmit = async () => {
+    
+
+    if (data?.role !== "charity") {
+      return toast.warning("your not charity");
+    }
 
     const requestData = {
       donationId: donation._id,
       donationTitle: donation.title,
       restaurantName: donation.name,
-      restaurantEmail: donation.email,
-      quantity:donation.quantity,
-      type:donation.type,
-      charityName: user.displayName,
-      charityEmail: user.email,
+      restaurantEmail: donation?.email,
+      quantity: donation.quantity,
+      type: donation.type,
+      charityName: user?.displayName,
+      charityEmail: user?.email,
       description,
       pickupTime,
       status: "Pending",
@@ -121,6 +120,16 @@ const DonationDetails = () => {
     setIsModalOpen(false);
   };
 
+
+  const modelReview = () => {
+    if (!user) {
+      toast.warning("Please log in to review donation.");
+      return;
+    } else {
+      setReviewModal(true);
+    }
+  };
+
   // add review
   const donationReview = useMutation({
     mutationFn: async (reviewData) => {
@@ -128,7 +137,7 @@ const DonationDetails = () => {
       return res.data;
     },
     onSuccess: () => {
-      refetch()
+      refetch();
       setReviewModal(false);
     },
   });
@@ -136,11 +145,11 @@ const DonationDetails = () => {
   const handleAddReview = async () => {
     const reviewData = {
       donationId: donation._id,
-      donationTitle:donation.title,
+      donationTitle: donation.title,
       restaurantName: donation.name,
-      restaurantEmail:donation.email,
-      reviewerName: user.displayName,
-      reviewerEmail: user.email,
+      restaurantEmail: donation.email,
+      reviewerName: user?.displayName,
+      reviewerEmail: user?.email,
       rating,
       reviewText,
       date: new Date(),
@@ -149,11 +158,12 @@ const DonationDetails = () => {
     donationReview.mutate(reviewData);
   };
 
-  if (isLoading||loading) return (
-    <div className="h-screen flex justify-center items-center">
-      <Loading />
-    </div>
-  );;
+  if (isLoading || loading)
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <Loading />
+      </div>
+    );
 
   return (
     <div className="min-h-screen bg-base-200 py-10">
@@ -192,14 +202,11 @@ const DonationDetails = () => {
             <FaHeart />
             {isPending ? "Saving..." : "Save to Favorites"}
           </button>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="btn btn-success"
-          >
+          <button onClick={() => modelOpen()} className="btn btn-success">
             Request Donation
           </button>
           <button
-            onClick={() => setReviewModal(true)}
+            onClick={() => modelReview()}
             className="btn btn-warning"
           >
             Add Review
