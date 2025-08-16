@@ -137,7 +137,8 @@ const Navbar = () => {
               <input
                 type="checkbox"
                 className="theme-controller"
-                value="cupcake"
+                value={theme}
+                onChange={() => setTheme(theme === "light" ? "dark" : "light")}
               />
 
               {/* sun icon */}
