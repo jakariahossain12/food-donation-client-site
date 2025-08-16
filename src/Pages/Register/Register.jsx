@@ -7,6 +7,7 @@ import { uploadToImgbb } from "../../Utils/Utils";
 import { useState } from "react";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
+import Navbar from "../../Component/Navbar/Navbar";
 
 const Register = () => {
   const {
@@ -86,78 +87,83 @@ const Register = () => {
   };
 
   return (
-    <div className="h-screen flex items-center justify-center">
-      <div className="w-md mx-auto mt-10 p-6   rounded shadow space-y-3">
-        <h2 className="text-2xl font-semibold mb-4 text-center">Register</h2>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {/* Name */}
-          <div>
-            <label className="block font-medium">Name</label>
-            <input
-              type="text"
-              {...register("name", { required: "Name is required" })}
-              className="w-full p-2 border rounded"
-            />
-            {errors.name && (
-              <p className="text-red-500 text-sm">{errors.name.message}</p>
-            )}
-          </div>
+    <>
+      <Navbar></Navbar>
+      <div className="h-screen bg-base-200 flex items-center justify-center">
+        <div className="w-md mx-auto mt-10 p-6   rounded shadow space-y-3">
+          <h2 className="text-2xl font-semibold mb-4 text-center">Register</h2>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            {/* Name */}
+            <div>
+              <label className="block font-medium">Name</label>
+              <input
+                type="text"
+                {...register("name", { required: "Name is required" })}
+                className="w-full p-2 border rounded"
+              />
+              {errors.name && (
+                <p className="text-red-500 text-sm">{errors.name.message}</p>
+              )}
+            </div>
 
-          {/* Image URL */}
-          <div>
-            <label className="block font-medium">Image URL</label>
-            <input
-              type="file"
-              required
-              onChange={handelImage}
-              className="w-full p-2 border rounded"
-            />
-          </div>
+            {/* Image URL */}
+            <div>
+              <label className="block font-medium">Image URL</label>
+              <input
+                type="file"
+                required
+                onChange={handelImage}
+                className="w-full p-2 border rounded"
+              />
+            </div>
 
-          {/* Email */}
-          <div>
-            <label className="block font-medium">Email</label>
-            <input
-              type="email"
-              {...register("email", { required: "Email is required" })}
-              className="w-full p-2 border rounded"
-            />
-            {errors.email && (
-              <p className="text-red-500 text-sm">{errors.email.message}</p>
-            )}
-          </div>
+            {/* Email */}
+            <div>
+              <label className="block font-medium">Email</label>
+              <input
+                type="email"
+                {...register("email", { required: "Email is required" })}
+                className="w-full p-2 border rounded"
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email.message}</p>
+              )}
+            </div>
 
-          {/* Password */}
-          <div>
-            <label className="block font-medium">Password</label>
-            <input
-              type="password"
-              {...register("password", { required: "Password is required" })}
-              className="w-full p-2 border rounded"
-            />
-            {errors.password && (
-              <p className="text-red-500 text-sm">{errors.password.message}</p>
-            )}
-          </div>
+            {/* Password */}
+            <div>
+              <label className="block font-medium">Password</label>
+              <input
+                type="password"
+                {...register("password", { required: "Password is required" })}
+                className="w-full p-2 border rounded"
+              />
+              {errors.password && (
+                <p className="text-red-500 text-sm">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
 
-          {/* Submit */}
-          <button
-            type="submit"
-            className="w-full bg-[#00705C] hover:bg-[#005e4e] text-white py-2 rounded"
-          >
-            Register
-          </button>
-        </form>
-        <GoogleButton></GoogleButton>
-        <p>
-          You have already an account Please{" "}
-          <Link className="text-blue-500 font-medium" to={"/login"}>
-            Login
-          </Link>
-        </p>
+            {/* Submit */}
+            <button
+              type="submit"
+              className="w-full bg-[#00705C] hover:bg-[#005e4e] text-white py-2 rounded"
+            >
+              Register
+            </button>
+          </form>
+          <GoogleButton></GoogleButton>
+          <p>
+            You have already an account Please{" "}
+            <Link className="text-blue-500 font-medium" to={"/login"}>
+              Login
+            </Link>
+          </p>
+        </div>
+        <ToastContainer />
       </div>
-      <ToastContainer />
-    </div>
+    </>
   );
 };
 
