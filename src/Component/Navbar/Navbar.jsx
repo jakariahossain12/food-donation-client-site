@@ -23,11 +23,14 @@ const Navbar = () => {
       <li>
         <NavLink to={"/"}>Home</NavLink>
       </li>
-      
-        <li>
-          <NavLink to={"/donations"}>All Donations</NavLink>
-        </li>
-      
+
+      <li>
+        <NavLink to={"/donations"}>All Donations</NavLink>
+      </li>
+      <li>
+        <NavLink to={"/about"}>about</NavLink>
+      </li>
+
       {user && (
         <li>
           <NavLink to={"/dashboard"}>Dashboard</NavLink>
