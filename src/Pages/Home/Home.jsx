@@ -7,6 +7,8 @@ import StatsAndFAQ from '../../Component/StatsAndFAQ/StatsAndFAQ';
 import FeaturedDonations from '../../Component/FeaturedDonations/FeaturedDonations';
 import LatestCharityRequests from '../../Component/LatestCharityRequests/LatestCharityRequests';
 import Services from '../../Component/Services/Services';
+import SuccessStories from '../../Component/SuccessStories/SuccessStories';
+import PartnerShowcase from '../../Component/PartnerShowcase/PartnerShowcase';
 
 const Home = () => {
     return (
@@ -15,7 +17,9 @@ const Home = () => {
             <BottomSection />
             <FeaturedDonations />
             <LatestCharityRequests />
-            <Services/>
+            <Services />
+            <SuccessStories />
+            <PartnerShowcase/>
             <StatsAndFAQ/>
             <ContactSection/>
         </div>
