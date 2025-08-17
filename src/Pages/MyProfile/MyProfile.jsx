@@ -20,7 +20,7 @@ const MyProfile = () => {
     },
   });
 
-  const { name, image, role } = data;
+  const { name, image, role, email } = data;
   const {
     register,
     handleSubmit,
@@ -66,6 +66,7 @@ const MyProfile = () => {
         {!editing ? (
           <>
             <h2 className="text-2xl font-bold text-[#00705c]">{name}</h2>
+            <p className="text-2xl font-bold text-[#00705c]">Email : {email}</p>
 
             {showRole && (
               <span className="mt-2 inline-block bg-[#fdd65b] text-[#00705c] text-sm font-semibold px-4 py-1 rounded-full shadow-sm">
