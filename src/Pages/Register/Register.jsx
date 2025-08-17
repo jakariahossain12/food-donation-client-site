@@ -32,7 +32,7 @@ const Register = () => {
   });
 
   const onSubmit = async (data) => {
-    const { name, email, password } = data;
+    const { name, email, password,role } = data;
 
     // Password validation
     const capitalRegex = /[A-Z]/;
@@ -68,7 +68,7 @@ const Register = () => {
           email,
           uid:res?.user?.uid,
           imageUrl,
-          role:'user',
+          role,
           create_at: new Date().toISOString(),
           last_login: new Date().toISOString(),
         };
@@ -115,6 +115,23 @@ const Register = () => {
                 onChange={handelImage}
                 className="w-full p-2 border rounded"
               />
+            </div>
+            {/* select your role */}
+            <div>
+              <legend className=" block font-medium">
+                Select your role for testing
+              </legend>
+              <select
+                {...register("role", { required: "Select your role" })}
+                defaultValue="Pick a browser"
+                className="select w-full p-2 border rounded"
+              >
+                <option disabled={true}>select role</option>
+                <option>user</option>
+                <option>charity</option>
+                <option>restaurant</option>
+                <option>admin</option>
+              </select>
             </div>
 
             {/* Email */}
