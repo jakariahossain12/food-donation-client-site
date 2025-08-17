@@ -6,6 +6,7 @@ import ContactSection from '../../Component/ContactSection/ContactSection';
 import StatsAndFAQ from '../../Component/StatsAndFAQ/StatsAndFAQ';
 import FeaturedDonations from '../../Component/FeaturedDonations/FeaturedDonations';
 import LatestCharityRequests from '../../Component/LatestCharityRequests/LatestCharityRequests';
+import Services from '../../Component/Services/Services';
 
 const Home = () => {
     return (
@@ -13,7 +14,8 @@ const Home = () => {
             <HeroSection />
             <BottomSection />
             <FeaturedDonations />
-            <LatestCharityRequests/>
+            <LatestCharityRequests />
+            <Services/>
             <StatsAndFAQ/>
             <ContactSection/>
         </div>
