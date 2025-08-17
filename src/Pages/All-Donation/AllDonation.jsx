@@ -29,6 +29,7 @@ const AllDonation = () => {
 
   return (
     <div className=" bg-base-200 min-h-screen ">
+      {window.scroll(0, 0)}
       {/* Always show the header */}
       <div className="text-center py-8 w-11/12 mx-auto px-4">
         <h2 className="text-4xl font-bold text-[#00705c]">

@@ -26,7 +26,7 @@ const Footer = () => {
         {/* Nav links */}
         <ul className="flex flex-wrap justify-center gap-6 text-sm font-medium text-gray-300">
           <li className="text-yellow-400">
-            <Link to={'/'}>Home</Link>
+            <Link to={"/"}>Home</Link>
           </li>
           <li>About</li>
           <li>Services</li>
@@ -41,13 +41,21 @@ const Footer = () => {
 
         {/* Social media icons */}
         <div className="flex justify-center gap-4 text-lg">
-          <a href="#" className="text-gray-300 hover:text-yellow-400">
+          <a
+            href="https://www.facebook.com/jakaria.khan.1848816"
+            target="_blank"
+            className="text-gray-300 hover:text-yellow-400"
+          >
             <FaFacebookF />
           </a>
           <a href="#" className="text-gray-300 hover:text-yellow-400">
             <FaTwitter />
           </a>
-          <a href="#" className="text-gray-300 hover:text-yellow-400">
+          <a
+            href="https://www.instagram.com/md_jakariakhan/"
+            target="_blank"
+            className="text-gray-300 hover:text-yellow-400"
+          >
             <FaInstagram />
           </a>
           <a href="#" className="text-gray-300 hover:text-yellow-400">

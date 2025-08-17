@@ -167,6 +167,7 @@ const DonationDetails = () => {
 
   return (
     <div className="min-h-screen bg-base-200 py-10">
+      {window.scroll(0,0) }
       <div className="max-w-3xl bg-base-100 mx-auto   p-6  rounded-lg shadow-md  relative z-10">
         <img
           src={donation.image}
