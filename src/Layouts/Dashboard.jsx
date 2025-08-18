@@ -20,7 +20,7 @@ import {
   MdInsights,
 } from "react-icons/md";
 
-import './dashboard.css'
+import "./dashboard.css";
 import { ToastContainer } from "react-toastify";
 import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../hooks/useAxiosSecure";
@@ -28,36 +28,48 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../Component/Loading/Loading";
 
 const Dashboard = () => {
-
-
   const { user, loading } = useAuth();
   const axiosSecure = useAxiosSecure();
-  
 
-  const { data = {}, isLoading } = useQuery({
-    queryKey: ["user", user.email],
+  const {
+    data = {},
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["user", user?.email],
+    enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/user?email=${user?.email}`);
+      const res = await axiosSecure.get(`/user?email=${user.email}`);
       return res.data;
     },
   });
+
   if (loading || isLoading) {
-    return <Loading></Loading>;
+    return <Loading />;
   }
 
+  if (isError) {
+    return (
+      <p className="text-red-500 text-center mt-10">Failed to load user data</p>
+    );
+  }
 
+  const role = data?.role || "guest";
 
-
+  // Helper function for NavLink styling
+  const navLinkClass = ({ isActive }) =>
+    isActive
+      ? "active flex items-center gap-3 px-3 py-2"
+      : "flex items-center gap-3 px-3 py-2";
 
   return (
-    <div className="drawer lg:drawer-open">
+    <div className="drawer  lg:drawer-open">
       <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
 
-      {/* Page Content Area */}
+      {/* Page Content */}
       <div className="drawer-content flex flex-col">
-        {/* Navbar - shown only on small screens */}
-        <div className="navbar bg-base-300 px-4 lg:hidden">
-          {/* Hamburger */}
+        {/* Mobile Navbar */}
+        <div className="navbar bg-base-300 px-4 lg:hidden shadow-md">
           <div className="flex-none">
             <label
               htmlFor="dashboard-drawer"
@@ -78,25 +90,23 @@ const Dashboard = () => {
               </svg>
             </label>
           </div>
-
-          {/* Title (optional, remove if not needed) */}
-          <div className="flex-1 text-lg font-medium pl-2">Dashboard</div>
+          <div className="flex-1 text-lg font-semibold pl-2">Dashboard</div>
         </div>
 
         {/* Main content */}
-        <div className="p-4">
+        <div className="p-6">
           <Outlet />
         </div>
       </div>
 
       {/* Sidebar */}
-      <div className="drawer-side">
+      <div className="drawer-side ">
         <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
-        <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content font-bold">
-          {/* Sidebar items */}
-          <div className="flex gap-1 mb-10">
-            <div className="bg-yellow-400 w-8 h-8 rounded-full flex items-center justify-center">
-              <div className="bg-green-600 w-5 h-5 rounded-full" />
+        <ul className="menu bg-base-200 p-4 w-80 min-h-full  text-base-content font-medium shadow-xl rounded-r-2xl">
+          {/* Logo */}
+          <div className="flex gap-2 mb-10 items-center px-2">
+            <div className="bg-amber-400 w-10 h-10 rounded-full flex items-center justify-center shadow-md">
+              <div className="bg-teal-600 w-6 h-6 rounded-full" />
             </div>
             <Link
               to="/"
@@ -106,182 +116,154 @@ const Dashboard = () => {
               FoodShare
             </Link>
           </div>
-          {/* user nav link */}
+
+          {/* DashboardOverview */}
           <li>
-            <Link
-              to={"/dashboard"}
-              className="flex items-center gap-2"
-            >
-              <MdPerson /> My Profile
-            </Link>
+            <NavLink to="/dashboard">
+              <MdDashboard size={20} /> DashboardOverview
+            </NavLink>
           </li>
-          {["user", "charity"].includes(data.role) && (
-            <li>
-              <NavLink
-                to={"/dashboard/request-charity"}
-                className="flex items-center gap-2"
-              >
-                <MdVolunteerActivism /> Request Charity Role
-              </NavLink>
-            </li>
+
+          {/* Profile */}
+          <li>
+            <NavLink to="/dashboard/profile">
+              <MdPerson size={20} /> My Profile
+            </NavLink>
+          </li>
+
+          {/* User + Charity */}
+          {["user", "charity"].includes(role) && (
+            <>
+              <li>
+                <NavLink
+                  to="/dashboard/request-charity"
+                  className={navLinkClass}
+                >
+                  <MdVolunteerActivism size={20} /> Request Charity Role
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/favorites" className={navLinkClass}>
+                  <MdFavorite size={20} /> Favorites
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/transaction-history"
+                  className={navLinkClass}
+                >
+                  <MdHistory size={20} /> Transaction History
+                </NavLink>
+              </li>
+            </>
           )}
-          {["user", "charity"].includes(data.role) && (
+
+          {/* User + Restaurant */}
+          {["restaurant", "user"].includes(role) && (
             <li>
-              <NavLink
-                to={"/dashboard/favorites"}
-                className="flex items-center gap-2"
-              >
-                <MdFavorite /> Favorites
-              </NavLink>
-            </li>
-          )}
-          { ["restaurant",'user'].includes(data.role) && (
-            <li>
-              <NavLink
-                to={"/dashboard/my-reviews"}
-                className="flex items-center gap-2"
-              >
-                <MdRateReview /> My Reviews
-              </NavLink>
-            </li>
-          )}
-          {["user", "charity"].includes(data.role) && (
-            <li>
-              <NavLink
-                to={"/dashboard/transaction-history"}
-                className="flex items-center gap-2"
-              >
-                <MdHistory /> Transaction History
-              </NavLink>
-            </li>
-          )}
-          {/* admin */}
-          {data.role === "admin" && (
-            <li>
-              <NavLink
-                to={"/dashboard/manage-donations"}
-                className="flex items-center gap-2"
-              >
-                <MdDashboard /> Manage Donations
-              </NavLink>
-            </li>
-          )}
-          {data.role === "admin" && (
-            <li>
-              <NavLink
-                to={"/dashboard/manage-users"}
-                className="flex items-center gap-2"
-              >
-                <MdPeople /> Manage Users
-              </NavLink>
-            </li>
-          )}
-          {data.role === "admin" && (
-            <li>
-              <NavLink
-                to={"/dashboard/manage-role-requests"}
-                className="flex items-center gap-2"
-              >
-                <MdAssignmentInd /> Manage Role Requests
-              </NavLink>
-            </li>
-          )}
-          {data.role === "admin" && (
-            <li>
-              <NavLink
-                to={"/dashboard/manage-requests"}
-                className="flex items-center gap-2"
-              >
-                <MdListAlt /> Manage Requests
-              </NavLink>
-            </li>
-          )}
-          {data.role === "admin" && (
-            <li>
-              <NavLink
-                to={"/dashboard/feature-donations"}
-                className="flex items-center gap-2"
-              >
-                <MdStar /> Feature Donations
-              </NavLink>
-            </li>
-          )}
-          {/* charity */}
-          {data.role === "charity" && (
-            <li>
-              <NavLink
-                to={"/dashboard/my-requests"}
-                className="flex items-center gap-2"
-              >
-                <MdAssignment /> My Requests
-              </NavLink>
-            </li>
-          )}
-          {data.role === "charity" && (
-            <li>
-              <NavLink
-                to={"/dashboard/my-pickups"}
-                className="flex items-center gap-2"
-              >
-                <MdLocalShipping /> My Pickups
+              <NavLink to="/dashboard/my-reviews" className={navLinkClass}>
+                <MdRateReview size={20} /> My Reviews
               </NavLink>
             </li>
           )}
 
-          {data.role === "charity" && (
-            <li>
-              <NavLink
-                to={"/dashboard/my-received-donations"}
-                className="flex items-center gap-2"
-              >
-                <MdCardGiftcard /> Received Donations
-              </NavLink>
-            </li>
-          )}
-          {/* Restaurant  */}
-          {data.role === "restaurant" && (
-            <li>
-              <NavLink
-                to={"/dashboard/add-donation"}
-                className="flex items-center gap-2"
-              >
-                <MdAddBox /> Add Donation
-              </NavLink>
-            </li>
-          )}
-          {data.role === "restaurant" && (
-            <li>
-              <NavLink
-                to={"/dashboard/my-donations"}
-                className="flex items-center gap-2"
-              >
-                <MdInventory /> My Donations
-              </NavLink>
-            </li>
-          )}
-
-          
-
-          {data.role === "restaurant" && (
-            <li>
-              <NavLink
-                to={"/dashboard/requested-donations"}
-                className="flex items-center gap-2"
-              >
-                <MdMoveToInbox /> Requested Donations
-              </NavLink>
-            </li>
+          {/* Admin */}
+          {role === "admin" && (
+            <>
+              <li>
+                <NavLink
+                  to="/dashboard/manage-donations"
+                  className={navLinkClass}
+                >
+                  <MdDashboard size={20} /> Manage Donations
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/manage-users" className={navLinkClass}>
+                  <MdPeople size={20} /> Manage Users
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/manage-role-requests"
+                  className={navLinkClass}
+                >
+                  <MdAssignmentInd size={20} /> Manage Role Requests
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/manage-requests"
+                  className={navLinkClass}
+                >
+                  <MdListAlt size={20} /> Manage Requests
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/feature-donations"
+                  className={navLinkClass}
+                >
+                  <MdStar size={20} /> Feature Donations
+                </NavLink>
+              </li>
+            </>
           )}
 
-          {data.role === "restaurant" && (
-            <li>
-              <NavLink
-                to={"/dashboard/donation-statistics"}
-                className="flex items-center gap-2"
-              >
-                <MdInsights /> Donation Statistics
-              </NavLink>
-            </li>
+          {/* Charity */}
+          {role === "charity" && (
+            <>
+              <li>
+                <NavLink to="/dashboard/my-requests" className={navLinkClass}>
+                  <MdAssignment size={20} /> My Requests
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/my-pickups" className={navLinkClass}>
+                  <MdLocalShipping size={20} /> My Pickups
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/my-received-donations"
+                  className={navLinkClass}
+                >
+                  <MdCardGiftcard size={20} /> Received Donations
+                </NavLink>
+              </li>
+            </>
+          )}
+
+          {/* Restaurant */}
+          {role === "restaurant" && (
+            <>
+              <li>
+                <NavLink to="/dashboard/add-donation" className={navLinkClass}>
+                  <MdAddBox size={20} /> Add Donation
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/my-donations" className={navLinkClass}>
+                  <MdInventory size={20} /> My Donations
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/requested-donations"
+                  className={navLinkClass}
+                >
+                  <MdMoveToInbox size={20} /> Requested Donations
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/donation-statistics"
+                  className={navLinkClass}
+                >
+                  <MdInsights size={20} /> Donation Statistics
+                </NavLink>
+              </li>
+            </>
           )}
         </ul>
       </div>

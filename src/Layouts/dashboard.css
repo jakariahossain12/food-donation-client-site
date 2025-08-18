@@ -1,9 +1,3 @@
-.active{
-    border-bottom: 2px solid #fdd65b;
-    color: #00705C;
-}
-ul>li:hover {
-    border-bottom: 2px solid #fdd65b;
+.active{ border-bottom: 2px solid #fdd65b; color: #00705C; } ul>li:hover { border-bottom: 2px solid #fdd65b; }
 
 
-}

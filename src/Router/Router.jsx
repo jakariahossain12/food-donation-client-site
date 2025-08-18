@@ -31,6 +31,7 @@ import CharityRoute from "../Private/CharityRoute";
 import AdminRoute from "../Private/AdminRoute";
 import DonationStatistics from "../Pages/Dashboard/Restaurant/DonationStatistics";
 import About from "../Component/About/About";
+import DashboardOverview from "../Pages/Dashboard/DashboardOverview/DashboardOverview";
 
 export const router = createBrowserRouter([
   {
@@ -60,6 +61,7 @@ export const router = createBrowserRouter([
     path: "login",
     Component: Login,
   },
+
   {
     path: "dashboard",
     element: (
@@ -69,8 +71,15 @@ export const router = createBrowserRouter([
     ),
     children: [
       // User
+
       {
         index: true,
+        
+        Component: DashboardOverview,
+      },
+      {
+        
+        path:'profile',
 
         element: (
           <PrivateRoute>
@@ -78,6 +87,7 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+
       {
         path: "request-charity",
         element: (
