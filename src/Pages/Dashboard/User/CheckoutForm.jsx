@@ -19,7 +19,7 @@ const CheckoutForm = ({ roleRequestData }) => {
 
   const mutation = useMutation({
     mutationFn: async (userData) => {
-      const res = await axiosSecure.post(`/save-payment`,userData
+      const res = await axiosSecure.post(`/payment/save-payment`,userData
       );
       return res.data;
     },
@@ -57,7 +57,7 @@ const CheckoutForm = ({ roleRequestData }) => {
 
     try {
       const amount = 25 * 100;
-      const res = await axiosSecure.post("/create-payment-intent", { amount });
+      const res = await axiosSecure.post("/payment/create-payment-intent", { amount });
 
       const clientSecret = res.data.clientSecret;
 

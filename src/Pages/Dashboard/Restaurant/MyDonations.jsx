@@ -17,7 +17,7 @@ const MyDonations = () => {
     queryKey: ["myDonation", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/my-donation?email=${user?.email}`);
+      const res = await axiosSecure.get(`/donation/mine?email=${user?.email}`);
       return res.data;
     },
   });
@@ -26,7 +26,7 @@ const MyDonations = () => {
 
   const mutation = useMutation({
     mutationFn: async (id) => {
-      const res = await axiosSecure.delete(`/delete-donation?id=${id}`);
+      const res = await axiosSecure.delete(`/donation?id=${id}`);
       refetch();
       toast.success('delete successfully')
       return res.data

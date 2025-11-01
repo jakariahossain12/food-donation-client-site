@@ -10,7 +10,7 @@ const FeaturedDonations = () => {
   const { isLoading, data: dummyDonations = [] } = useQuery({
     queryKey: ["featuredDonations"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/featured-donations");
+      const res = await axiosSecure.get("/donation/featured");
       return res.data;
     },
   });

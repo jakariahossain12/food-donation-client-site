@@ -21,7 +21,7 @@ const AddDonation = () => {
     
     const mutation = useMutation({
         mutationFn: async (donationData) => {
-            const res = await axiosSecure.post('/add-donation', donationData);
+            const res = await axiosSecure.post('/donation/add', donationData);
             toast.success(' donation post successfully')
             return res.data
         }

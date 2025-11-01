@@ -21,7 +21,7 @@ const ManageUsersTable = () => {
   } = useQuery({
     queryKey: ["allUsers",user.email],
     queryFn: async () => {
-      const res = await axiosSecure.get("/all-user");
+      const res = await axiosSecure.get("/user/all-user");
       return res.data;
     },
   });
@@ -45,7 +45,7 @@ const ManageUsersTable = () => {
 
   const mutationDeleteFirebaseUser = useMutation({
     mutationFn: async (uid) => {
-      const res = await axiosSecure.delete(`/delete-user/${uid}`);
+      const res = await axiosSecure.delete(`/firebase-user/delete-user/${uid}`);
       return res.data;
     },
   });

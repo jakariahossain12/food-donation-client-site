@@ -12,7 +12,7 @@ const LatestCharityRequests = () => {
   const { data: requests = [], isLoading } = useQuery({
     queryKey: ["latestCharityRequests"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/charity-requests/latest");
+      const res = await axiosSecure.get("/payment/charity-requests/latest");
       return res.data;
     },
   });

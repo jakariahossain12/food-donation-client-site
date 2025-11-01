@@ -24,7 +24,7 @@ const DonationStatistics = () => {
   const { data: stats = [], isLoading } = useQuery({
     queryKey: ["donationStats"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/restaurant/donation-stats");
+      const res = await axiosSecure.get("/donation/stats");
       return res.data;
     },
   });

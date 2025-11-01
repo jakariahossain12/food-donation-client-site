@@ -18,7 +18,7 @@ const MyPickups = () => {
     queryKey: ["myPickups"],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/donation-request/pickups?email=${user?.email}`
+        `/donation-requests/pickups?email=${user?.email}`
       );
       return res.data;
     },
@@ -26,7 +26,7 @@ const MyPickups = () => {
 
   const confirmPickup = useMutation({
     mutationFn: async (id) => {
-      const res = await axiosSecure.patch(`/donation-request/pickup/${id}`);
+      const res = await axiosSecure.patch(`/donation-requests/pickup/${id}`);
       return res.data;
     },
     onSuccess: () => {
