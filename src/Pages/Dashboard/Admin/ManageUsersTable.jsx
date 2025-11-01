@@ -55,7 +55,7 @@ const ManageUsersTable = () => {
   }
 
   const handleUpdateRole = (id, value) => {
-    if (value === "charity" || value === "restaurant" || value === "admin") {
+    if (value === "charity" || value === "restaurant" || value === "admin" || value === "user" ) {
       mutation.mutate({ id, value });
       toast.success(`user role update successfully,${value}`);
     } else {
@@ -114,6 +114,7 @@ const ManageUsersTable = () => {
                   className="border bg-base-200 rounded px-2 py-1 text-sm"
                 >
                   <option value="">Select Role</option>
+                  <option value="user">User</option>
                   <option value="admin">Admin</option>
                   <option value="restaurant">Restaurant</option>
                   <option value="charity">Charity</option>
