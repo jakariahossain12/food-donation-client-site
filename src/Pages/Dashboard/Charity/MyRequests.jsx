@@ -26,7 +26,7 @@ const MyRequests = () => {
 
   const cancelMutation = useMutation({
     mutationFn: async (id) => {
-      const res = await axiosSecure.delete(`/donation-requests/${id}`);
+      const res = await axiosSecure.delete(`/donation-requests/mine/${id}`);
       return res.data;
     },
     onSuccess: () => {

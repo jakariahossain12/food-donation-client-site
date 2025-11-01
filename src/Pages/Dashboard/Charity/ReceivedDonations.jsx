@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
-
 import { toast } from "react-toastify";
 import { format } from "date-fns";
 import { Dialog } from "@headlessui/react";
@@ -21,19 +20,18 @@ const ReceivedDonations = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["receivedDonations"],
+    queryKey: ["receivedDonations", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/donation-requests/received?email=${user?.email}`
-      );
+      const res = await axiosSecure.get(`/donation-requests/received?email=${user?.email}`);
       return res.data;
     },
+    enabled: !!user?.email,
   });
 
-  // Mutation to submit review
+  // Submit review mutation
   const reviewMutation = useMutation({
-    mutationFn: async ({ donationId, review }) => {
-      const res = await axiosSecure.post("/reviews", { donationId, ...review });
+    mutationFn: async (reviewData) => {
+      const res = await axiosSecure.post("/reviews/donation-review", reviewData);
       return res.data;
     },
     onSuccess: () => {
@@ -41,20 +39,41 @@ const ReceivedDonations = () => {
       setSelectedDonation(null);
       setReviewText("");
       setRating(0);
+      refetch();
     },
     onError: () => {
       toast.error("Failed to submit review.");
     },
   });
 
-  if (isLoading || loading) return <Loading></Loading>;
+  const handleSubmitReview = () => {
+    if (!selectedDonation?._id || !user?.email || rating === 0 || reviewText.trim() === "") {
+      toast.warning("Please fill out all review fields.");
+      return;
+    }
+
+const reviewData = {
+  donationId: selectedDonation._id,
+  donationTitle: selectedDonation.donationTitle,
+  restaurantName: selectedDonation.restaurantName,
+  restaurantEmail: selectedDonation.restaurantEmail, // ✅ add this
+  reviewerName: user.displayName,
+  reviewerEmail: user.email,
+  rating,
+  reviewText,
+  date: new Date(),
+};
+    console.log(reviewData);
+
+    reviewMutation.mutate(reviewData);
+  };
+
+  if (isLoading || loading) return <Loading />;
 
   if (received.length === 0) {
     return (
       <div className="text-center mt-12">
-        <h2 className="text-xl font-semibold text-gray-500">
-          No received donations yet.
-        </h2>
+        <h2 className="text-xl font-semibold text-gray-500">No received donations yet.</h2>
       </div>
     );
   }
@@ -67,22 +86,13 @@ const ReceivedDonations = () => {
             key={donation._id}
             className="bg-base-200 rounded-2xl shadow-md border p-5 space-y-3 relative"
           >
-            <h2 className="text-xl font-bold text-[#00705c]">
-              {donation.donationTitle}
-            </h2>
-            <p>
-              <strong>Restaurant:</strong> {donation.restaurantName}
-            </p>
-            <p>
-              <strong>Type:</strong> {donation.type}
-            </p>
-            <p>
-              <strong>Quantity:</strong> {donation.quantity}
-            </p>
+            <h2 className="text-xl font-bold text-[#00705c]">{donation.donationTitle}</h2>
+            <p><strong>Restaurant:</strong> {donation.restaurantName}</p>
+            <p><strong>Type:</strong> {donation.type}</p>
+            <p><strong>Quantity:</strong> {donation.quantity}</p>
             <p>
               <strong>Pickup Date:</strong>{" "}
               {format(new Date(donation.pickedUpAt), "PPP p")}
-              {donation.pickedUpAt}
             </p>
             <button
               onClick={() => setSelectedDonation(donation)}
@@ -102,12 +112,8 @@ const ReceivedDonations = () => {
       >
         <div className="flex items-center justify-center min-h-screen bg-black/50 p-4">
           <Dialog.Panel className="bg-base-100 rounded-xl p-6 w-full max-w-md space-y-4">
-            <Dialog.Title className="text-lg font-bold">
-              Leave a Review
-            </Dialog.Title>
-            <p>
-              <strong>{selectedDonation?.donationTitle}</strong>
-            </p>
+            <Dialog.Title className="text-lg font-bold">Leave a Review</Dialog.Title>
+            <p><strong>{selectedDonation?.donationTitle}</strong></p>
 
             <div className="flex gap-1">
               {[1, 2, 3, 4, 5].map((star) => (
@@ -139,18 +145,7 @@ const ReceivedDonations = () => {
                 Cancel
               </button>
               <button
-                onClick={() =>
-                  reviewMutation.mutate({
-                    donationId: selectedDonation._id,
-                    review: {
-                      reviewerName: user?.displayName,
-                      reviewerEmail: user?.email,
-                      rating,
-                      reviewText,
-                      date: new Date(),
-                    },
-                  })
-                }
+                onClick={handleSubmitReview}
                 className="btn btn-sm bg-emerald-600 text-white hover:bg-emerald-700"
               >
                 Submit Review
