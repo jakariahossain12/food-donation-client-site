@@ -14,16 +14,18 @@ const MyFavorites = () => {
 
   // Fetch user's favorite donations
   const {
-    data: favorites = [],
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["favorites", user?.email],
-    queryFn: async () => {
-      const res = await axiosSecure.get(`/favorites?email=${user.email}`);
-      return res.data;
-    },
-  });
+  data,
+  isLoading,
+  refetch,
+} = useQuery({
+  queryKey: ["favorites", user?.email],
+  queryFn: async () => {
+    const res = await axiosSecure.get(`/favorites?email=${user.email}`);
+    return res.data;
+  },
+});
+
+const favorites = data?.favorites || [];
 
   // Delete favorite mutation
   const { mutate: removeFavorite } = useMutation({
@@ -54,7 +56,7 @@ const MyFavorites = () => {
         <p className="text-center text-gray-500">No favorites found.</p>
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {favorites.map((fav) => (
+          {favorites?.map((fav) => (
             <div
               key={fav._id}
               className="card bg-base-200 shadow-lg rounded-lg overflow-hidden border"
