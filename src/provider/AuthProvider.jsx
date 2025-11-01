@@ -60,7 +60,7 @@ const AuthProvider = ({ children }) => {
         setUser(currentUser);
         
         axios
-          .post(`${import.meta.env.VITE_SERVER_BASE_API}/jwt-token`, {
+          .post(`${import.meta.env.VITE_SERVER_BASE_API}/auth/jwt-token`, {
             email: currentUser?.email,
           })
           .then((res) => {

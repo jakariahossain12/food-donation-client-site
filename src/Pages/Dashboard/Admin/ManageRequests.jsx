@@ -22,7 +22,7 @@ const ManageRequests = () => {
   // Mutation to delete a request
   const deleteRequest = useMutation({
     mutationFn: async (id) => {
-      const res = await axiosSecure.delete(`/donation-request/${id}`);
+      const res = await axiosSecure.delete(`/donation-requests/${id}`);
       return res.data;
     },
     onSuccess: () => {

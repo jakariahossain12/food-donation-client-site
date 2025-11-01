@@ -21,14 +21,14 @@ const ManageDonations = () => {
   } = useQuery({
     queryKey: ["allDonationsAdmin"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/all-donations");
+      const res = await axiosSecure.get("/donation/all");
       return res.data;
     },
   });
 
   const updateStatusMutation = useMutation({
     mutationFn: async ({ id, status }) => {
-      const res = await axiosSecure.patch(`/update-donation-status/${id}`, {
+      const res = await axiosSecure.patch(`/donation/status/${id}`, {
         status,
       });
       return res.data;

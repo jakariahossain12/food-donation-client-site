@@ -15,7 +15,7 @@ const RequestedDonationsTable = () => {
   const { data: requests = [], refetch, isLoading } = useQuery({
     queryKey: ["donationRequests"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/donation-requests?email=${user?.email}`);
+      const res = await axiosSecure.get(`/donation-requests/restaurant?email=${user?.email}`);
       return res.data;
     },
   });

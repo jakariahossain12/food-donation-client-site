@@ -16,7 +16,7 @@ const AllDonation = () => {
     queryKey: ["allVerifyDonations", searchTerm],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/all-verify-donations?search=${searchTerm}`
+        `/donation/public?search=${searchTerm}`
       );
       return res.data;
     },

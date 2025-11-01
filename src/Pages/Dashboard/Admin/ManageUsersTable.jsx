@@ -21,7 +21,7 @@ const ManageUsersTable = () => {
   } = useQuery({
     queryKey: ["allUsers",user.email],
     queryFn: async () => {
-      const res = await axiosSecure.get("/all-user");
+      const res = await axiosSecure.get("/user/all-user");
       return res.data;
     },
   });
@@ -45,7 +45,7 @@ const ManageUsersTable = () => {
 
   const mutationDeleteFirebaseUser = useMutation({
     mutationFn: async (uid) => {
-      const res = await axiosSecure.delete(`/delete-user/${uid}`);
+      const res = await axiosSecure.delete(`/firebase-user/delete-user/${uid}`);
       return res.data;
     },
   });
@@ -55,7 +55,7 @@ const ManageUsersTable = () => {
   }
 
   const handleUpdateRole = (id, value) => {
-    if (value === "charity" || value === "restaurant" || value === "admin") {
+    if (value === "charity" || value === "restaurant" || value === "admin" || value === "user" ) {
       mutation.mutate({ id, value });
       toast.success(`user role update successfully,${value}`);
     } else {
@@ -114,6 +114,7 @@ const ManageUsersTable = () => {
                   className="border bg-base-200 rounded px-2 py-1 text-sm"
                 >
                   <option value="">Select Role</option>
+                  <option value="user">User</option>
                   <option value="admin">Admin</option>
                   <option value="restaurant">Restaurant</option>
                   <option value="charity">Charity</option>

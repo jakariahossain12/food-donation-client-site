@@ -14,15 +14,15 @@ const FeatureDonations = () => {
   } = useQuery({
     queryKey: ["verifiedDonations"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/donations/verified");
+      const res = await axiosSecure.get("/donation/verified");
       return res.data;
     },
   });
 
-  // Handle feature action (adjust this logic as needed)
+  // Handle feature action 
   const featureDonation = useMutation({
     mutationFn: async (id) => {
-      const res = await axiosSecure.patch(`/donations/feature/${id}`);
+      const res = await axiosSecure.patch(`/donation/feature/${id}`);
       return res.data;
     },
     onSuccess: () => {

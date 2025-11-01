@@ -16,18 +16,18 @@ const AllCharityRequests = () => {
   } = useQuery({
     queryKey: ["allCharityRequests"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/charity-request-status`);
+      const res = await axiosSecure.get(`/payment/charity-request-status`);
       return res.data;
     },
   });
 
   const mutation = useMutation({
-    mutationFn: async (userData) => {
-      const res = await axiosSecure.patch(`/updata-user-role`, userData);
-      refetch();
-      return res.data;
-    },
-  });
+  mutationFn: async (userData) => {
+    const res = await axiosSecure.patch(`/user/update-user-role`, userData);
+    refetch();
+    return res.data;
+  },
+});
 
   if (isLoading || loading) {
     return (

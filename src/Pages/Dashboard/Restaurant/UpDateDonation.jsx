@@ -38,7 +38,7 @@ const UpDateDonation = () => {
   const mutation = useMutation({
     mutationFn: async (donationData) => {
       const res = await axiosSecure.put(
-        `/upDate-donation/${donation._id}`,
+        `/donation/update/${donation._id}`,
         donationData
       );
       queryClient.invalidateQueries(["myDonation"]);

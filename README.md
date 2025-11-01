@@ -1,48 +1,85 @@
-# Food Donation Platform - Frontend
-
-This is the frontend of a full-stack food donation platform built with React. It supports role-based access for Admins, Restaurants, Charities, and Users, integrated with Firebase authentication and verification workflows.
 
 ## website link : 
 https://deft-stroopwafel-641c61.netlify.app/
 
+# 🌍 Food Donation Platform — Frontend
+
+This is the frontend my full-stack food donation platform that connects restaurants, charities, and users to reduce food waste and support communities. Built with **React**, **Vite**, **Firebase**, **Stripe**, and **Tanstack Query**, it supports secure authentication, role-based dashboards, donation management, and real-time analytics.
+
+---
+
 ## 🚀 Features
 
-- 🥗 Browdevse and request food donations
-- 🏢 Role-based dashboards (Admin, Restaurant, Charity)
-- 🔐 Authentication via Firebase
-- ✅ Role verification system
-- ⭐ Feature donations on homepage
-- 📦 Manage pickups and reviews
-- 🎯 Real-time updates using React Query
+### 🔐 Authentication
+- Email/password registration and login via Firebase
+- Google social login
+- JWT token handling with Axios interceptor
+- Role-based route protection
 
-## 🛠️ Tech Stack
+### 🧑‍💼 User Dashboard
+- View profile and transaction history
+- Request Charity role (Stripe payment)
+- Save donations to favorites
+- Submit reviews
 
-- React
-- React Router DOM
-- Tailwind CSS + DaisyUI
-- Axios
-- Firebase Auth
-- SweetAlert2 & React Toastify
-- TanStack React Query
+### 🏪 Restaurant Dashboard
+- Add, update, and delete donations
+- View charity requests
+- Track donation statistics (Recharts)
 
-## 📦 Installation
+### 🧑‍🤝‍🧑 Charity Dashboard
+- Request donations
+- Confirm pickups
+- Submit reviews
+- View received donations and transaction history
+
+### 🛡️ Admin Dashboard
+- Manage donations, users, role requests, and charity requests
+- Feature verified donations for homepage
+
+---
+
+## 🧰 Tech Stack
+
+| Layer        | Tech Used                          |
+|--------------|------------------------------------|
+| Framework    | React + Vite                       |
+| Auth         | Firebase Auth + JWT                |
+| API Calls    | Axios with interceptors            |
+| Data Fetching| Tanstack Query                     |
+| Charts       | Recharts                           |
+| Payments     | Stripe Checkout                    |
+| Image Upload | ImgBB API                          |
+| Routing      | React Router DOM                   |
+| State Mgmt   | Context API      |
+
+---
+
+🔄 Axios Interceptor
+- Automatically attaches JWT token to requests
+- Handles 401 errors and redirects to login
 
 
-🌐 Environment Variables
-Create a .env file:
+## 🔑 Environment Variables
 
-VITE_FIREBASE_API_KEY=your_api_key
-VITE_FIREBASE_AUTH_DOMAIN=your_domain
-VITE_FIREBASE_PROJECT_ID=your_project_id
-VITE_FIREBASE_STORAGE_BUCKET=your_bucket
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-VITE_FIREBASE_APP_ID=your_app_id
-VITE_SERVER_BASE_API=http://localhost:5000
+Create a `.env` file in the frontend root:
+
+```env
+VITE_apiKey=AIzaSyAfQ0utIfpo6MV9ocDqmP0W2j2qGHQPhDE
+VITE_authDomain=assagment-12.firebaseapp.com
+VITE_projectId=assagment-12
+VITE_storageBucket=assagment-12.firebasestorage.app
+VITE_messagingSenderId=790489930376
+VITE_appId=1:790489930376:web:8c8c21684ec6b24ed9dd3d
+
+VITE_IMAGEBB_KEY=c6bc58a5f62a3b356742c2a308bdd44d
+VITE_SERVER_BASE_API=http://localhost:4000
 
 
-| Role       | Permissions                          |
-| ---------- | ------------------------------------ |
-| Admin      | Verify roles, manage users/donations |
-| Restaurant | Add/manage donations                 |
-| Charity    | Request/receive food                 |
-| User       | View donations, request charity role |
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+

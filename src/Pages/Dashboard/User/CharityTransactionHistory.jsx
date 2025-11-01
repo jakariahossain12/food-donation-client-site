@@ -20,7 +20,7 @@ const CharityTransactionHistory = () => {
     queryKey: ["payment", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/charity-request-status?email=${user?.email}`
+        `/payment/charity-request-status?email=${user?.email}`
       );
 
       return res.data;

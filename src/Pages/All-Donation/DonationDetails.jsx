@@ -38,7 +38,7 @@ const DonationDetails = () => {
   const { data: reviews = {}, refetch } = useQuery({
     queryKey: ["review", id],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/review?id=${id}`);
+      const res = await axiosSecure.get(`/reviews?id=${id}`);
       return res.data;
     },
   });
@@ -72,7 +72,7 @@ const DonationDetails = () => {
 
   const requestDonation = useMutation({
     mutationFn: async (requestData) => {
-      const res = await axiosSecure.post("/donation-request", requestData);
+      const res = await axiosSecure.post("/donation-requests", requestData);
       return res.data;
     },
     onSuccess: () => {
@@ -133,7 +133,7 @@ const DonationDetails = () => {
   // add review
   const donationReview = useMutation({
     mutationFn: async (reviewData) => {
-      const res = await axiosSecure.post("/donation-review", reviewData);
+      const res = await axiosSecure.post("/reviews/donation-review", reviewData);
       return res.data;
     },
     onSuccess: () => {

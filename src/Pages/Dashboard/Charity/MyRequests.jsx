@@ -18,7 +18,7 @@ const MyRequests = () => {
     queryKey: ["myRequests", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/my-requests?email=${user?.email}`
+        `/donation-requests/my-requests?email=${user?.email}`
       );
       return res.data;
     },
@@ -26,7 +26,7 @@ const MyRequests = () => {
 
   const cancelMutation = useMutation({
     mutationFn: async (id) => {
-      const res = await axiosSecure.delete(`/donation-requests/${id}`);
+      const res = await axiosSecure.delete(`/donation-requests/mine/${id}`);
       return res.data;
     },
     onSuccess: () => {
