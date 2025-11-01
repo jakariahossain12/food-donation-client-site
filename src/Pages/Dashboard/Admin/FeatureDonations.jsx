@@ -19,7 +19,7 @@ const FeatureDonations = () => {
     },
   });
 
-  // Handle feature action (adjust this logic as needed)
+  // Handle feature action 
   const featureDonation = useMutation({
     mutationFn: async (id) => {
       const res = await axiosSecure.patch(`/donation/feature/${id}`);
