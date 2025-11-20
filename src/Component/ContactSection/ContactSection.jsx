@@ -29,7 +29,7 @@ const ContactSection = () => {
             <FaPhoneAlt className="text-xl text-yellow-500" />
             <div>
               <h4 className="font-semibold text-gray-700">Phone</h4>
-              <p className="text-gray-500 text-sm">+1 (888) 456 789</p>
+              <p className="text-gray-500 text-sm">+8801877639415</p>
             </div>
           </div>
 
@@ -39,7 +39,7 @@ const ContactSection = () => {
             <div>
               <h4 className="font-semibold text-gray-700">Address</h4>
               <p className="text-gray-500 text-sm">
-                121 King St, Melbourne VIC 300, Australia
+                121 King St, Melbourne VIC 300, Bangladesh
               </p>
             </div>
           </div>
