@@ -4,6 +4,7 @@ import Loading from "../../../Component/Loading/Loading";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { Link } from "react-router";
+import { useState } from "react";
 
 const statusColor = {
   Verified: "text-green-600 font-semibold",
@@ -14,17 +15,18 @@ const statusColor = {
 const ManageDonations = () => {
   const axiosSecure = useAxiosSecure();
 
-  const {
-    data: donations = [],
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["allDonationsAdmin"],
-    queryFn: async () => {
-      const res = await axiosSecure.get("/donation/all");
-      return res.data;
-    },
-  });
+ const [page, setPage] = useState(1);
+
+const { data, isLoading, refetch } = useQuery({
+  queryKey: ["allDonationsAdmin", page],
+  queryFn: async () => {
+    const res = await axiosSecure.get(`/donation/all?page=${page}&limit=5`);
+    return res.data;
+  },
+});
+
+const donations = data?.data || [];
+const totalPages = data?.totalPages;
 
   const updateStatusMutation = useMutation({
     mutationFn: async ({ id, status }) => {
@@ -121,6 +123,40 @@ const ManageDonations = () => {
           ))}
         </tbody>
       </table>
+      <div className="flex justify-center mt-6 gap-3">
+  <button
+    disabled={page === 1}
+    onClick={() => setPage(page - 1)}
+    className="btn btn-outline btn-sm"
+  >
+    Prev
+  </button>
+
+ {[...Array(totalPages)].map((_, i) => (
+  <button
+    key={i}
+    onClick={() => setPage(i + 1)}
+    className="btn btn-sm"
+    style={{
+      backgroundColor: page === i + 1 ? "#00705c" : "transparent",
+      border: "1px solid #00705c",
+      color: page === i + 1 ? "white" : "#00705c"
+    }}
+  >
+    {i + 1}
+  </button>
+))}
+
+
+  <button
+    disabled={page === totalPages}
+    onClick={() => setPage(page + 1)}
+    className="btn btn-outline btn-sm"
+  >
+    Next
+  </button>
+</div>
+
     </div>
   );
 };
