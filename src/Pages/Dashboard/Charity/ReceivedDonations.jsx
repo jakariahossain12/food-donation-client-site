@@ -63,7 +63,7 @@ const reviewData = {
   reviewText,
   date: new Date(),
 };
-    console.log(reviewData);
+    
 
     reviewMutation.mutate(reviewData);
   };
