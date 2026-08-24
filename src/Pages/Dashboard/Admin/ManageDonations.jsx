@@ -21,36 +21,38 @@ const { data, isLoading, refetch } = useQuery({
   queryKey: ["allDonationsAdmin", page],
   queryFn: async () => {
     const res = await axiosSecure.get(`/donation/all?page=${page}&limit=5`);
+    
     return res.data;
   },
 });
 
-const donations = data?.data || [];
+const donations = Array.isArray(data) ? data : (data?.data || data?.donations || []);
 const totalPages = data?.totalPages;
 
-  const updateStatusMutation = useMutation({
-    mutationFn: async ({ id, status }) => {
-      const res = await axiosSecure.patch(`/donation/status/${id}`, {
-        status,
-      });
-      return res.data;
-    },
-    onSuccess: () => {
-      refetch();
-    },
-  });
+const updateStatusMutation = useMutation({
+  mutationFn: async ({ id, status }) => {
+    const res = await axiosSecure.patch(`/donation/status/${id}`, {
+      status,
+    });
+    return res.data;
+  },
+  onSuccess: (data, variables) => {
+    toast.success(`Status updated successfully to ${variables.status}`);
+    refetch(); // Refetches current page data
+  },
+  onError: (error) => {
+    console.error("Mutation Error:", error);
+    toast.error(error?.response?.data?.message || "Failed to update status");
+  },
+});
 
-  const handleStatusUpdate = (id, status) => {
-      updateStatusMutation.mutate({ id, status });
-      if (status === "Verified") {
-          toast.success(`Status updated successfully ${status} `);
-      } else {
-          toast.error(`Status updated successfully ${status} `);
-      }
-        
-  };
+const handleStatusUpdate = (id, status) => {
+  updateStatusMutation.mutate({ id, status });
+};
 
     if (isLoading) return <Loading />;
+
+    
     
     if (donations.length === 0) {
       return <div className="flex justify-center items-center min-h-[60vh] px-4">

@@ -18,7 +18,7 @@ export default function DashboardOverview() {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const [stats, setStats] = useState({});
-    console.log(stats);
+    
 
   useEffect(() => {
     const fetchStats = async () => {
